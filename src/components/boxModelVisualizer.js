@@ -6,7 +6,6 @@ function BoxModelVisualizer() {
   const [borderRightWidth, setBorderRightWidth] = useState(30)
   const [borderBottomWidth, setBorderBottomWidth] = useState(30)
   const [borderLeftWidth, setBorderLeftWidth] = useState(30)
-  const [boxSizing, setBoxSizing] = useState("border-box")
   const [height, setHeight] = useState(100)
   const [marginTop, setMarginTop] = useState(40)
   const [marginRight, setMarginRight] = useState(40)
@@ -17,12 +16,16 @@ function BoxModelVisualizer() {
   const [paddingBottom, setPaddingBottom]= useState(10)
   const [paddingLeft, setPaddingLeft] = useState(10)
   const [width, setWidth] = useState(400)
+  const labelZindex = 999
 
   return (
     <div
       css={css({
         display: 'flex',
         justifyContent: 'center',
+        '*': {
+          boxSizing: 'border-box',
+        }
       })}
     >
       <div>
@@ -30,16 +33,6 @@ function BoxModelVisualizer() {
         <h2>Element</h2>
 
         <form>
-        <div>
-            <label>Box Sizing</label>
-            <select
-              onChange={(e) => setBoxSizing(e.target.value)}
-            >
-              <option value="border-box">Border-box</option>
-              <option value="content-box">Content-box</option>
-            </select>
-          </div>
-
           <div>
             <label>Margin Top</label>
             <input
@@ -185,6 +178,7 @@ function BoxModelVisualizer() {
           css={css({
             background: 'lightblue',
             display: 'inline-flex',
+            fontSize: 12,
             paddingTop: marginTop,
             paddingRight: marginRight,
             paddingBottom: marginBottom,
@@ -194,10 +188,15 @@ function BoxModelVisualizer() {
         >
           <div
             css={css({
+              alignItems: 'center',
+              display: 'flex',
+              height: marginTop,
+              justifyContent: 'center',
               left: 0,
               position: 'absolute',
               top: 0,
               width: '100%',
+              zIndex: labelZindex,
             })}
           >
             {marginTop.toLocaleString()}
@@ -207,19 +206,27 @@ function BoxModelVisualizer() {
               alignItems: 'center',
               display: 'flex',
               height: '100%',
+              justifyContent: 'center',
               position: 'absolute',
               right: 0,
               top: 0,
+              width: marginRight,
+              zIndex: labelZindex,
             })}
           >
             {marginRight.toLocaleString()}
           </div>
           <div
             css={css({
+              alignItems: 'center',
+              display: 'flex',
+              height: marginBottom,
+              justifyContent: 'center',
               left: 0,
               position: 'absolute',
               bottom: 0,
               width: '100%',
+              zIndex: labelZindex,
             })}
           >
             {marginBottom.toLocaleString()}
@@ -229,9 +236,12 @@ function BoxModelVisualizer() {
               alignItems: 'center',
               display: 'flex',
               height: '100%',
+              justifyContent: 'center',
               left: 0,
               position: 'absolute',
               top: 0,
+              width: marginLeft,
+              zIndex: labelZindex,
             })}
           >
             {marginLeft.toLocaleString()}
@@ -249,10 +259,15 @@ function BoxModelVisualizer() {
           >
             <div
               css={css({
+                alignItems: 'center',
+                display: 'flex',
+                height: borderTopWidth,
+                justifyContent: 'center',
                 left: 0,
                 position: 'absolute',
                 top: 0,
                 width: '100%',
+                zIndex: labelZindex,
               })}
             >
               {borderTopWidth.toLocaleString()}
@@ -262,19 +277,27 @@ function BoxModelVisualizer() {
                 alignItems: 'center',
                 display: 'flex',
                 height: '100%',
+                justifyContent: 'center',
                 position: 'absolute',
                 right: 0,
                 top: 0,
+                width: borderRightWidth,
+                zIndex: labelZindex,
               })}
             >
               {borderRightWidth.toLocaleString()}
             </div>
             <div
               css={css({
+                alignItems: 'center',
+                display: 'flex',
+                height: borderBottomWidth,
+                justifyContent: 'center',
                 left: 0,
                 position: 'absolute',
                 bottom: 0,
                 width: '100%',
+                zIndex: labelZindex,
               })}
             >
               {borderBottomWidth.toLocaleString()}
@@ -284,9 +307,12 @@ function BoxModelVisualizer() {
                 alignItems: 'center',
                 display: 'flex',
                 height: '100%',
+                justifyContent: 'center',
                 left: 0,
                 position: 'absolute',
                 top: 0,
+                width: borderLeftWidth,
+                zIndex: labelZindex,
               })}
             >
               {borderLeftWidth.toLocaleString()}
@@ -306,10 +332,15 @@ function BoxModelVisualizer() {
             >
               <div
                 css={css({
+                  alignItems: 'center',
+                  display: 'flex',
+                  height: paddingTop,
+                  justifyContent: 'center',
                   left: 0,
                   position: 'absolute',
                   top: 0,
                   width: '100%',
+                  zIndex: labelZindex,
                 })}
               >
                 {paddingTop.toLocaleString()}
@@ -319,19 +350,27 @@ function BoxModelVisualizer() {
                   alignItems: 'center',
                   display: 'flex',
                   height: '100%',
+                  justifyContent: 'center',
                   position: 'absolute',
                   right: 0,
                   top: 0,
+                  width: paddingRight,
+                  zIndex: labelZindex,
                 })}
               >
                 {paddingRight.toLocaleString()}
               </div>
               <div
                 css={css({
+                  alignItems: 'center',
+                  display: 'flex',
+                  height: paddingBottom,
+                  justifyContent: 'center',
                   left: 0,
                   position: 'absolute',
                   bottom: 0,
                   width: '100%',
+                  zIndex: labelZindex,
                 })}
               >
                 {paddingBottom.toLocaleString()}
@@ -341,57 +380,43 @@ function BoxModelVisualizer() {
                   alignItems: 'center',
                   display: 'flex',
                   height: '100%',
+                  justifyContent: 'center',
                   left: 0,
                   position: 'absolute',
                   top: 0,
+                  width: paddingLeft,
+                  zIndex: labelZindex,
                 })}
               >
                 {paddingLeft.toLocaleString()}
               </div>
               <div
                 css={css({
-                  alignItems: 'center',
                   background: 'pink',
-                  boxSizing,
-                  display: 'inline-flex',
                   height: height - (paddingTop + paddingBottom),
-                  justifyContent: 'center',
+                  position: 'relative',
                   width: width - (paddingRight + paddingLeft),
                 })}
               >
-                {width.toLocaleString()} X {height.toLocaleString()}
+                <div
+                  css={css({
+                    alignItems: 'center',
+                    display: 'flex',
+                    height: '100%',
+                    justifyContent: 'center',
+                    left: 0,
+                    position: 'absolute',
+                    top: 0,
+                    width: '100%',
+                    zIndex: labelZindex,
+                  })}
+                >
+                  {width.toLocaleString()} x {height.toLocaleString()}
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        {/* <div
-          css={css({
-            alignItems: 'center',
-            background: 'pink',
-            borderColor: 'red',
-            borderStyle: 'solid',
-            boxSizing,
-            borderTopWidth,
-            borderRightWidth,
-            borderBottomWidth,
-            borderLeftWidth,
-            display: 'flex',
-            height,
-            marginTop,
-            marginRight,
-            marginBottom,
-            marginLeft,
-            paddingTop,
-            paddingRight,
-            paddingBottom,
-            paddingLeft,
-            justifyContent: 'center',
-            width,
-          })}
-        >
-          {width.toLocaleString()} X {height.toLocaleString()}
-        </div> */}
       </div>
     </div>
   )
