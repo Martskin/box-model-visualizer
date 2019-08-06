@@ -16,6 +16,7 @@ const base = {
     blue: {
       55: "#19cbff",
       60: "#3232FF",
+      95: "#e8feff",
     },
     red: {
       52: "#DE2B2B",
@@ -47,8 +48,8 @@ module.exports = {
       xs: base.space.default * .5,
       sm: base.space.default * .75,
       md: base.space.default,
-      lg: base.space.default * 1.5,
-      xl: base.space.default * 2,
+      lg: base.space.default * 1.25,
+      xl: base.space.default * 1.5,
       xxl: base.space.default * 3.5,
       xxxl: base.space.default * 4,
     }
@@ -63,6 +64,7 @@ module.exports = {
       },
       interactive: {
         default: base.color.blue[55],
+        focus: base.color.blue[95],
       }
     },
     background: {
@@ -92,6 +94,7 @@ module.exports = {
       default: 3,
     },
     component: `1px ${base.color.neutral[78]} solid`,
+    input: `1px ${base.color.neutral[86]} solid`,
   },
   shadow: {
     default:' 0 0px 8px #251f1f',

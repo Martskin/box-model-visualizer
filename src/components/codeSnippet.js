@@ -8,10 +8,9 @@ import { css } from "@emotion/core"
 const CodeSnippet = ({ code, language }) => (
   <div
     css={css({
-      border: tokens.border.component,
-      borderRadius: tokens.border.radius.default,
       fontSize: tokens.font.size.sm,
       lineHeight: 1.5,
+      margin: `0 ${-tokens.space.xxs}px`,
       overflow: "hidden",
       textAlign: "left",
       pre: {
@@ -20,8 +19,10 @@ const CodeSnippet = ({ code, language }) => (
         padding: 0,
       },
       '.plain': {
-        fontSize: 5,
-        lineHeight: 1,
+        '&:first-of-type, &:last-of-type': {
+          fontSize: 5,
+          lineHeight: 1,
+        }
       },
       '.token-line': {
         '&:first-of-type, &:last-of-type': {

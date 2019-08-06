@@ -32,36 +32,35 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
   const [height, setHeight] = useState(element.height)
 
   const styleBlock = `
-    div {
-      /* margin properties */
-      margin-top: ${marginTop}px;
-      margin-right: ${marginRight}px;
-      margin-bottom: ${marginBottom}px;
-      margin-left: ${marginLeft}px;
+  /* margin properties */
+  margin-top: ${marginTop}px;
+  margin-right: ${marginRight}px;
+  margin-bottom: ${marginBottom}px;
+  margin-left: ${marginLeft}px;
 
-      /* border properties */
-      border-color: ${borderBackgroundColor};
-      border-style: solid;
-      border-top-width: ${borderTopWidth}px;
-      border-right-width: ${borderRightWidth}px;
-      border-bottom-width: ${borderBottomWidth}px;
-      border-left-width: ${borderLeftWidth}px;
+  /* border properties */
+  border-color: ${borderBackgroundColor};
+  border-style: solid;
+  border-top-width: ${borderTopWidth}px;
+  border-right-width: ${borderRightWidth}px;
+  border-bottom-width: ${borderBottomWidth}px;
+  border-left-width: ${borderLeftWidth}px;
 
-      /* padding properties */
-      padding-top: ${paddingTop}px;
-      padding-right: ${paddingRight}px;
-      padding-bottom: ${paddingBottom}px;
-      padding-left: ${paddingLeft}px;
+  /* padding properties */
+  padding-top: ${paddingTop}px;
+  padding-right: ${paddingRight}px;
+  padding-bottom: ${paddingBottom}px;
+  padding-left: ${paddingLeft}px;
 
-      /* element size properties */
-      width: ${width}px;
-      height: ${height}px;
-    }
+  /* element size properties */
+  width: ${width}px;
+  height: ${height}px;
   `
 
   return (
     <div
       css={css({
+        color: tokens.color.text.default,
         fontFamily: tokens.font.family.sansSerif,
         lineHeight: 1.5,
         '*': {
@@ -69,10 +68,111 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
         },
         h2: {
           color: tokens.color.text.secondary,
-          fontSize: tokens.font.size.md,
+          fontSize: tokens.font.size.sm,
           fontWeight: 'normal',
           lineHeight: 1.1,
-          margin: `0 auto ${tokens.space.md}px`,
+          margin: `0 0 ${tokens.space.md}px`,
+        },
+        legend: {
+          color: tokens.color.text.default,
+          display: 'table',
+          float: 'left',
+          fontSize: tokens.font.size.md,
+          fontWeight: 'bold',
+          margin: `0 0 ${tokens.space.md}px`,
+          padding: 0,
+          width: '100%',
+          '+ *': {
+              clear: 'both',
+          },
+        },
+        label: {
+          display: 'block',
+          fontSize: tokens.font.size.sm,
+          fontWeight: 'normal',
+          lineHeight: 1.1,
+          margin: `0 0 ${tokens.space.xxs}px`,
+        },
+        'fieldset': {
+          borderBottom: tokens.border.component,
+          borderLeft: 0,
+          borderRight: 0,
+          borderTop: tokens.border.component,
+          margin: `0 -${tokens.space.md}px ${tokens.space.md}px`,
+          minWidth: 0,
+          padding: tokens.space.md,
+          ':hover': {
+            background: tokens.color.text.interactive.focus,
+          },
+          ' > div': {
+            margin: `0 0 ${tokens.space.md}px`,
+            '&:last-of-type': {
+              margin: 0,
+            }
+          }
+        },
+        input: {
+          border: tokens.border.input,
+          color: tokens.color.text.default,
+          fontSize: tokens.font.size.sm,
+          padding: tokens.space.xxs,
+          width: 76,
+          '&[type="color"]': {
+            background: 'transparent',
+            display: 'inline-block',
+            border: 0,
+            height: 33,
+            outline: 0,
+            padding: 0,
+            margin: '0 0 0 -2px',
+            verticalAlign: 'middle',
+            width: 29,
+          }
+        },
+        '.control-panel': {
+          display: 'flex',
+          flexWrap: 'wrap',
+          'input': {
+            width: '60px',
+          }
+        },
+        '.control-panel__cell': {
+          textAlign: 'center',
+          '&:first-of-type': {
+            order: 0,
+            width: '100%',
+          },
+          '&:nth-of-type(2)': {
+            order: 3,
+            width: '30%',
+          },
+          '&:nth-of-type(3)': {
+            order: 2,
+            padding: tokens.space.sm,
+            width: '40%',
+          },
+          '&:nth-of-type(4)': {
+            order: 4,
+            width: '100%',
+          },
+          '&:last-of-type': {
+            order: 1,
+            width: '30%',
+          },
+          '.input-group': {
+            display: 'inline-block',
+            textAlign: 'left',
+          }
+        },
+        '.control-panel__thumbnail': {
+          border: `6px solid ${tokens.border.color.default}`,
+          height: '34px',
+          width: '100%',
+        },
+        '.color-picker-grid': {
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gridColumnGap: tokens.space.xs,
         }
       })}
     >
@@ -80,12 +180,19 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
         css={css({
           display: 'grid',
           gridTemplateColumns: '250px 1fr 250px',
+          height: 'calc(100vh - 48px)',
+          position: 'fixed',
+          width: '100vw',
           '> div': {
+            overflow: 'auto',
             padding: tokens.space.md,
+            position: 'relative',
             '&:first-of-type': {
+              background: tokens.color.background.light,
               borderRight: tokens.border.component,
             },
             '&:last-of-type': {
+              background: tokens.color.background.light,
               borderLeft: tokens.border.component,
             }
           }
@@ -96,78 +203,101 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
           <form>
             <fieldset>
               <legend>Margin</legend>
-              <div>
-                <label>Margin Background Color</label>
-                <input
-                  value={marginBackgroundColor}
-                  type="color"
-                  onChange={(e) => setMarginBackgroundColor(e.target.value)}
-                  onClick={(e) => e.target.select()}
-                />
+              <div
+                className="control-panel"
+              >
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Top</label>
+                    <input
+                      defaultValue={marginTop}
+                      type="number"
+                      onChange={(e) => setMarginTop(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
 
-                <input
-                  value={marginBackgroundColor}
-                  type="text"
-                  onChange={(e) => setMarginBackgroundColor(e.target.value)}
-                  onClick={(e) => e.target.select()}
-                />
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Right</label>
+                    <input
+                      defaultValue={marginRight}
+                      type="number"
+                      onChange={(e) => setMarginRight(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
+
+                <div className="control-panel__cell">
+                  <div
+                    className="control-panel__thumbnail"
+                    style={{
+                      borderColor: marginBackgroundColor,
+                    }}
+                  />
+                </div>
+
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Bottom</label>
+                    <input
+                      defaultValue={marginBottom}
+                      type="number"
+                      onChange={(e) => setMarginBottom(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
+
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Left</label>
+                    <input
+                      defaultValue={marginLeft}
+                      type="number"
+                      onChange={(e) => setMarginLeft(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <label>Margin Label Color</label>
-                <input
-                  value={marginLabelColor}
-                  type="color"
-                  onChange={(e) => setMarginLabelColor(e.target.value)}
-                  onClick={(e) => e.target.select()}
-                />
+              <div className="color-picker-grid">
+                <div>
+                  <label>Background</label>
+                  <input
+                    value={marginBackgroundColor}
+                    type="color"
+                    onChange={(e) => setMarginBackgroundColor(e.target.value)}
+                    onClick={(e) => e.target.select()}
+                  />
 
-                <input
-                  value={marginLabelColor}
-                  type="text"
-                  onChange={(e) => setMarginLabelColor(e.target.value)}
-                  onClick={(e) => e.target.select()}
-                />
-              </div>
+                  <input
+                    value={marginBackgroundColor}
+                    type="text"
+                    onChange={(e) => setMarginBackgroundColor(e.target.value)}
+                    onClick={(e) => e.target.select()}
+                  />
+                </div>
 
-              <div>
-                <label>Margin Top</label>
-                <input
-                  defaultValue={marginTop}
-                  type="number"
-                  onChange={(e) => setMarginTop(parseInt(e.target.value))}
-                  onClick={(e) => e.target.select()}
-                />
-              </div>
+                <div>
+                  <label>Label</label>
+                  <input
+                    value={marginLabelColor}
+                    type="color"
+                    onChange={(e) => setMarginLabelColor(e.target.value)}
+                    onClick={(e) => e.target.select()}
+                  />
 
-              <div>
-                <label>Margin Right</label>
-                <input
-                  defaultValue={marginRight}
-                  type="number"
-                  onChange={(e) => setMarginRight(parseInt(e.target.value))}
-                  onClick={(e) => e.target.select()}
-                />
-              </div>
-
-              <div>
-                <label>Margin Bottom</label>
-                <input
-                  defaultValue={marginBottom}
-                  type="number"
-                  onChange={(e) => setMarginBottom(parseInt(e.target.value))}
-                  onClick={(e) => e.target.select()}
-                />
-              </div>
-
-              <div>
-                <label>Margin Left</label>
-                <input
-                  defaultValue={marginLeft}
-                  type="number"
-                  onChange={(e) => setMarginLeft(parseInt(e.target.value))}
-                  onClick={(e) => e.target.select()}
-                />
+                  <input
+                    value={marginLabelColor}
+                    type="text"
+                    onChange={(e) => setMarginLabelColor(e.target.value)}
+                    onClick={(e) => e.target.select()}
+                  />
+                </div>
               </div>
             </fieldset>
 
@@ -379,95 +509,30 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
           <h2>Result</h2>
           <div
             css={css({
-              background: marginBackgroundColor,
-              color: marginLabelColor,
-              display: 'inline-flex',
-              fontSize: 12,
-              margin: '0 auto',
-              paddingTop: marginTop,
-              paddingRight: marginRight,
-              paddingBottom: marginBottom,
-              paddingLeft: marginLeft,
-              position: 'relative',
+              textAlign: 'center',
             })}
           >
             <div
               css={css({
-                alignItems: 'center',
-                display: 'flex',
-                height: marginTop,
-                justifyContent: 'center',
-                left: 0,
-                position: 'absolute',
-                top: 0,
-                width: '100%',
-                zIndex: 1,
-              })}
-            >
-              {marginTop.toLocaleString()}
-            </div>
-            <div
-              css={css({
-                alignItems: 'center',
-                display: 'flex',
-                height: '100%',
-                justifyContent: 'center',
-                position: 'absolute',
-                right: 0,
-                top: 0,
-                width: marginRight,
-                zIndex: 1,
-              })}
-            >
-              {marginRight.toLocaleString()}
-            </div>
-            <div
-              css={css({
-                alignItems: 'center',
-                display: 'flex',
-                height: marginBottom,
-                justifyContent: 'center',
-                left: 0,
-                position: 'absolute',
-                bottom: 0,
-                width: '100%',
-                zIndex: 1,
-              })}
-            >
-              {marginBottom.toLocaleString()}
-            </div>
-            <div
-              css={css({
-                alignItems: 'center',
-                display: 'flex',
-                height: '100%',
-                justifyContent: 'center',
-                left: 0,
-                position: 'absolute',
-                top: 0,
-                width: marginLeft,
-                zIndex: 1,
-              })}
-            >
-              {marginLeft.toLocaleString()}
-            </div>
-            <div
-              css={css({
-                background: borderBackgroundColor,
-                color: borderLabelColor,
+                background: marginBackgroundColor,
+                color: marginLabelColor,
                 display: 'inline-flex',
-                paddingTop: borderTopWidth,
-                paddingRight: borderRightWidth,
-                paddingBottom: borderBottomWidth,
-                paddingLeft: borderLeftWidth,
+                fontSize: 12,
+                paddingTop: marginTop,
+                paddingRight: marginRight,
+                paddingBottom: marginBottom,
+                paddingLeft: marginLeft,
                 position: 'relative',
+                div: {
+                  transition: 'width .5s ease-out, height .5s ease-out',
+                }
               })}
             >
               <div
                 css={css({
                   alignItems: 'center',
                   display: 'flex',
-                  height: borderTopWidth,
+                  height: marginTop,
                   justifyContent: 'center',
                   left: 0,
                   position: 'absolute',
@@ -476,7 +541,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                   zIndex: 1,
                 })}
               >
-                {borderTopWidth.toLocaleString()}
+                {marginTop.toLocaleString()}
               </div>
               <div
                 css={css({
@@ -487,17 +552,17 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                   position: 'absolute',
                   right: 0,
                   top: 0,
-                  width: borderRightWidth,
+                  width: marginRight,
                   zIndex: 1,
                 })}
               >
-                {borderRightWidth.toLocaleString()}
+                {marginRight.toLocaleString()}
               </div>
               <div
                 css={css({
                   alignItems: 'center',
                   display: 'flex',
-                  height: borderBottomWidth,
+                  height: marginBottom,
                   justifyContent: 'center',
                   left: 0,
                   position: 'absolute',
@@ -506,7 +571,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                   zIndex: 1,
                 })}
               >
-                {borderBottomWidth.toLocaleString()}
+                {marginBottom.toLocaleString()}
               </div>
               <div
                 css={css({
@@ -517,23 +582,21 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                   left: 0,
                   position: 'absolute',
                   top: 0,
-                  width: borderLeftWidth,
+                  width: marginLeft,
                   zIndex: 1,
                 })}
               >
-                {borderLeftWidth.toLocaleString()}
+                {marginLeft.toLocaleString()}
               </div>
               <div
                 css={css({
-                  alignItems: 'center',
-                  background: paddingBackgroundColor,
-                  color: paddingLabelColor,
+                  background: borderBackgroundColor,
+                  color: borderLabelColor,
                   display: 'inline-flex',
-                  justifyContent: 'center',
-                  paddingTop,
-                  paddingRight,
-                  paddingBottom,
-                  paddingLeft,
+                  paddingTop: borderTopWidth,
+                  paddingRight: borderRightWidth,
+                  paddingBottom: borderBottomWidth,
+                  paddingLeft: borderLeftWidth,
                   position: 'relative',
                 })}
               >
@@ -541,7 +604,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                   css={css({
                     alignItems: 'center',
                     display: 'flex',
-                    height: paddingTop,
+                    height: borderTopWidth,
                     justifyContent: 'center',
                     left: 0,
                     position: 'absolute',
@@ -550,7 +613,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                     zIndex: 1,
                   })}
                 >
-                  {paddingTop.toLocaleString()}
+                  {borderTopWidth.toLocaleString()}
                 </div>
                 <div
                   css={css({
@@ -561,17 +624,17 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                     position: 'absolute',
                     right: 0,
                     top: 0,
-                    width: paddingRight,
+                    width: borderRightWidth,
                     zIndex: 1,
                   })}
                 >
-                  {paddingRight.toLocaleString()}
+                  {borderRightWidth.toLocaleString()}
                 </div>
                 <div
                   css={css({
                     alignItems: 'center',
                     display: 'flex',
-                    height: paddingBottom,
+                    height: borderBottomWidth,
                     justifyContent: 'center',
                     left: 0,
                     position: 'absolute',
@@ -580,7 +643,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                     zIndex: 1,
                   })}
                 >
-                  {paddingBottom.toLocaleString()}
+                  {borderBottomWidth.toLocaleString()}
                 </div>
                 <div
                   css={css({
@@ -591,21 +654,71 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                     left: 0,
                     position: 'absolute',
                     top: 0,
-                    width: paddingLeft,
+                    width: borderLeftWidth,
                     zIndex: 1,
                   })}
                 >
-                  {paddingLeft.toLocaleString()}
+                  {borderLeftWidth.toLocaleString()}
                 </div>
                 <div
                   css={css({
-                    background: elementBackgroundColor,
-                    color: elementLabelColor,
-                    height: height - (paddingTop + paddingBottom),
+                    alignItems: 'center',
+                    background: paddingBackgroundColor,
+                    color: paddingLabelColor,
+                    display: 'inline-flex',
+                    justifyContent: 'center',
+                    paddingTop,
+                    paddingRight,
+                    paddingBottom,
+                    paddingLeft,
                     position: 'relative',
-                    width: width - (paddingRight + paddingLeft),
                   })}
                 >
+                  <div
+                    css={css({
+                      alignItems: 'center',
+                      display: 'flex',
+                      height: paddingTop,
+                      justifyContent: 'center',
+                      left: 0,
+                      position: 'absolute',
+                      top: 0,
+                      width: '100%',
+                      zIndex: 1,
+                    })}
+                  >
+                    {paddingTop.toLocaleString()}
+                  </div>
+                  <div
+                    css={css({
+                      alignItems: 'center',
+                      display: 'flex',
+                      height: '100%',
+                      justifyContent: 'center',
+                      position: 'absolute',
+                      right: 0,
+                      top: 0,
+                      width: paddingRight,
+                      zIndex: 1,
+                    })}
+                  >
+                    {paddingRight.toLocaleString()}
+                  </div>
+                  <div
+                    css={css({
+                      alignItems: 'center',
+                      display: 'flex',
+                      height: paddingBottom,
+                      justifyContent: 'center',
+                      left: 0,
+                      position: 'absolute',
+                      bottom: 0,
+                      width: '100%',
+                      zIndex: 1,
+                    })}
+                  >
+                    {paddingBottom.toLocaleString()}
+                  </div>
                   <div
                     css={css({
                       alignItems: 'center',
@@ -615,11 +728,36 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                       left: 0,
                       position: 'absolute',
                       top: 0,
-                      width: '100%',
+                      width: paddingLeft,
                       zIndex: 1,
                     })}
                   >
-                    {width.toLocaleString()} x {height.toLocaleString()}
+                    {paddingLeft.toLocaleString()}
+                  </div>
+                  <div
+                    css={css({
+                      background: elementBackgroundColor,
+                      color: elementLabelColor,
+                      height: height - (paddingTop + paddingBottom),
+                      position: 'relative',
+                      width: width - (paddingRight + paddingLeft),
+                    })}
+                  >
+                    <div
+                      css={css({
+                        alignItems: 'center',
+                        display: 'flex',
+                        height: '100%',
+                        justifyContent: 'center',
+                        left: 0,
+                        position: 'absolute',
+                        top: 0,
+                        width: '100%',
+                        zIndex: 1,
+                      })}
+                    >
+                      {width.toLocaleString()} x {height.toLocaleString()}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -645,7 +783,7 @@ BoxModelVisualizer.propTypes = {
 
 BoxModelVisualizer.defaultProps = {
   margin: {
-    backgroundColor: '#add8e6',
+    backgroundColor: '#f8cca1',
     labelColor: tokens.color.text.default,
     top: 40,
     right: 40,
@@ -653,26 +791,26 @@ BoxModelVisualizer.defaultProps = {
     left: 40,
   },
   border: {
-    backgroundColor: '#ff0000',
+    backgroundColor: '#fcdc9f',
     labelColor: tokens.color.text.default,
-    top: 40,
-    right: 40,
-    bottom: 40,
-    left: 40,
+    top: 30,
+    right: 30,
+    bottom: 30,
+    left: 30,
   },
   padding: {
-    backgroundColor: '#ffff00',
+    backgroundColor: '#c3cf8e',
     labelColor: tokens.color.text.default,
-    top: 10,
-    right: 10,
-    bottom: 10,
-    left: 10,
+    top: 20,
+    right: 20,
+    bottom: 20,
+    left: 20,
   },
   element: {
-    backgroundColor: '#ffc0cb',
+    backgroundColor: '#8eb6c1',
     labelColor: tokens.color.text.default,
-    width: 400,
-    height: 100,
+    width: 200,
+    height: 200,
   },
 }
 
