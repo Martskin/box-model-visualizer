@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { css } from "@emotion/core"
+import CodeSnippet from "./codeSnippet"
 
 function BoxModelVisualizer() {
   const [borderTopWidth, setBorderTopWidth] = useState(30)
@@ -16,7 +17,43 @@ function BoxModelVisualizer() {
   const [paddingBottom, setPaddingBottom]= useState(10)
   const [paddingLeft, setPaddingLeft] = useState(10)
   const [width, setWidth] = useState(400)
+  const [marginBackgroundColor, setMarginBackgroundColor] = useState('#add8e6')
+  const [marginLabelColor, setMarginLabelColor] = useState('#303030')
+  const [borderBackgroundColor, setBorderBackgroundColor] = useState('#ff0000')
+  const [borderLabelColor, setBorderLabelColor] = useState('#303030')
+  const [paddingBackgroundColor, setPaddingBackgroundColor] = useState('#ffff00')
+  const [paddingLabelColor, setPaddingLabelColor] = useState('#303030')
+  const [elementBackgroundColor, setElementBackgroundColor] = useState('#ffc0cb')
+  const [elementLabelColor, setElementLabelColor] = useState('#303030')
   const labelZindex = 999
+
+  const styleBlock = `
+    {
+      /* margin properties */
+      margin-top: ${marginTop}px;
+      margin-right: ${marginRight}px;
+      margin-bottom: ${marginBottom}px;
+      margin-left: ${marginLeft}px;
+
+      /* border properties */
+      border-color: ${borderBackgroundColor};
+      border-style: solid;
+      border-top-width: ${borderTopWidth}px;
+      border-right-width: ${borderRightWidth}px;
+      border-bottom-width: ${borderBottomWidth}px;
+      border-left-width: ${borderLeftWidth}px;
+
+      /* padding properties */
+      padding-top: ${paddingTop}px;
+      padding-right: ${paddingRight}px;
+      padding-bottom: ${paddingBottom}px;
+      padding-left: ${paddingLeft}px;
+
+      /* element size properties */
+      width: ${width}px;
+      height: ${height}px;
+    }
+  `
 
   return (
     <div
@@ -33,6 +70,40 @@ function BoxModelVisualizer() {
         <h2>Element</h2>
 
         <form>
+          <div>
+            <label>Margin Background Color</label>
+            <input
+              value={marginBackgroundColor}
+              type="color"
+              onChange={(e) => setMarginBackgroundColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+
+            <input
+              value={marginBackgroundColor}
+              type="text"
+              onChange={(e) => setMarginBackgroundColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+
+          <div>
+            <label>Margin Label Color</label>
+            <input
+              value={marginLabelColor}
+              type="color"
+              onChange={(e) => setMarginLabelColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+
+            <input
+              value={marginLabelColor}
+              type="text"
+              onChange={(e) => setMarginLabelColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+
           <div>
             <label>Margin Top</label>
             <input
@@ -69,6 +140,40 @@ function BoxModelVisualizer() {
               defaultValue={marginLeft}
               type="number"
               onChange={(e) => setMarginLeft(parseInt(e.target.value))}
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+
+          <div>
+            <label>Border Background Color</label>
+            <input
+              value={borderBackgroundColor}
+              type="color"
+              onChange={(e) => setBorderBackgroundColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+
+            <input
+              value={borderBackgroundColor}
+              type="text"
+              onChange={(e) => setBorderBackgroundColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+
+          <div>
+            <label>Border Label Color</label>
+            <input
+              value={borderLabelColor}
+              type="color"
+              onChange={(e) => setBorderLabelColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+
+            <input
+              value={borderLabelColor}
+              type="text"
+              onChange={(e) => setBorderLabelColor(e.target.value)}
               onClick={(e) => e.target.select()}
             />
           </div>
@@ -114,6 +219,40 @@ function BoxModelVisualizer() {
           </div>
 
           <div>
+            <label>Padding Background Color</label>
+            <input
+              value={paddingBackgroundColor}
+              type="color"
+              onChange={(e) => setPaddingBackgroundColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+
+            <input
+              value={paddingBackgroundColor}
+              type="text"
+              onChange={(e) => setPaddingBackgroundColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+
+          <div>
+            <label>Padding Label Color</label>
+            <input
+              value={paddingLabelColor}
+              type="color"
+              onChange={(e) => setPaddingLabelColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+
+            <input
+              value={paddingLabelColor}
+              type="text"
+              onChange={(e) => setPaddingLabelColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+
+          <div>
             <label>Padding Top</label>
             <input
               defaultValue={paddingTop}
@@ -154,6 +293,40 @@ function BoxModelVisualizer() {
           </div>
 
           <div>
+            <label>Element Background Color</label>
+            <input
+              value={elementBackgroundColor}
+              type="color"
+              onChange={(e) => setElementBackgroundColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+
+            <input
+              value={elementBackgroundColor}
+              type="text"
+              onChange={(e) => setElementBackgroundColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+
+          <div>
+            <label>Element Label Color</label>
+            <input
+              value={elementLabelColor}
+              type="color"
+              onChange={(e) => setElementLabelColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+
+            <input
+              value={elementLabelColor}
+              type="text"
+              onChange={(e) => setElementLabelColor(e.target.value)}
+              onClick={(e) => e.target.select()}
+            />
+          </div>
+
+          <div>
             <label>Width</label>
             <input
               defaultValue={width}
@@ -176,7 +349,8 @@ function BoxModelVisualizer() {
 
         <div
           css={css({
-            background: 'lightblue',
+            background: marginBackgroundColor,
+            color: marginLabelColor,
             display: 'inline-flex',
             fontSize: 12,
             paddingTop: marginTop,
@@ -248,7 +422,8 @@ function BoxModelVisualizer() {
           </div>
           <div
             css={css({
-              background: 'red',
+              background: borderBackgroundColor,
+              color: borderLabelColor,
               display: 'inline-flex',
               paddingTop: borderTopWidth,
               paddingRight: borderRightWidth,
@@ -320,7 +495,8 @@ function BoxModelVisualizer() {
             <div
               css={css({
                 alignItems: 'center',
-                background: 'yellow',
+                background: paddingBackgroundColor,
+                color: paddingLabelColor,
                 display: 'inline-flex',
                 justifyContent: 'center',
                 paddingTop,
@@ -392,7 +568,8 @@ function BoxModelVisualizer() {
               </div>
               <div
                 css={css({
-                  background: 'pink',
+                  background: elementBackgroundColor,
+                  color: elementLabelColor,
                   height: height - (paddingTop + paddingBottom),
                   position: 'relative',
                   width: width - (paddingRight + paddingLeft),
@@ -417,6 +594,9 @@ function BoxModelVisualizer() {
             </div>
           </div>
         </div>
+
+        <h3>CSS</h3>
+        <CodeSnippet code={styleBlock} language="css" />
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React from "react"
 import Highlight, { defaultProps } from "prism-react-renderer";
-import defaultTheme from "prism-react-renderer/themes/vsDark";
+import defaultTheme from "prism-react-renderer/themes/github";
 import tokens from "../data/tokens"
 import { css } from "@emotion/core"
 
