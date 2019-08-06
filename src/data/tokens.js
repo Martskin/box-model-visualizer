@@ -16,7 +16,7 @@ const base = {
     blue: {
       55: "#19cbff",
       60: "#3232FF",
-      95: "#e8feff",
+      95: "#e8f6ff",
     },
     red: {
       52: "#DE2B2B",
@@ -44,8 +44,9 @@ module.exports = {
       'serif': "Helvetica Neue, Helvetica, Arial, sans-serif",
     },
     size: {
-      xxs: base.space.default * .25,
-      xs: base.space.default * .5,
+      xxxs: base.space.default * .25,
+      xxs: base.space.default * .5,
+      xs: base.space.default * .625,
       sm: base.space.default * .75,
       md: base.space.default,
       lg: base.space.default * 1.25,
@@ -75,6 +76,7 @@ module.exports = {
     }
   },
   space: {
+    xxxs: base.space.default * .125,
     xxs: base.space.default * .25,
     xs: base.space.default * .5,
     sm: base.space.default * .75,

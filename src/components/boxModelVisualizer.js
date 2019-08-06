@@ -77,9 +77,9 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
           color: tokens.color.text.default,
           display: 'table',
           float: 'left',
-          fontSize: tokens.font.size.md,
+          fontSize: tokens.font.size.sm,
           fontWeight: 'bold',
-          margin: `0 0 ${tokens.space.md}px`,
+          margin: `0 0 ${tokens.space.xxs}px`,
           padding: 0,
           width: '100%',
           '+ *': {
@@ -88,50 +88,49 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
         },
         label: {
           display: 'block',
-          fontSize: tokens.font.size.sm,
+          fontSize: tokens.font.size.xs,
           fontWeight: 'normal',
           lineHeight: 1.1,
-          margin: `0 0 ${tokens.space.xxs}px`,
+          margin: `0 0 ${tokens.space.xxxs}px`,
         },
         'fieldset': {
-          borderBottom: tokens.border.component,
+          borderBottom: 0,
           borderLeft: 0,
           borderRight: 0,
           borderTop: tokens.border.component,
-          margin: `0 -${tokens.space.md}px ${tokens.space.md}px`,
+          margin: `0 -${tokens.space.md}px 0`,
           minWidth: 0,
-          padding: tokens.space.md,
+          padding: `${tokens.space.xxs}px ${tokens.space.md}px ${tokens.space.xs}px`,
+          '&:last-of-type': {
+            borderBottom: tokens.border.component,
+            marginBottom: tokens.space.md,
+          },
           ':hover': {
             background: tokens.color.text.interactive.focus,
           },
-          ' > div': {
-            margin: `0 0 ${tokens.space.md}px`,
-            '&:last-of-type': {
-              margin: 0,
-            }
-          }
         },
         input: {
           border: tokens.border.input,
           color: tokens.color.text.default,
-          fontSize: tokens.font.size.sm,
-          padding: tokens.space.xxs,
+          display: 'block',
+          fontSize: tokens.font.size.xs,
+          padding: `${tokens.space.xxxs}px ${tokens.space.xxs}px`,
           width: 76,
           '&[type="color"]': {
             background: 'transparent',
-            display: 'inline-block',
             border: 0,
-            height: 33,
-            outline: 0,
+            cursor: 'pointer',
+            height: 26,
             padding: 0,
             margin: '0 0 0 -2px',
             verticalAlign: 'middle',
-            width: 29,
+            width: 22,
           }
         },
         '.control-panel': {
           display: 'flex',
           flexWrap: 'wrap',
+          marginBottom: tokens.space.xs,
           'input': {
             width: '60px',
           }
@@ -148,7 +147,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
           },
           '&:nth-of-type(3)': {
             order: 2,
-            padding: tokens.space.sm,
+            padding: `${tokens.space.xs}px ${tokens.space.sm}px`,
             width: '40%',
           },
           '&:nth-of-type(4)': {
@@ -166,13 +165,23 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
         },
         '.control-panel__thumbnail': {
           border: `6px solid ${tokens.border.color.default}`,
-          height: '34px',
+          height: '28px',
           width: '100%',
         },
         '.color-picker-grid': {
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gridColumnGap: tokens.space.xs,
+        },
+        '.color-picker-input-grid': {
+          alignItems: 'center',
+          display: 'grid',
+          gridTemplateColumns: '22px 1fr',
+          position: 'relative',
+          'input[type="color"]': {
+            position: 'absolute',
+            top: '-4px',
+          }
         }
       })}
     >
@@ -267,241 +276,372 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
               <div className="color-picker-grid">
                 <div>
                   <label>Background</label>
-                  <input
-                    value={marginBackgroundColor}
-                    type="color"
-                    onChange={(e) => setMarginBackgroundColor(e.target.value)}
-                    onClick={(e) => e.target.select()}
-                  />
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={marginBackgroundColor}
+                        type="color"
+                        onChange={(e) => setMarginBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
 
-                  <input
-                    value={marginBackgroundColor}
-                    type="text"
-                    onChange={(e) => setMarginBackgroundColor(e.target.value)}
-                    onClick={(e) => e.target.select()}
-                  />
+                    <div>
+                      <input
+                        value={marginBackgroundColor}
+                        type="text"
+                        onChange={(e) => setMarginBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div>
                   <label>Label</label>
-                  <input
-                    value={marginLabelColor}
-                    type="color"
-                    onChange={(e) => setMarginLabelColor(e.target.value)}
-                    onClick={(e) => e.target.select()}
-                  />
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={marginLabelColor}
+                        type="color"
+                        onChange={(e) => setMarginLabelColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
 
-                  <input
-                    value={marginLabelColor}
-                    type="text"
-                    onChange={(e) => setMarginLabelColor(e.target.value)}
-                    onClick={(e) => e.target.select()}
-                  />
+                    <div>
+                      <input
+                        value={marginLabelColor}
+                        type="text"
+                        onChange={(e) => setMarginBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </fieldset>
 
-            <div>
-              <label>Border Background Color</label>
-              <input
-                value={borderBackgroundColor}
-                type="color"
-                onChange={(e) => setBorderBackgroundColor(e.target.value)}
-                onClick={(e) => e.target.select()}
-              />
+            <fieldset>
+              <legend>Border</legend>
+              <div
+                className="control-panel"
+              >
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Top</label>
+                    <input
+                      defaultValue={borderTopWidth}
+                      type="number"
+                      onChange={(e) => setBorderTopWidth(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
 
-              <input
-                value={borderBackgroundColor}
-                type="text"
-                onChange={(e) => setBorderBackgroundColor(e.target.value)}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Right</label>
+                    <input
+                      defaultValue={borderRightWidth}
+                      type="number"
+                      onChange={(e) => setBorderRightWidth(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <label>Border Label Color</label>
-              <input
-                value={borderLabelColor}
-                type="color"
-                onChange={(e) => setBorderLabelColor(e.target.value)}
-                onClick={(e) => e.target.select()}
-              />
+                <div className="control-panel__cell">
+                  <div
+                    className="control-panel__thumbnail"
+                    style={{
+                      borderColor: borderBackgroundColor,
+                    }}
+                  />
+                </div>
 
-              <input
-                value={borderLabelColor}
-                type="text"
-                onChange={(e) => setBorderLabelColor(e.target.value)}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Bottom</label>
+                    <input
+                      defaultValue={borderBottomWidth}
+                      type="number"
+                      onChange={(e) => setBorderBottomWidth(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <label>Border Top Width</label>
-              <input
-                defaultValue={borderTopWidth}
-                type="number"
-                onChange={(e) => setBorderTopWidth(parseInt(e.target.value))}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Left</label>
+                    <input
+                      defaultValue={borderLeftWidth}
+                      type="number"
+                      onChange={(e) => setBorderLeftWidth(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
+              </div>
 
-            <div>
-              <label>Border Right Width</label>
-              <input
-                defaultValue={borderRightWidth}
-                type="number"
-                onChange={(e) => setBorderRightWidth(parseInt(e.target.value))}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+              <div className="color-picker-grid">
+                <div>
+                  <label>Background</label>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={borderBackgroundColor}
+                        type="color"
+                        onChange={(e) => setBorderBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
 
-            <div>
-              <label>Border Bottom Width</label>
-              <input
-                defaultValue={borderBottomWidth}
-                type="number"
-                onChange={(e) => setBorderBottomWidth(parseInt(e.target.value))}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                    <div>
+                      <input
+                        value={borderBackgroundColor}
+                        type="text"
+                        onChange={(e) => setBorderBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
 
-            <div>
-              <label>Border Left Width</label>
-              <input
-                defaultValue={borderLeftWidth}
-                type="number"
-                onChange={(e) => setBorderLeftWidth(parseInt(e.target.value))}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                <div>
+                  <label>Label</label>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={borderLabelColor}
+                        type="color"
+                        onChange={(e) => setBorderLabelColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
 
-            <div>
-              <label>Padding Background Color</label>
-              <input
-                value={paddingBackgroundColor}
-                type="color"
-                onChange={(e) => setPaddingBackgroundColor(e.target.value)}
-                onClick={(e) => e.target.select()}
-              />
+                    <div>
+                      <input
+                        value={borderLabelColor}
+                        type="text"
+                        onChange={(e) => setBorderBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
 
-              <input
-                value={paddingBackgroundColor}
-                type="text"
-                onChange={(e) => setPaddingBackgroundColor(e.target.value)}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+            <fieldset>
+              <legend>Padding</legend>
+              <div
+                className="control-panel"
+              >
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Top</label>
+                    <input
+                      defaultValue={paddingTop}
+                      type="number"
+                      onChange={(e) => setPaddingTop(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <label>Padding Label Color</label>
-              <input
-                value={paddingLabelColor}
-                type="color"
-                onChange={(e) => setPaddingLabelColor(e.target.value)}
-                onClick={(e) => e.target.select()}
-              />
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Right</label>
+                    <input
+                      defaultValue={paddingRight}
+                      type="number"
+                      onChange={(e) => setPaddingRight(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
 
-              <input
-                value={paddingLabelColor}
-                type="text"
-                onChange={(e) => setPaddingLabelColor(e.target.value)}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                <div className="control-panel__cell">
+                  <div
+                    className="control-panel__thumbnail"
+                    style={{
+                      borderColor: paddingBackgroundColor,
+                    }}
+                  />
+                </div>
 
-            <div>
-              <label>Padding Top</label>
-              <input
-                defaultValue={paddingTop}
-                type="number"
-                onChange={(e) => setPaddingTop(parseInt(e.target.value))}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Bottom</label>
+                    <input
+                      defaultValue={paddingBottom}
+                      type="number"
+                      onChange={(e) => setPaddingBottom(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <label>Padding Right</label>
-              <input
-                defaultValue={paddingRight}
-                type="number"
-                onChange={(e) => setPaddingRight(parseInt(e.target.value))}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Left</label>
+                    <input
+                      defaultValue={paddingLeft}
+                      type="number"
+                      onChange={(e) => setPaddingLeft(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
+              </div>
 
-            <div>
-              <label>Padding Bottom</label>
-              <input
-                defaultValue={paddingBottom}
-                type="number"
-                onChange={(e) => setPaddingBottom(parseInt(e.target.value))}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+              <div className="color-picker-grid">
+                <div>
+                  <label>Background</label>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={paddingBackgroundColor}
+                        type="color"
+                        onChange={(e) => setPaddingBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
 
-            <div>
-              <label>Padding Left</label>
-              <input
-                defaultValue={paddingLeft}
-                type="number"
-                onChange={(e) => setPaddingLeft(parseInt(e.target.value))}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                    <div>
+                      <input
+                        value={paddingBackgroundColor}
+                        type="text"
+                        onChange={(e) => setPaddingBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
 
-            <div>
-              <label>Element Background Color</label>
-              <input
-                value={elementBackgroundColor}
-                type="color"
-                onChange={(e) => setElementBackgroundColor(e.target.value)}
-                onClick={(e) => e.target.select()}
-              />
+                <div>
+                  <label>Label</label>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={paddingLabelColor}
+                        type="color"
+                        onChange={(e) => setPaddingLabelColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
 
-              <input
-                value={elementBackgroundColor}
-                type="text"
-                onChange={(e) => setElementBackgroundColor(e.target.value)}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                    <div>
+                      <input
+                        value={paddingLabelColor}
+                        type="text"
+                        onChange={(e) => setPaddingBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
 
-            <div>
-              <label>Element Label Color</label>
-              <input
-                value={elementLabelColor}
-                type="color"
-                onChange={(e) => setElementLabelColor(e.target.value)}
-                onClick={(e) => e.target.select()}
-              />
+            <fieldset>
+              <legend>Element Size</legend>
+              <div
+                className="control-panel"
+              >
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Width</label>
+                    <input
+                      defaultValue={width}
+                      type="number"
+                      onChange={(e) => setWidth(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
 
-              <input
-                value={elementLabelColor}
-                type="text"
-                onChange={(e) => setElementLabelColor(e.target.value)}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                <div className="control-panel__cell">
+                  
+                </div>
 
-            <div>
-              <label>Width</label>
-              <input
-                defaultValue={width}
-                type="number"
-                onChange={(e) => setWidth(parseInt(e.target.value))}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                <div className="control-panel__cell">
+                  <div
+                    className="control-panel__thumbnail"
+                    style={{
+                      background: elementBackgroundColor,
+                      border: 'none',
+                    }}
+                  />
+                </div>
 
-            <div>
-              <label>Height</label>
-              <input
-                defaultValue={height}
-                type="number"
-                onChange={(e) => setHeight(parseInt(e.target.value))}
-                onClick={(e) => e.target.select()}
-              />
-            </div>
+                <div className="control-panel__cell">
+                  
+                </div>
+
+                <div className="control-panel__cell">
+                  <div className="input-group">
+                    <label>Height</label>
+                    <input
+                      defaultValue={height}
+                      type="number"
+                      onChange={(e) => setHeight(parseInt(e.target.value))}
+                      onClick={(e) => e.target.select()}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="color-picker-grid">
+                <div>
+                  <label>Background</label>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={elementBackgroundColor}
+                        type="color"
+                        onChange={(e) => setElementBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        value={elementBackgroundColor}
+                        type="text"
+                        onChange={(e) => setElementBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label>Label</label>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={elementLabelColor}
+                        type="color"
+                        onChange={(e) => setElementLabelColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        value={elementLabelColor}
+                        type="text"
+                        onChange={(e) => setElementBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
           </form>
         </div>
 
