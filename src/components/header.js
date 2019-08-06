@@ -19,8 +19,6 @@ const Header = ({ siteTitle, siteSubTitle, siteHeading }) => (
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        margin: '0 auto',
-        maxWidth: tokens.layout.breakpoint.md,
       })}
     >
       <Link
@@ -39,19 +37,12 @@ const Header = ({ siteTitle, siteSubTitle, siteHeading }) => (
           <div
             css={css({
               color: tokens.color.text.onDark.secondary,
-              fontSize: 24,
+              fontSize: tokens.font.size.lg,
               lineHeight: 1,
               paddingLeft: tokens.space.sm,
             })}
           >
             {siteTitle}
-          </div>
-          <div
-            css={css({
-              fontSize: tokens.font.size.sm,
-            })}
-          >
-            {siteSubTitle}
           </div>
         </div>
       </Link>

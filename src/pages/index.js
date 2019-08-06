@@ -5,12 +5,7 @@ import BoxModelVisualizer from "../components/boxModelVisualizer"
 const IndexPage = () => (
   <Layout>
     <div>
-      <h1>
-        CSS Box-model Visualizer
-      </h1>
-      <BoxModelVisualizer
-        
-      />
+      <BoxModelVisualizer />
     </div>
   </Layout>
 )

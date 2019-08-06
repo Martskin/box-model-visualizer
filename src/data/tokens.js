@@ -3,15 +3,15 @@ const base = {
     black: "#000000",
     white: "#FFFFFF",
     neutral: {
-      10: "#F8F8F8",
-      20: "#E8E8E8",
-      30: "#DCDCDC",
-      40: "#C8C8C8",
-      50: "#BEBEBE",
-      60: "#B0B0B0",
-      70: "#909090",
-      80: "#808080",
-      90: "#303030",
+      97: "#F8F8F8",
+      91: "#E8E8E8",
+      86: "#DCDCDC",
+      78: "#C8C8C8",
+      74: "#BEBEBE",
+      69: "#B0B0B0",
+      56: "#909090",
+      50: "#808080",
+      18: "#303030",
     },
     blue: {
       55: "#19cbff",
@@ -55,11 +55,11 @@ module.exports = {
   },
   color: {
     text: {
-      default: base.color.neutral[90],
-      secondary: base.color.neutral[70],
+      default: base.color.neutral[18],
+      secondary: base.color.neutral[56],
       onDark: {
         default: base.color.white,
-        secondary: base.color.neutral[30],
+        secondary: base.color.neutral[86],
       },
       interactive: {
         default: base.color.blue[55],
@@ -67,8 +67,8 @@ module.exports = {
     },
     background: {
       default: base.color.white,
-      light: base.color.neutral[10],
-      dark: base.color.neutral[90],
+      light: base.color.neutral[97],
+      dark: base.color.neutral[18],
       black: base.color.black,
     }
   },
@@ -83,7 +83,7 @@ module.exports = {
   },
   border: {
     color: {
-      default: base.color.neutral[60],
+      default: base.color.neutral[78],
     },
     width: {
       default: 1,
@@ -91,7 +91,7 @@ module.exports = {
     radius: {
       default: 3,
     },
-    component: `1px ${base.color.neutral[60]} solid`,
+    component: `1px ${base.color.neutral[78]} solid`,
   },
   shadow: {
     default:' 0 0px 8px #251f1f',
@@ -101,6 +101,9 @@ module.exports = {
       md: 960,
       xl: 1210,
     }
+  },
+  zIndex: {
+    
   },
   alert: {
     color: {

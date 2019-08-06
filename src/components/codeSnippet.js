@@ -10,14 +10,23 @@ const CodeSnippet = ({ code, language }) => (
     css={css({
       border: tokens.border.component,
       borderRadius: tokens.border.radius.default,
-      fontSize: tokens.font.size.md,
-      marginBottom: tokens.space.lg,
+      fontSize: tokens.font.size.sm,
+      lineHeight: 1.5,
       overflow: "hidden",
       textAlign: "left",
       pre: {
         margin: 0,
         overflow: 'auto',
-        padding: tokens.space.sm,
+        padding: 0,
+      },
+      '.plain': {
+        fontSize: 5,
+        lineHeight: 1,
+      },
+      '.token-line': {
+        '&:first-of-type, &:last-of-type': {
+          lineHeight: .5,
+        }
       }
     })}
   >
