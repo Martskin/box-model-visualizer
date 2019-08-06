@@ -4,20 +4,22 @@ import { css } from "@emotion/core"
 import CodeSnippet from "./codeSnippet"
 import tokens from "../data/tokens"
 
-function BoxModelVisualizer({ border, margin, padding, element }) {
-  const [borderBackgroundColor, setBorderBackgroundColor] = useState(border.backgroundColor)
-  const [borderLabelColor, setBorderLabelColor] = useState(border.labelColor)
-  const [borderTopWidth, setBorderTopWidth] = useState(border.top)
-  const [borderRightWidth, setBorderRightWidth] = useState(border.right)
-  const [borderBottomWidth, setBorderBottomWidth] = useState(border.bottom)
-  const [borderLeftWidth, setBorderLeftWidth] = useState(border.left)
-  
+function BoxModelVisualizer({ margin, border, padding, element }) {  
   const [marginBackgroundColor, setMarginBackgroundColor] = useState(margin.backgroundColor)
   const [marginLabelColor, setMarginLabelColor] = useState(margin.labelColor)
   const [marginTop, setMarginTop] = useState(margin.top)
   const [marginRight, setMarginRight] = useState(margin.right)
   const [marginBottom, setMarginBottom] = useState(margin.bottom)
   const [marginLeft, setMarginLeft] = useState(margin.left)
+  const [marginIsHighlighted, setMarginIsHighlighted] = useState(false)
+
+  const [borderBackgroundColor, setBorderBackgroundColor] = useState(border.backgroundColor)
+  const [borderLabelColor, setBorderLabelColor] = useState(border.labelColor)
+  const [borderTopWidth, setBorderTopWidth] = useState(border.top)
+  const [borderRightWidth, setBorderRightWidth] = useState(border.right)
+  const [borderBottomWidth, setBorderBottomWidth] = useState(border.bottom)
+  const [borderLeftWidth, setBorderLeftWidth] = useState(border.left)
+  const [borderIsHighlighted, setBorderIsHighlighted] = useState(false)
 
   const [paddingBackgroundColor, setPaddingBackgroundColor] = useState(padding.backgroundColor)
   const [paddingLabelColor, setPaddingLabelColor] = useState(padding.labelColor)
@@ -25,11 +27,13 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
   const [paddingRight, setPaddingRight] = useState(padding.right)
   const [paddingBottom, setPaddingBottom]= useState(padding.bottom)
   const [paddingLeft, setPaddingLeft] = useState(padding.left)
+  const [paddingIsHighlighted, setPaddingIsHighlighted] = useState(false)
 
   const [elementBackgroundColor, setElementBackgroundColor] = useState(element.backgroundColor)
   const [elementLabelColor, setElementLabelColor] = useState(element.labelColor)
   const [width, setWidth] = useState(element.width)
   const [height, setHeight] = useState(element.height)
+  const [elementIsHighlighted, setElementIsHighlighted] = useState(false)
 
   const styleBlock = `
   /* margin properties */
@@ -53,6 +57,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
   padding-left: ${paddingLeft}px;
 
   /* element size properties */
+  box-sizing: border-box;
   width: ${width}px;
   height: ${height}px;
   `
@@ -100,7 +105,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
           borderTop: tokens.border.component,
           margin: `0 -${tokens.space.md}px 0`,
           minWidth: 0,
-          padding: `${tokens.space.xxs}px ${tokens.space.md}px ${tokens.space.xs}px`,
+          padding: `${tokens.space.xs}px ${tokens.space.md}px ${tokens.space.xs}px`,
           '&:last-of-type': {
             borderBottom: tokens.border.component,
             marginBottom: tokens.space.md,
@@ -210,7 +215,10 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
         <div>
           <h2>Properties</h2>
           <form>
-            <fieldset>
+            <fieldset
+              onMouseEnter={() => setMarginIsHighlighted(true)}
+              onMouseLeave={() => setMarginIsHighlighted(false)}
+            >
               <legend>Margin</legend>
               <div
                 className="control-panel"
@@ -322,7 +330,10 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
               </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset
+              onMouseEnter={() => setBorderIsHighlighted(true)}
+              onMouseLeave={() => setBorderIsHighlighted(false)}
+            >
               <legend>Border</legend>
               <div
                 className="control-panel"
@@ -434,7 +445,10 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
               </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset
+              onMouseEnter={() => setPaddingIsHighlighted(true)}
+              onMouseLeave={() => setPaddingIsHighlighted(false)}
+            >
               <legend>Padding</legend>
               <div
                 className="control-panel"
@@ -546,7 +560,10 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
               </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset
+              onMouseEnter={() => setElementIsHighlighted(true)}
+              onMouseLeave={() => setElementIsHighlighted(false)}
+            >
               <legend>Element Size</legend>
               <div
                 className="control-panel"
@@ -657,7 +674,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                 background: marginBackgroundColor,
                 color: marginLabelColor,
                 display: 'inline-flex',
-                fontSize: 12,
+                fontSize: tokens.font.size.xs,
                 paddingTop: marginTop,
                 paddingRight: marginRight,
                 paddingBottom: marginBottom,
@@ -665,6 +682,18 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                 position: 'relative',
                 div: {
                   transition: 'width .5s ease-out, height .5s ease-out',
+                },
+                '&::before': {
+                  background: tokens.color.background.default,
+                  content: '" "',
+                  display: 'block',
+                  left: 0,
+                  opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.6' : 0,
+                  position: 'absolute',
+                  height: '100%',
+                  top: 0,
+                  width: '100%',
+                  zIndex: 2,
                 }
               })}
             >
@@ -738,6 +767,19 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                   paddingBottom: borderBottomWidth,
                   paddingLeft: borderLeftWidth,
                   position: 'relative',
+                  zIndex: 3,
+                  '&::before': {
+                    background: tokens.color.background.default,
+                    content: '" "',
+                    display: 'block',
+                    left: 0,
+                    opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.6' : 0,
+                    position: 'absolute',
+                    height: '100%',
+                    top: 0,
+                    width: '100%',
+                    zIndex: 5,
+                  }
                 })}
               >
                 <div
@@ -750,7 +792,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                     position: 'absolute',
                     top: 0,
                     width: '100%',
-                    zIndex: 1,
+                    zIndex: 4,
                   })}
                 >
                   {borderTopWidth.toLocaleString()}
@@ -765,7 +807,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                     right: 0,
                     top: 0,
                     width: borderRightWidth,
-                    zIndex: 1,
+                    zIndex: 4,
                   })}
                 >
                   {borderRightWidth.toLocaleString()}
@@ -780,7 +822,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                     position: 'absolute',
                     bottom: 0,
                     width: '100%',
-                    zIndex: 1,
+                    zIndex: 4,
                   })}
                 >
                   {borderBottomWidth.toLocaleString()}
@@ -795,7 +837,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                     position: 'absolute',
                     top: 0,
                     width: borderLeftWidth,
-                    zIndex: 1,
+                    zIndex: 4,
                   })}
                 >
                   {borderLeftWidth.toLocaleString()}
@@ -812,6 +854,19 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                     paddingBottom,
                     paddingLeft,
                     position: 'relative',
+                    zIndex: 6,
+                    '&::before': {
+                      background: tokens.color.background.default,
+                      content: '" "',
+                      display: 'block',
+                      left: 0,
+                      opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.6' : 0,
+                      position: 'absolute',
+                      height: '100%',
+                      top: 0,
+                      width: '100%',
+                      zIndex: 8,
+                    }
                   })}
                 >
                   <div
@@ -824,7 +879,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                       position: 'absolute',
                       top: 0,
                       width: '100%',
-                      zIndex: 1,
+                      zIndex: 7,
                     })}
                   >
                     {paddingTop.toLocaleString()}
@@ -839,7 +894,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                       right: 0,
                       top: 0,
                       width: paddingRight,
-                      zIndex: 1,
+                      zIndex: 7,
                     })}
                   >
                     {paddingRight.toLocaleString()}
@@ -854,7 +909,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                       position: 'absolute',
                       bottom: 0,
                       width: '100%',
-                      zIndex: 1,
+                      zIndex: 7,
                     })}
                   >
                     {paddingBottom.toLocaleString()}
@@ -869,7 +924,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                       position: 'absolute',
                       top: 0,
                       width: paddingLeft,
-                      zIndex: 1,
+                      zIndex: 7,
                     })}
                   >
                     {paddingLeft.toLocaleString()}
@@ -881,6 +936,19 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                       height: height - (paddingTop + paddingBottom),
                       position: 'relative',
                       width: width - (paddingRight + paddingLeft),
+                      zIndex: 9,
+                      '&::before': {
+                        background: tokens.color.background.default,
+                        content: '" "',
+                        display: 'block',
+                        left: 0,
+                        opacity: (marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted) ? '.6' : 0,
+                        position: 'absolute',
+                        height: '100%',
+                        top: 0,
+                        width: '100%',
+                        zIndex: 11,
+                      }
                     })}
                   >
                     <div
@@ -893,7 +961,7 @@ function BoxModelVisualizer({ border, margin, padding, element }) {
                         position: 'absolute',
                         top: 0,
                         width: '100%',
-                        zIndex: 1,
+                        zIndex: 10,
                       })}
                     >
                       {width.toLocaleString()} x {height.toLocaleString()}

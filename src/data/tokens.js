@@ -71,8 +71,11 @@ module.exports = {
     background: {
       default: base.color.white,
       light: base.color.neutral[97],
+      neutral: base.color.neutral[78],
+      medium: base.color.neutral[50],
       dark: base.color.neutral[18],
       black: base.color.black,
+      focus: base.color.blue[95],
     }
   },
   space: {
