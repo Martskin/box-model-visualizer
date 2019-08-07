@@ -11,8 +11,9 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   const [marginRight, setMarginRight] = useState(margin.right)
   const [marginBottom, setMarginBottom] = useState(margin.bottom)
   const [marginLeft, setMarginLeft] = useState(margin.left)
-  const [marginLabel, setMarginlabel] = useState(margin.label)
-  const [marginLabelIsVisible, setMarginlabelIsVisible] = useState(true)
+  const [marginLabel, setMarginLabel] = useState(margin.label)
+  const [marginLabelIsVisible, setMarginLabelIsVisible] = useState(true)
+  const [marginUnitsIsVisible, setMarginUnitsIsVisible] = useState(true)
   const [marginIsHighlighted, setMarginIsHighlighted] = useState(false)
 
   const [borderBackgroundColor, setBorderBackgroundColor] = useState(border.backgroundColor)
@@ -21,8 +22,9 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   const [borderRightWidth, setBorderRightWidth] = useState(border.right)
   const [borderBottomWidth, setBorderBottomWidth] = useState(border.bottom)
   const [borderLeftWidth, setBorderLeftWidth] = useState(border.left)
-  const [borderLabel, setBorderlabel] = useState(border.label)
-  const [borderLabelIsVisible, setBorderlabelIsVisible] = useState(true)
+  const [borderLabel, setBorderLabel] = useState(border.label)
+  const [borderLabelIsVisible, setBorderLabelIsVisible] = useState(true)
+  const [borderUnitsIsVisible, setBorderUnitsIsVisible] = useState(true)
   const [borderIsHighlighted, setBorderIsHighlighted] = useState(false)
 
   const [paddingBackgroundColor, setPaddingBackgroundColor] = useState(padding.backgroundColor)
@@ -31,16 +33,18 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   const [paddingRight, setPaddingRight] = useState(padding.right)
   const [paddingBottom, setPaddingBottom]= useState(padding.bottom)
   const [paddingLeft, setPaddingLeft] = useState(padding.left)
-  const [paddingLabel, setPaddinglabel] = useState(padding.label)
-  const [paddingLabelIsVisible, setPaddinglabelIsVisible] = useState(true)
+  const [paddingLabel, setPaddingLabel] = useState(padding.label)
+  const [paddingLabelIsVisible, setPaddingLabelIsVisible] = useState(true)
+  const [paddingUnitsIsVisible, setPaddingUnitsIsVisible] = useState(true)
   const [paddingIsHighlighted, setPaddingIsHighlighted] = useState(false)
 
   const [elementBackgroundColor, setElementBackgroundColor] = useState(element.backgroundColor)
   const [elementLabelColor, setElementLabelColor] = useState(element.labelColor)
   const [width, setWidth] = useState(element.width)
   const [height, setHeight] = useState(element.height)
-  const [elementLabel, setElementlabel] = useState(element.label)
-  const [elementLabelIsVisible, setElementlabelIsVisible] = useState(true)
+  const [elementLabel, setElementLabel] = useState(element.label)
+  const [elementLabelIsVisible, setElementLabelIsVisible] = useState(true)
+  const [elementUnitsIsVisible, setElementUnitsIsVisible] = useState(true)
   const [elementIsHighlighted, setElementIsHighlighted] = useState(false)
 
   const styleBlock = `
@@ -122,13 +126,13 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             background: tokens.color.text.interactive.focus,
           },
         },
-        input: {
+        'input:not([type="checkbox"])': {
           border: tokens.border.input,
           color: tokens.color.text.default,
           display: 'block',
           fontSize: tokens.font.size.xs,
           padding: `${tokens.space.xxxs}px ${tokens.space.xxs}px`,
-          width: 76,
+          width: '100%',
           '&[type="color"]': {
             background: 'transparent',
             border: 0,
@@ -181,10 +185,13 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           height: '28px',
           width: '100%',
         },
-        '.color-picker-grid': {
+        '.input-grid': {
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gridColumnGap: tokens.space.xs,
+          '> div': {
+            marginBottom: tokens.space.xs,
+          }
         },
         '.color-picker-input-grid': {
           alignItems: 'center',
@@ -289,9 +296,54 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
               </div>
 
-              <div className="color-picker-grid">
+              <div className="input-grid">
                 <div>
-                  <label>Background</label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={(e) => setMarginLabelIsVisible(e.target.checked)}
+                      defaultChecked={marginLabelIsVisible}
+                    />
+                    <span>Show label</span>
+                  </label>
+                </div>
+
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={(e) => setMarginUnitsIsVisible(e.target.checked)}
+                      defaultChecked={marginUnitsIsVisible}
+                    />
+                    <span>Show units</span>
+                  </label>
+                </div>
+
+                <div>
+                  <label>Label Color</label>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={marginLabelColor}
+                        type="color"
+                        onChange={(e) => setMarginLabelColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        value={marginLabelColor}
+                        type="text"
+                        onChange={(e) => setMarginBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label>Background Color</label>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
@@ -314,25 +366,14 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
 
                 <div>
-                  <label>Label</label>
-                  <div className="color-picker-input-grid">
-                    <div>
-                      <input
-                        value={marginLabelColor}
-                        type="color"
-                        onChange={(e) => setMarginLabelColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
-                      />
-                    </div>
-
-                    <div>
-                      <input
-                        value={marginLabelColor}
-                        type="text"
-                        onChange={(e) => setMarginBackgroundColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
-                      />
-                    </div>
+                  <div className="input-group">
+                    <label>Label</label>
+                    <input
+                      defaultValue={marginLabel}
+                      type="text"
+                      onChange={(e) => setMarginLabel(e.target.value)}
+                      onClick={(e) => e.target.select()}
+                    />
                   </div>
                 </div>
               </div>
@@ -404,9 +445,54 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
               </div>
 
-              <div className="color-picker-grid">
+              <div className="input-grid">
                 <div>
-                  <label>Background</label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={(e) => setBorderLabelIsVisible(e.target.checked)}
+                      defaultChecked={borderLabelIsVisible}
+                    />
+                    <span>Show label</span>
+                  </label>
+                </div>
+
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={(e) => setBorderUnitsIsVisible(e.target.checked)}
+                      defaultChecked={borderUnitsIsVisible}
+                    />
+                    <span>Show units</span>
+                  </label>
+                </div>
+
+                <div>
+                  <label>Label Color</label>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={borderLabelColor}
+                        type="color"
+                        onChange={(e) => setBorderLabelColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        value={borderLabelColor}
+                        type="text"
+                        onChange={(e) => setBorderBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label>Background Color</label>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
@@ -429,25 +515,14 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
 
                 <div>
-                  <label>Label</label>
-                  <div className="color-picker-input-grid">
-                    <div>
-                      <input
-                        value={borderLabelColor}
-                        type="color"
-                        onChange={(e) => setBorderLabelColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
-                      />
-                    </div>
-
-                    <div>
-                      <input
-                        value={borderLabelColor}
-                        type="text"
-                        onChange={(e) => setBorderBackgroundColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
-                      />
-                    </div>
+                  <div className="input-group">
+                    <label>Label</label>
+                    <input
+                      defaultValue={borderLabel}
+                      type="text"
+                      onChange={(e) => setBorderLabel(e.target.value)}
+                      onClick={(e) => e.target.select()}
+                    />
                   </div>
                 </div>
               </div>
@@ -519,9 +594,54 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
               </div>
 
-              <div className="color-picker-grid">
+              <div className="input-grid">
                 <div>
-                  <label>Background</label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={(e) => setPaddingLabelIsVisible(e.target.checked)}
+                      defaultChecked={paddingLabelIsVisible}
+                    />
+                    <span>Show label</span>
+                  </label>
+                </div>
+
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={(e) => setPaddingUnitsIsVisible(e.target.checked)}
+                      defaultChecked={paddingUnitsIsVisible}
+                    />
+                    <span>Show units</span>
+                  </label>
+                </div>
+
+                <div>
+                  <label>Label Color</label>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={paddingLabelColor}
+                        type="color"
+                        onChange={(e) => setPaddingLabelColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        value={marginLabelColor}
+                        type="text"
+                        onChange={(e) => setPaddingBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label>Background Color</label>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
@@ -544,25 +664,14 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
 
                 <div>
-                  <label>Label</label>
-                  <div className="color-picker-input-grid">
-                    <div>
-                      <input
-                        value={paddingLabelColor}
-                        type="color"
-                        onChange={(e) => setPaddingLabelColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
-                      />
-                    </div>
-
-                    <div>
-                      <input
-                        value={paddingLabelColor}
-                        type="text"
-                        onChange={(e) => setPaddingBackgroundColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
-                      />
-                    </div>
+                  <div className="input-group">
+                    <label>Label</label>
+                    <input
+                      defaultValue={paddingLabel}
+                      type="text"
+                      onChange={(e) => setPaddingLabel(e.target.value)}
+                      onClick={(e) => e.target.select()}
+                    />
                   </div>
                 </div>
               </div>
@@ -619,9 +728,54 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
               </div>
 
-              <div className="color-picker-grid">
+              <div className="input-grid">
                 <div>
-                  <label>Background</label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={(e) => setElementLabelIsVisible(e.target.checked)}
+                      defaultChecked={elementLabelIsVisible}
+                    />
+                    <span>Show label</span>
+                  </label>
+                </div>
+
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      onChange={(e) => setElementUnitsIsVisible(e.target.checked)}
+                      defaultChecked={elementUnitsIsVisible}
+                    />
+                    <span>Show units</span>
+                  </label>
+                </div>
+
+                <div>
+                  <label>Label Color</label>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={elementLabelColor}
+                        type="color"
+                        onChange={(e) => setElementLabelColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        value={elementLabelColor}
+                        type="text"
+                        onChange={(e) => setElementBackgroundColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label>Background Color</label>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
@@ -644,25 +798,14 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
 
                 <div>
-                  <label>Label</label>
-                  <div className="color-picker-input-grid">
-                    <div>
-                      <input
-                        value={elementLabelColor}
-                        type="color"
-                        onChange={(e) => setElementLabelColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
-                      />
-                    </div>
-
-                    <div>
-                      <input
-                        value={elementLabelColor}
-                        type="text"
-                        onChange={(e) => setElementBackgroundColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
-                      />
-                    </div>
+                  <div className="input-group">
+                    <label>Label</label>
+                    <input
+                      defaultValue={elementLabel}
+                      type="text"
+                      onChange={(e) => setElementLabel(e.target.value)}
+                      onClick={(e) => e.target.select()}
+                    />
                   </div>
                 </div>
               </div>
@@ -724,70 +867,74 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   {marginLabel}
                 </div>
               )}
-              <div
-                css={css({
-                  alignItems: 'center',
-                  display: 'flex',
-                  height: marginTop,
-                  justifyContent: 'center',
-                  left: 0,
-                  opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                  position: 'absolute',
-                  top: 0,
-                  width: '100%',
-                  zIndex: 8,
-                })}
-              >
-                {marginTop.toLocaleString()}
-              </div>
-              <div
-                css={css({
-                  alignItems: 'center',
-                  display: 'flex',
-                  height: '100%',
-                  justifyContent: 'center',
-                  opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                  position: 'absolute',
-                  right: 0,
-                  top: 0,
-                  width: marginRight,
-                  zIndex: 8,
-                })}
-              >
-                {marginRight.toLocaleString()}
-              </div>
-              <div
-                css={css({
-                  alignItems: 'center',
-                  display: 'flex',
-                  height: marginBottom,
-                  justifyContent: 'center',
-                  left: 0,
-                  opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                  position: 'absolute',
-                  bottom: 0,
-                  width: '100%',
-                  zIndex: 8,
-                })}
-              >
-                {marginBottom.toLocaleString()}
-              </div>
-              <div
-                css={css({
-                  alignItems: 'center',
-                  display: 'flex',
-                  height: '100%',
-                  justifyContent: 'center',
-                  left: 0,
-                  opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                  position: 'absolute',
-                  top: 0,
-                  width: marginLeft,
-                  zIndex: 8,
-                })}
-              >
-                {marginLeft.toLocaleString()}
-              </div>
+              {marginUnitsIsVisible && (
+                <>
+                  <div
+                    css={css({
+                      alignItems: 'center',
+                      display: 'flex',
+                      height: marginTop,
+                      justifyContent: 'center',
+                      left: 0,
+                      opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      position: 'absolute',
+                      top: 0,
+                      width: '100%',
+                      zIndex: 8,
+                    })}
+                  >
+                    {marginTop.toLocaleString()}
+                  </div>
+                  <div
+                    css={css({
+                      alignItems: 'center',
+                      display: 'flex',
+                      height: '100%',
+                      justifyContent: 'center',
+                      opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      position: 'absolute',
+                      right: 0,
+                      top: 0,
+                      width: marginRight,
+                      zIndex: 8,
+                    })}
+                  >
+                    {marginRight.toLocaleString()}
+                  </div>
+                  <div
+                    css={css({
+                      alignItems: 'center',
+                      display: 'flex',
+                      height: marginBottom,
+                      justifyContent: 'center',
+                      left: 0,
+                      opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      position: 'absolute',
+                      bottom: 0,
+                      width: '100%',
+                      zIndex: 8,
+                    })}
+                  >
+                    {marginBottom.toLocaleString()}
+                  </div>
+                  <div
+                    css={css({
+                      alignItems: 'center',
+                      display: 'flex',
+                      height: '100%',
+                      justifyContent: 'center',
+                      left: 0,
+                      opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      position: 'absolute',
+                      top: 0,
+                      width: marginLeft,
+                      zIndex: 8,
+                    })}
+                  >
+                    {marginLeft.toLocaleString()}
+                  </div>
+                </>
+              )}
               <div
                 css={css({
                   background: borderBackgroundColor,
@@ -832,70 +979,74 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     {borderLabel}
                   </div>
                 )}
-                <div
-                  css={css({
-                    alignItems: 'center',
-                    display: 'flex',
-                    height: borderTopWidth,
-                    justifyContent: 'center',
-                    left: 0,
-                    opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                    position: 'absolute',
-                    top: 0,
-                    width: '100%',
-                    zIndex: 8,
-                  })}
-                >
-                  {borderTopWidth.toLocaleString()}
-                </div>
-                <div
-                  css={css({
-                    alignItems: 'center',
-                    display: 'flex',
-                    height: '100%',
-                    justifyContent: 'center',
-                    opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                    position: 'absolute',
-                    right: 0,
-                    top: 0,
-                    width: borderRightWidth,
-                    zIndex: 8,
-                  })}
-                >
-                  {borderRightWidth.toLocaleString()}
-                </div>
-                <div
-                  css={css({
-                    alignItems: 'center',
-                    display: 'flex',
-                    height: borderBottomWidth,
-                    justifyContent: 'center',
-                    left: 0,
-                    opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                    position: 'absolute',
-                    bottom: 0,
-                    width: '100%',
-                    zIndex: 8,
-                  })}
-                >
-                  {borderBottomWidth.toLocaleString()}
-                </div>
-                <div
-                  css={css({
-                    alignItems: 'center',
-                    display: 'flex',
-                    height: '100%',
-                    justifyContent: 'center',
-                    left: 0,
-                    opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                    position: 'absolute',
-                    top: 0,
-                    width: borderLeftWidth,
-                    zIndex: 8,
-                  })}
-                >
-                  {borderLeftWidth.toLocaleString()}
-                </div>
+                {borderUnitsIsVisible && (
+                  <>
+                    <div
+                      css={css({
+                        alignItems: 'center',
+                        display: 'flex',
+                        height: borderTopWidth,
+                        justifyContent: 'center',
+                        left: 0,
+                        opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        position: 'absolute',
+                        top: 0,
+                        width: '100%',
+                        zIndex: 8,
+                      })}
+                    >
+                      {borderTopWidth.toLocaleString()}
+                    </div>
+                    <div
+                      css={css({
+                        alignItems: 'center',
+                        display: 'flex',
+                        height: '100%',
+                        justifyContent: 'center',
+                        opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        position: 'absolute',
+                        right: 0,
+                        top: 0,
+                        width: borderRightWidth,
+                        zIndex: 8,
+                      })}
+                    >
+                      {borderRightWidth.toLocaleString()}
+                    </div>
+                    <div
+                      css={css({
+                        alignItems: 'center',
+                        display: 'flex',
+                        height: borderBottomWidth,
+                        justifyContent: 'center',
+                        left: 0,
+                        opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        position: 'absolute',
+                        bottom: 0,
+                        width: '100%',
+                        zIndex: 8,
+                      })}
+                    >
+                      {borderBottomWidth.toLocaleString()}
+                    </div>
+                    <div
+                      css={css({
+                        alignItems: 'center',
+                        display: 'flex',
+                        height: '100%',
+                        justifyContent: 'center',
+                        left: 0,
+                        opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        position: 'absolute',
+                        top: 0,
+                        width: borderLeftWidth,
+                        zIndex: 8,
+                      })}
+                    >
+                      {borderLeftWidth.toLocaleString()}
+                    </div>
+                  </>
+                )}
                 <div
                   css={css({
                     alignItems: 'center',
@@ -942,70 +1093,74 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       {paddingLabel}
                     </div>
                   )}
-                  <div
-                    css={css({
-                      alignItems: 'center',
-                      display: 'flex',
-                      height: paddingTop,
-                      justifyContent: 'center',
-                      left: 0,
-                      opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                      position: 'absolute',
-                      top: 0,
-                      width: '100%',
-                      zIndex: 8,
-                    })}
-                  >
-                    {paddingTop.toLocaleString()}
-                  </div>
-                  <div
-                    css={css({
-                      alignItems: 'center',
-                      display: 'flex',
-                      height: '100%',
-                      justifyContent: 'center',
-                      opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                      position: 'absolute',
-                      right: 0,
-                      top: 0,
-                      width: paddingRight,
-                      zIndex: 8,
-                    })}
-                  >
-                    {paddingRight.toLocaleString()}
-                  </div>
-                  <div
-                    css={css({
-                      alignItems: 'center',
-                      display: 'flex',
-                      height: paddingBottom,
-                      justifyContent: 'center',
-                      left: 0,
-                      opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                      position: 'absolute',
-                      bottom: 0,
-                      width: '100%',
-                      zIndex: 8,
-                    })}
-                  >
-                    {paddingBottom.toLocaleString()}
-                  </div>
-                  <div
-                    css={css({
-                      alignItems: 'center',
-                      display: 'flex',
-                      height: '100%',
-                      justifyContent: 'center',
-                      left: 0,
-                      opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                      position: 'absolute',
-                      top: 0,
-                      width: paddingLeft,
-                      zIndex: 8,
-                    })}
-                  >
-                    {paddingLeft.toLocaleString()}
-                  </div>
+                  {paddingUnitsIsVisible && (
+                    <>
+                      <div
+                        css={css({
+                          alignItems: 'center',
+                          display: 'flex',
+                          height: paddingTop,
+                          justifyContent: 'center',
+                          left: 0,
+                          opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                          position: 'absolute',
+                          top: 0,
+                          width: '100%',
+                          zIndex: 8,
+                        })}
+                      >
+                        {paddingTop.toLocaleString()}
+                      </div>
+                      <div
+                        css={css({
+                          alignItems: 'center',
+                          display: 'flex',
+                          height: '100%',
+                          justifyContent: 'center',
+                          opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                          position: 'absolute',
+                          right: 0,
+                          top: 0,
+                          width: paddingRight,
+                          zIndex: 8,
+                        })}
+                      >
+                        {paddingRight.toLocaleString()}
+                      </div>
+                      <div
+                        css={css({
+                          alignItems: 'center',
+                          display: 'flex',
+                          height: paddingBottom,
+                          justifyContent: 'center',
+                          left: 0,
+                          opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                          position: 'absolute',
+                          bottom: 0,
+                          width: '100%',
+                          zIndex: 8,
+                        })}
+                      >
+                        {paddingBottom.toLocaleString()}
+                      </div>
+                      <div
+                        css={css({
+                          alignItems: 'center',
+                          display: 'flex',
+                          height: '100%',
+                          justifyContent: 'center',
+                          left: 0,
+                          opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                          position: 'absolute',
+                          top: 0,
+                          width: paddingLeft,
+                          zIndex: 8,
+                        })}
+                      >
+                        {paddingLeft.toLocaleString()}
+                      </div>
+                    </>
+                  )}
                   <div
                     css={css({
                       background: elementBackgroundColor,
@@ -1047,22 +1202,24 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         {elementLabel}
                       </div>
                     )}
-                    <div
-                      css={css({
-                        alignItems: 'center',
-                        display: 'flex',
-                        height: '100%',
-                        justifyContent: 'center',
-                        left: 0,
-                        opacity: (marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted) ? '.25' : 1,
-                        position: 'absolute',
-                        top: 0,
-                        width: '100%',
-                        zIndex: 8,
-                      })}
-                    >
-                      {width.toLocaleString()} x {height.toLocaleString()}
-                    </div>
+                    {elementUnitsIsVisible && (
+                      <div
+                        css={css({
+                          alignItems: 'center',
+                          display: 'flex',
+                          height: '100%',
+                          justifyContent: 'center',
+                          left: 0,
+                          opacity: (marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted) ? '.25' : 1,
+                          position: 'absolute',
+                          top: 0,
+                          width: '100%',
+                          zIndex: 8,
+                        })}
+                      >
+                        {width.toLocaleString()} x {height.toLocaleString()}
+                      </div>
+                  )}
                   </div>
                 </div>
               </div>
