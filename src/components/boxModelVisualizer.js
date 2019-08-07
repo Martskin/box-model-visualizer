@@ -693,7 +693,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   height: '100%',
                   top: 0,
                   width: '100%',
-                  zIndex: 2,
+                  zIndex: 1,
                 }
               })}
             >
@@ -704,10 +704,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   height: marginTop,
                   justifyContent: 'center',
                   left: 0,
+                  opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                   position: 'absolute',
                   top: 0,
                   width: '100%',
-                  zIndex: 1,
+                  zIndex: 8,
                 })}
               >
                 {marginTop.toLocaleString()}
@@ -718,11 +719,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   display: 'flex',
                   height: '100%',
                   justifyContent: 'center',
+                  opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                   position: 'absolute',
                   right: 0,
                   top: 0,
                   width: marginRight,
-                  zIndex: 1,
+                  zIndex: 8,
                 })}
               >
                 {marginRight.toLocaleString()}
@@ -734,10 +736,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   height: marginBottom,
                   justifyContent: 'center',
                   left: 0,
+                  opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                   position: 'absolute',
                   bottom: 0,
                   width: '100%',
-                  zIndex: 1,
+                  zIndex: 8,
                 })}
               >
                 {marginBottom.toLocaleString()}
@@ -749,10 +752,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   height: '100%',
                   justifyContent: 'center',
                   left: 0,
+                  opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                   position: 'absolute',
                   top: 0,
                   width: marginLeft,
-                  zIndex: 1,
+                  zIndex: 8,
                 })}
               >
                 {marginLeft.toLocaleString()}
@@ -767,7 +771,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   paddingBottom: borderBottomWidth,
                   paddingLeft: borderLeftWidth,
                   position: 'relative',
-                  zIndex: 3,
+                  zIndex: 2,
                   '&::before': {
                     background: tokens.color.background.default,
                     content: '" "',
@@ -778,7 +782,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     height: '100%',
                     top: 0,
                     width: '100%',
-                    zIndex: 5,
+                    zIndex: 3,
                   }
                 })}
               >
@@ -789,10 +793,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     height: borderTopWidth,
                     justifyContent: 'center',
                     left: 0,
+                    opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                     position: 'absolute',
                     top: 0,
                     width: '100%',
-                    zIndex: 4,
+                    zIndex: 8,
                   })}
                 >
                   {borderTopWidth.toLocaleString()}
@@ -803,11 +808,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     display: 'flex',
                     height: '100%',
                     justifyContent: 'center',
+                    opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                     position: 'absolute',
                     right: 0,
                     top: 0,
                     width: borderRightWidth,
-                    zIndex: 4,
+                    zIndex: 8,
                   })}
                 >
                   {borderRightWidth.toLocaleString()}
@@ -819,10 +825,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     height: borderBottomWidth,
                     justifyContent: 'center',
                     left: 0,
+                    opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                     position: 'absolute',
                     bottom: 0,
                     width: '100%',
-                    zIndex: 4,
+                    zIndex: 8,
                   })}
                 >
                   {borderBottomWidth.toLocaleString()}
@@ -834,10 +841,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     height: '100%',
                     justifyContent: 'center',
                     left: 0,
+                    opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                     position: 'absolute',
                     top: 0,
                     width: borderLeftWidth,
-                    zIndex: 4,
+                    zIndex: 8,
                   })}
                 >
                   {borderLeftWidth.toLocaleString()}
@@ -854,7 +862,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     paddingBottom,
                     paddingLeft,
                     position: 'relative',
-                    zIndex: 6,
+                    zIndex: 4,
                     '&::before': {
                       background: tokens.color.background.default,
                       content: '" "',
@@ -865,7 +873,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       height: '100%',
                       top: 0,
                       width: '100%',
-                      zIndex: 8,
+                      zIndex: 5,
                     }
                   })}
                 >
@@ -876,10 +884,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       height: paddingTop,
                       justifyContent: 'center',
                       left: 0,
+                      opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                       position: 'absolute',
                       top: 0,
                       width: '100%',
-                      zIndex: 7,
+                      zIndex: 8,
                     })}
                   >
                     {paddingTop.toLocaleString()}
@@ -890,11 +899,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       display: 'flex',
                       height: '100%',
                       justifyContent: 'center',
+                      opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                       position: 'absolute',
                       right: 0,
                       top: 0,
                       width: paddingRight,
-                      zIndex: 7,
+                      zIndex: 8,
                     })}
                   >
                     {paddingRight.toLocaleString()}
@@ -906,10 +916,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       height: paddingBottom,
                       justifyContent: 'center',
                       left: 0,
+                      opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                       position: 'absolute',
                       bottom: 0,
                       width: '100%',
-                      zIndex: 7,
+                      zIndex: 8,
                     })}
                   >
                     {paddingBottom.toLocaleString()}
@@ -921,10 +932,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       height: '100%',
                       justifyContent: 'center',
                       left: 0,
+                      opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                       position: 'absolute',
                       top: 0,
                       width: paddingLeft,
-                      zIndex: 7,
+                      zIndex: 8,
                     })}
                   >
                     {paddingLeft.toLocaleString()}
@@ -947,7 +959,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         height: '100%',
                         top: 0,
                         width: '100%',
-                        zIndex: 11,
+                        zIndex: 7,
                       }
                     })}
                   >
@@ -958,10 +970,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         height: '100%',
                         justifyContent: 'center',
                         left: 0,
+                        opacity: (marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted) ? '.25' : 1,
                         position: 'absolute',
                         top: 0,
                         width: '100%',
-                        zIndex: 10,
+                        zIndex: 8,
                       })}
                     >
                       {width.toLocaleString()} x {height.toLocaleString()}
