@@ -90,7 +90,7 @@ module.exports = {
   },
   border: {
     color: {
-      default: base.color.neutral[78],
+      default: base.color.neutral[86],
     },
     width: {
       default: 1,
@@ -98,7 +98,7 @@ module.exports = {
     radius: {
       default: 3,
     },
-    component: `1px ${base.color.neutral[78]} solid`,
+    component: `1px ${base.color.neutral[86]} solid`,
     input: `1px ${base.color.neutral[86]} solid`,
   },
   shadow: {

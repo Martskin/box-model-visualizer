@@ -15,7 +15,6 @@ const CodeSnippet = ({ code, language }) => (
       textAlign: "left",
       pre: {
         margin: 0,
-        overflow: 'auto',
         padding: 0,
       },
       '.plain': {
