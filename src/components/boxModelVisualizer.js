@@ -7,6 +7,7 @@ import Button from "./button"
 
 function BoxModelVisualizer({ margin, border, padding, element }) {  
   let cssCode = React.createRef();
+  let cssCopiedNotification = React.createRef();
 
   const [marginBackgroundColor, setMarginBackgroundColor] = useState(margin.backgroundColor)
   const [marginLabelColor, setMarginLabelColor] = useState(margin.labelColor)
@@ -77,9 +78,17 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   height: ${height}px;
   `
 
+  function triggerNotification(el) {
+    el.setAttribute('style', 'display: inline-block')
+    setTimeout(function(){
+      el.setAttribute('style', 'display: none')
+    }, 5000)
+  }
+
   function copyCSS() {
     cssCode.current.select()
     document.execCommand('copy')
+    triggerNotification(cssCopiedNotification.current)
   }
 
   return (
@@ -116,7 +125,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           fontSize: tokens.font.size.xs,
           fontWeight: 'normal',
           lineHeight: 1.1,
-          margin: `0 0 ${tokens.space.xxxs}px`,
+          margin: `0 0 ${tokens.space.xxs}px`,
         },
         'fieldset': {
           borderBottom: 0,
@@ -210,6 +219,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             position: 'absolute',
             top: '-4px',
           }
+        },
+        '.notification': {
+            color: tokens.color.text.secondary,
+            display: 'none',
+            fontSize: tokens.font.size.xs,
+            paddingLeft: tokens.space.xxs,
         }
       })}
     >
@@ -1240,6 +1255,9 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           <CodeSnippet code={styleBlock} language="css" />
 
           <Button label="Copy CSS" onClick={() => copyCSS() } size="small" />
+          <span ref={cssCopiedNotification} className="notification">
+            CSS copied to clipboard!
+          </span>
           <textarea
             ref={cssCode}
             value={styleBlock}
