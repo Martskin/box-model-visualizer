@@ -11,6 +11,8 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   const [marginRight, setMarginRight] = useState(margin.right)
   const [marginBottom, setMarginBottom] = useState(margin.bottom)
   const [marginLeft, setMarginLeft] = useState(margin.left)
+  const [marginLabel, setMarginlabel] = useState(margin.label)
+  const [marginLabelIsVisible, setMarginlabelIsVisible] = useState(true)
   const [marginIsHighlighted, setMarginIsHighlighted] = useState(false)
 
   const [borderBackgroundColor, setBorderBackgroundColor] = useState(border.backgroundColor)
@@ -19,6 +21,8 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   const [borderRightWidth, setBorderRightWidth] = useState(border.right)
   const [borderBottomWidth, setBorderBottomWidth] = useState(border.bottom)
   const [borderLeftWidth, setBorderLeftWidth] = useState(border.left)
+  const [borderLabel, setBorderlabel] = useState(border.label)
+  const [borderLabelIsVisible, setBorderlabelIsVisible] = useState(true)
   const [borderIsHighlighted, setBorderIsHighlighted] = useState(false)
 
   const [paddingBackgroundColor, setPaddingBackgroundColor] = useState(padding.backgroundColor)
@@ -27,12 +31,16 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   const [paddingRight, setPaddingRight] = useState(padding.right)
   const [paddingBottom, setPaddingBottom]= useState(padding.bottom)
   const [paddingLeft, setPaddingLeft] = useState(padding.left)
+  const [paddingLabel, setPaddinglabel] = useState(padding.label)
+  const [paddingLabelIsVisible, setPaddinglabelIsVisible] = useState(true)
   const [paddingIsHighlighted, setPaddingIsHighlighted] = useState(false)
 
   const [elementBackgroundColor, setElementBackgroundColor] = useState(element.backgroundColor)
   const [elementLabelColor, setElementLabelColor] = useState(element.labelColor)
   const [width, setWidth] = useState(element.width)
   const [height, setHeight] = useState(element.height)
+  const [elementLabel, setElementlabel] = useState(element.label)
+  const [elementLabelIsVisible, setElementlabelIsVisible] = useState(true)
   const [elementIsHighlighted, setElementIsHighlighted] = useState(false)
 
   const styleBlock = `
@@ -697,6 +705,25 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 }
               })}
             >
+              {marginLabelIsVisible && (
+                <div
+                  css={css({
+                    alignItems: 'center',
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    left: 0,
+                    lineHeight: 1,
+                    opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                    padding: tokens.space.xxxs,
+                    position: 'absolute',
+                    top: 0,
+                    width: '100%',
+                    zIndex: 8,
+                  })}
+                >
+                  {marginLabel}
+                </div>
+              )}
               <div
                 css={css({
                   alignItems: 'center',
@@ -786,6 +813,25 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   }
                 })}
               >
+                {borderLabelIsVisible && (
+                  <div
+                    css={css({
+                      alignItems: 'center',
+                      display: 'flex',
+                      justifyContent: 'flex-start',
+                      left: 0,
+                      lineHeight: 1,
+                      opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      padding: tokens.space.xxxs,
+                      position: 'absolute',
+                      top: 0,
+                      width: '100%',
+                      zIndex: 8,
+                    })}
+                  >
+                    {borderLabel}
+                  </div>
+                )}
                 <div
                   css={css({
                     alignItems: 'center',
@@ -877,6 +923,25 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     }
                   })}
                 >
+                  {paddingLabelIsVisible && (
+                    <div
+                      css={css({
+                        alignItems: 'center',
+                        display: 'flex',
+                        justifyContent: 'flex-start',
+                        left: 0,
+                        lineHeight: 1,
+                        opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        padding: tokens.space.xxxs,
+                        position: 'absolute',
+                        top: 0,
+                        width: '100%',
+                        zIndex: 8,
+                      })}
+                    >
+                      {paddingLabel}
+                    </div>
+                  )}
                   <div
                     css={css({
                       alignItems: 'center',
@@ -963,6 +1028,25 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       }
                     })}
                   >
+                    {elementLabelIsVisible && (
+                      <div
+                        css={css({
+                          alignItems: 'center',
+                          display: 'flex',
+                          justifyContent: 'flex-start',
+                          left: 0,
+                          lineHeight: 1,
+                          opacity: (marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted) ? '.25' : 1,
+                          padding: tokens.space.xxxs,
+                          position: 'absolute',
+                          top: 0,
+                          width: '100%',
+                          zIndex: 8,
+                        })}
+                      >
+                        {elementLabel}
+                      </div>
+                    )}
                     <div
                       css={css({
                         alignItems: 'center',
@@ -1010,6 +1094,7 @@ BoxModelVisualizer.defaultProps = {
     right: 32,
     bottom: 32,
     left: 32,
+    label: 'margin',
   },
   border: {
     backgroundColor: '#fde1a0',
@@ -1018,6 +1103,7 @@ BoxModelVisualizer.defaultProps = {
     right: 8,
     bottom: 8,
     left: 8,
+    label: 'border',
   },
   padding: {
     backgroundColor: '#c4ddb9',
@@ -1026,12 +1112,14 @@ BoxModelVisualizer.defaultProps = {
     right: 16,
     bottom: 16,
     left: 16,
+    label: 'padding',
   },
   element: {
     backgroundColor: '#a1c6e7',
     labelColor: tokens.color.text.default,
     width: 200,
     height: 200,
+    label: 'element',
   },
 }
 
