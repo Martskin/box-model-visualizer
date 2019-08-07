@@ -92,7 +92,9 @@ function Button({ label, disabled, variant, size, onClick }) {
         borderWidth: '1px',
         borderStyle: 'solid',
         borderRadius: tokens.border.radius.interactive,
+        boxSizing: 'border-box',
         cursor: 'pointer',
+        display: 'inline-block',
         fontFamily: tokens.font.family.sansSerif,
         lineHeight: 1,
         margin: 0,
@@ -105,10 +107,14 @@ function Button({ label, disabled, variant, size, onClick }) {
           borderColor: tokens.border.color.interactive.disabled,
           color: tokens.color.text.interactive.disabled,
           pointerEvents: 'none',
+        },
+        '& + button': {
+          marginLeft: tokens.space.xs,
         }
       })}
       disabled={disabled}
       onClick={onClick}
+      type="button"
     >
       {label}
     </button>

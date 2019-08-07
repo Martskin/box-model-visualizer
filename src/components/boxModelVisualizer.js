@@ -6,8 +6,10 @@ import tokens from "../data/tokens"
 import Button from "./button"
 
 function BoxModelVisualizer({ margin, border, padding, element }) {  
-  let cssCode = React.createRef();
-  let cssCopiedNotification = React.createRef();
+  let cssCodeTextarea = React.createRef()
+  let cssCopiedNotification = React.createRef()
+  let linkInput = React.createRef()
+  let linkCopiedNotification = React.createRef()
 
   const [marginBackgroundColor, setMarginBackgroundColor] = useState(margin.backgroundColor)
   const [marginLabelColor, setMarginLabelColor] = useState(margin.labelColor)
@@ -85,8 +87,19 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
     }, 5000)
   }
 
+  function resetProperties() {
+    window.location = '/'
+  }
+
+  function copyLink() {
+    linkInput.current.value = window.location.href
+    linkInput.current.select()
+    document.execCommand('copy')
+    triggerNotification(linkCopiedNotification.current)
+  }
+
   function copyCSS() {
-    cssCode.current.select()
+    cssCodeTextarea.current.select()
     document.execCommand('copy')
     triggerNotification(cssCopiedNotification.current)
   }
@@ -105,7 +118,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           fontSize: tokens.font.size.sm,
           fontWeight: 'normal',
           lineHeight: 1.1,
-          margin: `0 0 ${tokens.space.md}px`,
+          margin: `0 0 ${tokens.space.sm}px`,
         },
         legend: {
           color: tokens.color.text.default,
@@ -139,7 +152,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             borderBottom: tokens.border.component,
             marginBottom: tokens.space.md,
           },
-          ':hover': {
+          '&:not(:first-of-type):hover': {
             background: tokens.color.background.interactive.hover.default,
           },
         },
@@ -225,6 +238,13 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             display: 'none',
             fontSize: tokens.font.size.xs,
             paddingLeft: tokens.space.xxs,
+        },
+        '.accessibly-hidden': {
+            clip: 'rect(1px, 1px, 1px, 1px)',
+            overflow: 'hidden',
+            position: 'absolute',
+            height: '1px',
+            width: '1px',
         }
       })}
     >
@@ -237,7 +257,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           width: '100vw',
           '> div': {
             overflow: 'auto',
-            padding: tokens.space.md,
+            padding: tokens.space.sm,
             position: 'relative',
             '&:first-of-type': {
               background: tokens.color.background.light,
@@ -253,6 +273,35 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         <div>
           <h2>Properties</h2>
           <form>
+            <fieldset>
+              <div
+                css={css({
+                  display: 'flex',
+                })}
+              >
+                <div
+                  css={css({
+                    flexGrow: 1,
+                  })}
+                >
+                  <Button label="Copy link" onClick={() => copyLink() } size="small" variant="primary" />
+                  <span ref={linkCopiedNotification} className="notification">
+                    Link copied to clipboard!
+                  </span>
+                  <input
+                    ref={linkInput}
+                    value=""
+                    type="text"
+                    readOnly
+                    className="accessibly-hidden"
+                  />
+                </div>
+                <div>
+                  <Button label="Reset" onClick={() => resetProperties() } size="small" />
+                </div>
+              </div>
+            </fieldset>
+          
             <fieldset
               onMouseEnter={() => setMarginIsHighlighted(true)}
               onMouseLeave={() => setMarginIsHighlighted(false)}
@@ -1259,16 +1308,10 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             CSS copied to clipboard!
           </span>
           <textarea
-            ref={cssCode}
+            ref={cssCodeTextarea}
             value={styleBlock}
             readOnly
-            css={css({
-              clip: 'rect(1px, 1px, 1px, 1px)',
-              overflow: 'hidden',
-              position: 'absolute',
-              height: '1px',
-              width: '1px',
-            })}
+            className="accessibly-hidden"
           />
         </div>
       </div>
