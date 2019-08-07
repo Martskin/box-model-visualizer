@@ -14,8 +14,9 @@ const base = {
       18: "#303030",
     },
     blue: {
+      45: "#095ddd",
       55: "#19cbff",
-      60: "#3232FF",
+      60: "#3b86f7",
       95: "#e8f6ff",
     },
     red: {
@@ -63,9 +64,12 @@ module.exports = {
         default: base.color.white,
         secondary: base.color.neutral[86],
       },
+      onInteractive: base.color.white,
       interactive: {
-        default: base.color.blue[55],
+        default: base.color.blue[60],
+        tertiary: base.color.neutral[50],
         focus: base.color.blue[95],
+        disabled: base.color.neutral[56],
       }
     },
     background: {
@@ -75,7 +79,15 @@ module.exports = {
       medium: base.color.neutral[50],
       dark: base.color.neutral[18],
       black: base.color.black,
-      focus: base.color.blue[95],
+      interactive: {
+        default: base.color.blue[60],
+        hover: {
+          default: base.color.blue[95],
+          primary: base.color.blue[45],
+        },
+        focus: base.color.blue[95],
+        disabled: base.color.neutral[91],
+      },
     }
   },
   space: {
@@ -91,12 +103,23 @@ module.exports = {
   border: {
     color: {
       default: base.color.neutral[86],
+      interactive: {
+        default: base.color.blue[60],
+        hover: {
+          default: base.color.blue[60],
+          primary: base.color.blue[45],
+        },
+        tertiary: base.color.neutral[50],
+        focus: base.color.blue[95],
+        disabled: base.color.neutral[78],
+      },
     },
     width: {
       default: 1,
     },
     radius: {
       default: 3,
+      interactive: 3,
     },
     component: `1px ${base.color.neutral[86]} solid`,
     input: `1px ${base.color.neutral[86]} solid`,
@@ -109,30 +132,5 @@ module.exports = {
       md: 960,
       xl: 1210,
     }
-  },
-  zIndex: {
-    
-  },
-  alert: {
-    color: {
-      background: {
-        info: base.color.blue[60],
-        error: base.color.red[52],
-        warning: base.color.yellow[47],
-        success: base.color.green[39],
-      },
-      text: {
-        info: base.color.white,
-        error: base.color.white,
-        warning: base.color.black,
-        success: base.color.white,
-      }
-    },
-    icon: {
-      info: "ⓘ",
-      error: "☠️",
-      warning: "⚠",
-      success: "🎉",
-    },
   },
 };

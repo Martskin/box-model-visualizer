@@ -3,8 +3,11 @@ import React, { useState } from "react"
 import { css } from "@emotion/core"
 import CodeSnippet from "./codeSnippet"
 import tokens from "../data/tokens"
+import Button from "./button"
 
 function BoxModelVisualizer({ margin, border, padding, element }) {  
+  let cssCode = React.createRef();
+
   const [marginBackgroundColor, setMarginBackgroundColor] = useState(margin.backgroundColor)
   const [marginLabelColor, setMarginLabelColor] = useState(margin.labelColor)
   const [marginTop, setMarginTop] = useState(margin.top)
@@ -74,6 +77,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   height: ${height}px;
   `
 
+  function copyCSS() {
+    cssCode.current.select()
+    document.execCommand('copy')
+  }
+
   return (
     <div
       css={css({
@@ -123,7 +131,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             marginBottom: tokens.space.md,
           },
           ':hover': {
-            background: tokens.color.text.interactive.focus,
+            background: tokens.color.background.interactive.hover.default,
           },
         },
         'input:not([type="checkbox"])': {
@@ -1230,6 +1238,20 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         <div>
           <h2>CSS</h2>
           <CodeSnippet code={styleBlock} language="css" />
+
+          <Button label="Copy CSS" onClick={() => copyCSS() } size="small" />
+          <textarea
+            ref={cssCode}
+            value={styleBlock}
+            readOnly
+            css={css({
+              clip: 'rect(1px, 1px, 1px, 1px)',
+              overflow: 'hidden',
+              position: 'absolute',
+              height: '1px',
+              width: '1px',
+            })}
+          />
         </div>
       </div>
     </div>
