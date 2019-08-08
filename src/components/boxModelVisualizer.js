@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { css } from "@emotion/core"
 import CodeSnippet from "./codeSnippet"
 import tokens from "../data/tokens"
@@ -46,8 +46,8 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
   const [elementBackgroundColor, setElementBackgroundColor] = useState(element.backgroundColor)
   const [elementLabelColor, setElementLabelColor] = useState(element.labelColor)
-  const [width, setWidth] = useState(element.width)
-  const [height, setHeight] = useState(element.height)
+  const [elementWidth, setElementWidth] = useState(element.width)
+  const [elementHeight, setElementHeight] = useState(element.height)
   const [elementLabel, setElementLabel] = useState(element.label)
   const [elementLabelIsVisible, setElementLabelIsVisible] = useState(true)
   const [elementUnitsIsVisible, setElementUnitsIsVisible] = useState(true)
@@ -76,9 +76,62 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
   /* element size properties */
   box-sizing: border-box;
-  width: ${width}px;
-  height: ${height}px;
+  width: ${elementWidth}px;
+  height: ${elementHeight}px;
   `
+
+  useEffect(() => {
+    parseQueryString()
+  }, [])
+
+  function parseQueryString() {
+    //?mt=42&mr=132&mb=46&ml=4&mlb=custom%20m%20label&mbc=cccccc&mlbc=ff0005&mlbv={true}&muv=&bt=42&br=132&bb=46&bl=4&blb=custom%20b%20label&bbc=FFCCCC&blbc=010EFF&blbv=&buv={true}&pt=42&pr=132&pb=46&pl=4&plb=custom%20p%20label&pbc=009701&plbc=01ffff&plbv={true}&puv=&ew=820&eh=500&elb=custom%20e%20label&ebc=0A0F78&elbc=F0F07F&elbv=&euv={true}
+    let urlParams = new URLSearchParams(window.location.search)
+    let hookFunctions = {
+      'mt': (val) => {setMarginTop(parseInt(val))},
+      'mr': (val) => {setMarginRight(parseInt(val))},
+      'mb': (val) => {setMarginBottom(parseInt(val))},
+      'ml': (val) => {setMarginLeft(parseInt(val))},
+      'mlb': (val) => {setMarginLabel(val)},
+      'mbc': (val) => {setMarginBackgroundColor('#' + val)},
+      'mlbc': (val) => {setMarginLabelColor('#' + val)},
+      'mlbv': (val) => {setMarginLabelIsVisible(val)},
+      'muv': (val) => {setMarginUnitsIsVisible(val)},
+      
+      'bt': (val) => {setBorderTopWidth(parseInt(val))},
+      'br': (val) => {setBorderRightWidth(parseInt(val))},
+      'bb': (val) => {setBorderBottomWidth(parseInt(val))},
+      'bl': (val) => {setBorderLeftWidth(parseInt(val))},
+      'blb': (val) => {setBorderLabel(val)},
+      'bbc': (val) => {setBorderBackgroundColor('#' + val)},
+      'blbc': (val) => {setBorderLabelColor('#' + val)},
+      'blbv': (val) => {setBorderLabelIsVisible(val)},
+      'buv': (val) => {setBorderUnitsIsVisible(val)},
+
+      'pt': (val) => {setPaddingTop(parseInt(val))},
+      'pr': (val) => {setPaddingRight(parseInt(val))},
+      'pb': (val) => {setPaddingBottom(parseInt(val))},
+      'pl': (val) => {setPaddingLeft(parseInt(val))},
+      'plb': (val) => {setPaddingLabel(val)},
+      'pbc': (val) => {setPaddingBackgroundColor('#' + val)},
+      'plbc': (val) => {setPaddingLabelColor('#' + val)},
+      'plbv': (val) => {setPaddingLabelIsVisible(val)},
+      'puv': (val) => {setPaddingUnitsIsVisible(val)},
+
+      'ew': (val) => {setElementWidth(parseInt(val))},
+      'eh': (val) => {setElementHeight(parseInt(val))},
+      'elb': (val) => {setElementLabel(val)},
+      'ebc': (val) => {setElementBackgroundColor('#' + val)},
+      'elbc': (val) => {setElementLabelColor('#' + val)},
+      'elbv': (val) => {setElementLabelIsVisible(val)},
+      'euv': (val) => {setElementUnitsIsVisible(val)},
+    }
+    for (let pair of urlParams.entries()) { 
+      if (hookFunctions[pair[0]]) {
+        hookFunctions[pair[0]](pair[1])
+      }
+    }
+  }
 
   function triggerNotification(el) {
     el.setAttribute('style', 'display: inline-block')
@@ -314,7 +367,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Top</label>
                     <input
-                      defaultValue={marginTop}
+                      value={marginTop}
                       type="number"
                       onChange={(e) => setMarginTop(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
@@ -326,7 +379,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Right</label>
                     <input
-                      defaultValue={marginRight}
+                      value={marginRight}
                       type="number"
                       onChange={(e) => setMarginRight(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
@@ -347,7 +400,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Bottom</label>
                     <input
-                      defaultValue={marginBottom}
+                      value={marginBottom}
                       type="number"
                       onChange={(e) => setMarginBottom(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
@@ -359,7 +412,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Left</label>
                     <input
-                      defaultValue={marginLeft}
+                      value={marginLeft}
                       type="number"
                       onChange={(e) => setMarginLeft(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
@@ -374,7 +427,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     <input
                       type="checkbox"
                       onChange={(e) => setMarginLabelIsVisible(e.target.checked)}
-                      defaultChecked={marginLabelIsVisible}
+                      checked={marginLabelIsVisible}
                     />
                     <span>Show label</span>
                   </label>
@@ -385,7 +438,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     <input
                       type="checkbox"
                       onChange={(e) => setMarginUnitsIsVisible(e.target.checked)}
-                      defaultChecked={marginUnitsIsVisible}
+                      checked={marginUnitsIsVisible}
                     />
                     <span>Show units</span>
                   </label>
@@ -441,7 +494,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Label</label>
                     <input
-                      defaultValue={marginLabel}
+                      value={marginLabel}
                       type="text"
                       onChange={(e) => setMarginLabel(e.target.value)}
                       onClick={(e) => e.target.select()}
@@ -463,7 +516,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Top</label>
                     <input
-                      defaultValue={borderTopWidth}
+                      value={borderTopWidth}
                       type="number"
                       onChange={(e) => setBorderTopWidth(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
@@ -475,7 +528,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Right</label>
                     <input
-                      defaultValue={borderRightWidth}
+                      value={borderRightWidth}
                       type="number"
                       onChange={(e) => setBorderRightWidth(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
@@ -496,7 +549,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Bottom</label>
                     <input
-                      defaultValue={borderBottomWidth}
+                      value={borderBottomWidth}
                       type="number"
                       onChange={(e) => setBorderBottomWidth(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
@@ -508,7 +561,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Left</label>
                     <input
-                      defaultValue={borderLeftWidth}
+                      value={borderLeftWidth}
                       type="number"
                       onChange={(e) => setBorderLeftWidth(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
@@ -523,7 +576,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     <input
                       type="checkbox"
                       onChange={(e) => setBorderLabelIsVisible(e.target.checked)}
-                      defaultChecked={borderLabelIsVisible}
+                      checked={borderLabelIsVisible}
                     />
                     <span>Show label</span>
                   </label>
@@ -534,7 +587,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     <input
                       type="checkbox"
                       onChange={(e) => setBorderUnitsIsVisible(e.target.checked)}
-                      defaultChecked={borderUnitsIsVisible}
+                      checked={borderUnitsIsVisible}
                     />
                     <span>Show units</span>
                   </label>
@@ -590,7 +643,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Label</label>
                     <input
-                      defaultValue={borderLabel}
+                      value={borderLabel}
                       type="text"
                       onChange={(e) => setBorderLabel(e.target.value)}
                       onClick={(e) => e.target.select()}
@@ -612,7 +665,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Top</label>
                     <input
-                      defaultValue={paddingTop}
+                      value={paddingTop}
                       type="number"
                       onChange={(e) => setPaddingTop(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
@@ -624,7 +677,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Right</label>
                     <input
-                      defaultValue={paddingRight}
+                      value={paddingRight}
                       type="number"
                       onChange={(e) => setPaddingRight(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
@@ -645,7 +698,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Bottom</label>
                     <input
-                      defaultValue={paddingBottom}
+                      value={paddingBottom}
                       type="number"
                       onChange={(e) => setPaddingBottom(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
@@ -657,7 +710,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Left</label>
                     <input
-                      defaultValue={paddingLeft}
+                      value={paddingLeft}
                       type="number"
                       onChange={(e) => setPaddingLeft(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
@@ -672,7 +725,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     <input
                       type="checkbox"
                       onChange={(e) => setPaddingLabelIsVisible(e.target.checked)}
-                      defaultChecked={paddingLabelIsVisible}
+                      checked={paddingLabelIsVisible}
                     />
                     <span>Show label</span>
                   </label>
@@ -683,7 +736,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     <input
                       type="checkbox"
                       onChange={(e) => setPaddingUnitsIsVisible(e.target.checked)}
-                      defaultChecked={paddingUnitsIsVisible}
+                      checked={paddingUnitsIsVisible}
                     />
                     <span>Show units</span>
                   </label>
@@ -739,7 +792,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Label</label>
                     <input
-                      defaultValue={paddingLabel}
+                      value={paddingLabel}
                       type="text"
                       onChange={(e) => setPaddingLabel(e.target.value)}
                       onClick={(e) => e.target.select()}
@@ -761,9 +814,9 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Width</label>
                     <input
-                      defaultValue={width}
+                      value={elementWidth}
                       type="number"
-                      onChange={(e) => setWidth(parseInt(e.target.value))}
+                      onChange={(e) => setElementWidth(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
                     />
                   </div>
@@ -791,9 +844,9 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Height</label>
                     <input
-                      defaultValue={height}
+                      value={elementHeight}
                       type="number"
-                      onChange={(e) => setHeight(parseInt(e.target.value))}
+                      onChange={(e) => setElementHeight(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
                     />
                   </div>
@@ -806,7 +859,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     <input
                       type="checkbox"
                       onChange={(e) => setElementLabelIsVisible(e.target.checked)}
-                      defaultChecked={elementLabelIsVisible}
+                      checked={elementLabelIsVisible}
                     />
                     <span>Show label</span>
                   </label>
@@ -817,7 +870,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     <input
                       type="checkbox"
                       onChange={(e) => setElementUnitsIsVisible(e.target.checked)}
-                      defaultChecked={elementUnitsIsVisible}
+                      checked={elementUnitsIsVisible}
                     />
                     <span>Show units</span>
                   </label>
@@ -873,7 +926,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div className="input-group">
                     <label>Label</label>
                     <input
-                      defaultValue={elementLabel}
+                      value={elementLabel}
                       type="text"
                       onChange={(e) => setElementLabel(e.target.value)}
                       onClick={(e) => e.target.select()}
@@ -1237,9 +1290,9 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     css={css({
                       background: elementBackgroundColor,
                       color: elementLabelColor,
-                      height: height - (borderTopWidth + borderBottomWidth) - (paddingTop + paddingBottom),
+                      height: elementHeight - (borderTopWidth + borderBottomWidth) - (paddingTop + paddingBottom),
                       position: 'relative',
-                      width: width - (borderRightWidth + borderLeftWidth) - (paddingRight + paddingLeft),
+                      width: elementWidth - (borderRightWidth + borderLeftWidth) - (paddingRight + paddingLeft),
                       zIndex: 6,
                       '&::before': {
                         background: tokens.color.background.default,
@@ -1289,7 +1342,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                           zIndex: 8,
                         })}
                       >
-                        {width.toLocaleString()} x {height.toLocaleString()}
+                        {elementWidth.toLocaleString()} x {elementHeight.toLocaleString()}
                       </div>
                   )}
                   </div>
