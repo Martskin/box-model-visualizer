@@ -6,9 +6,9 @@ import tokens from "../data/tokens"
 import Button from "./button"
 
 function BoxModelVisualizer({ margin, border, padding, element }) {  
-  let cssCodeTextarea = React.createRef()
+  let cssCodeHiddenTextarea = React.createRef()
   let cssCopiedNotification = React.createRef()
-  let linkInput = React.createRef()
+  let linkHiddenInput = React.createRef()
   let linkCopiedNotification = React.createRef()
 
   const [marginBackgroundColor, setMarginBackgroundColor] = useState(margin.backgroundColor)
@@ -84,51 +84,164 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
     parseQueryString()
   }, [])
 
-  function parseQueryString() {
-    //?mt=42&mr=132&mb=46&ml=4&mlb=custom%20m%20label&mbc=cccccc&mlbc=ff0005&mlbv={true}&muv=&bt=42&br=132&bb=46&bl=4&blb=custom%20b%20label&bbc=FFCCCC&blbc=010EFF&blbv=&buv={true}&pt=42&pr=132&pb=46&pl=4&plb=custom%20p%20label&pbc=009701&plbc=01ffff&plbv={true}&puv=&ew=820&eh=500&elb=custom%20e%20label&ebc=0A0F78&elbc=F0F07F&elbv=&euv={true}
-    let urlParams = new URLSearchParams(window.location.search)
-    let hookFunctions = {
-      'mt': (val) => {setMarginTop(parseInt(val))},
-      'mr': (val) => {setMarginRight(parseInt(val))},
-      'mb': (val) => {setMarginBottom(parseInt(val))},
-      'ml': (val) => {setMarginLeft(parseInt(val))},
-      'mlb': (val) => {setMarginLabel(val)},
-      'mbc': (val) => {setMarginBackgroundColor('#' + val)},
-      'mlbc': (val) => {setMarginLabelColor('#' + val)},
-      'mlbv': (val) => {setMarginLabelIsVisible(val)},
-      'muv': (val) => {setMarginUnitsIsVisible(val)},
-      
-      'bt': (val) => {setBorderTopWidth(parseInt(val))},
-      'br': (val) => {setBorderRightWidth(parseInt(val))},
-      'bb': (val) => {setBorderBottomWidth(parseInt(val))},
-      'bl': (val) => {setBorderLeftWidth(parseInt(val))},
-      'blb': (val) => {setBorderLabel(val)},
-      'bbc': (val) => {setBorderBackgroundColor('#' + val)},
-      'blbc': (val) => {setBorderLabelColor('#' + val)},
-      'blbv': (val) => {setBorderLabelIsVisible(val)},
-      'buv': (val) => {setBorderUnitsIsVisible(val)},
-
-      'pt': (val) => {setPaddingTop(parseInt(val))},
-      'pr': (val) => {setPaddingRight(parseInt(val))},
-      'pb': (val) => {setPaddingBottom(parseInt(val))},
-      'pl': (val) => {setPaddingLeft(parseInt(val))},
-      'plb': (val) => {setPaddingLabel(val)},
-      'pbc': (val) => {setPaddingBackgroundColor('#' + val)},
-      'plbc': (val) => {setPaddingLabelColor('#' + val)},
-      'plbv': (val) => {setPaddingLabelIsVisible(val)},
-      'puv': (val) => {setPaddingUnitsIsVisible(val)},
-
-      'ew': (val) => {setElementWidth(parseInt(val))},
-      'eh': (val) => {setElementHeight(parseInt(val))},
-      'elb': (val) => {setElementLabel(val)},
-      'ebc': (val) => {setElementBackgroundColor('#' + val)},
-      'elbc': (val) => {setElementLabelColor('#' + val)},
-      'elbv': (val) => {setElementLabelIsVisible(val)},
-      'euv': (val) => {setElementUnitsIsVisible(val)},
+  function truthyHelper(val) {
+    let paramSafeVal
+    if (val === 'true') {
+      paramSafeVal = true
+    } else {
+      paramSafeVal = false
     }
+    return paramSafeVal
+  }
+
+  const hooksMap = {
+    mt: {
+      var: marginTop,
+      func: (val) => {setMarginTop(parseInt(val))},
+    },
+    mr: {
+      var: marginRight,
+      func: (val) => {setMarginRight(parseInt(val))},
+    },
+    mb: {
+      var: marginBottom,
+      func: (val) => {setMarginBottom(parseInt(val))}
+    },
+    ml: {
+      var: marginLeft,
+      func: (val) => {setMarginLeft(parseInt(val))}
+    },
+    mlb: {
+      var: marginLabel,
+      func: (val) => {setMarginLabel(val)}
+    },
+    mbc: {
+      var: marginBackgroundColor,
+      func: (val) => {setMarginBackgroundColor(val)}
+    },
+    mlbc: {
+      var: marginLabelColor,
+      func: (val) => {setMarginLabelColor(val)}
+    },
+    mlbv: {
+      var: marginLabelIsVisible,
+      func: (val) => {setMarginLabelIsVisible(truthyHelper(val))}
+    },
+    muv: {
+      var: marginUnitsIsVisible,
+      func: (val) => {setMarginUnitsIsVisible(truthyHelper(val))}
+    },
+    
+    bt: {
+      var: borderTopWidth,
+      func: (val) => {setBorderTopWidth(parseInt(val))}
+    },
+    br: {
+      var: borderRightWidth,
+      func: (val) => {setBorderRightWidth(parseInt(val))}
+    },
+    bb: {
+      var: borderBottomWidth,
+      func: (val) => {setBorderBottomWidth(parseInt(val))}
+    },
+    bl: {
+      var: borderLeftWidth,
+      func: (val) => {setBorderLeftWidth(parseInt(val))}
+    },
+    blb: {
+      var: borderLabel,
+      func: (val) => {setBorderLabel(val)}
+    },
+    bbc: {
+      var: borderBackgroundColor,
+      func: (val) => {setBorderBackgroundColor(val)}
+    },
+    blbc: {
+      var: borderLabelColor,
+      func: (val) => {setBorderLabelColor(val)}
+    },
+    blbv: {
+      var: borderLabelIsVisible,
+      func: (val) => {setBorderLabelIsVisible(truthyHelper(val))}
+    },
+    buv: {
+      var: borderUnitsIsVisible,
+      func: (val) => {setBorderUnitsIsVisible(truthyHelper(val))}
+    },
+
+    pt: {
+      var: paddingTop,
+      func: (val) => {setPaddingTop(parseInt(val))}
+    },
+    pr: {
+      var: paddingRight,
+      func: (val) => {setPaddingRight(parseInt(val))}
+    },
+    pb: {
+      var: paddingBottom,
+      func: (val) => {setPaddingBottom(parseInt(val))}
+    },
+    pl: {
+      var: paddingLeft,
+      func: (val) => {setPaddingLeft(parseInt(val))}
+    },
+    plb: {
+      var: paddingLabel,
+      func: (val) => {setPaddingLabel(val)}
+    },
+    pbc: {
+      var: paddingBackgroundColor,
+      func: (val) => {setPaddingBackgroundColor(val)}
+    },
+    plbc: {
+      var: paddingLabelColor,
+      func: (val) => {setPaddingLabelColor(val)}
+    },
+    plbv: {
+      var: paddingLabelIsVisible,
+      func: (val) => {setPaddingLabelIsVisible(truthyHelper(val))}
+    },
+    puv: {
+      var: paddingUnitsIsVisible,
+      func: (val) => {setPaddingUnitsIsVisible(truthyHelper(val))}
+    },
+
+    ew: {
+      var: elementWidth,
+      func: (val) => {setElementWidth(parseInt(val))}
+    },
+    eh: {
+      var: elementHeight,
+      func: (val) => {setElementHeight(parseInt(val))}
+    },
+    elb: {
+      var: elementLabel,
+      func: (val) => {setElementLabel(val)}
+    },
+    ebc: {
+      var: elementBackgroundColor,
+      func: (val) => {setElementBackgroundColor(val)}
+    },
+    elbc: {
+      var: elementLabelColor,
+      func: (val) => {setElementLabelColor(val)}
+    },
+    elbv: {
+      var: elementLabelIsVisible,
+      func: (val) => {setElementLabelIsVisible(truthyHelper(val))}
+    },
+    euv: {
+      var: elementUnitsIsVisible,
+      func: (val) => {setElementUnitsIsVisible(truthyHelper(val))}
+    },
+  }
+
+  function parseQueryString() {
+    //?mt=42&mr=132&mb=46&ml=4&mlb=custom%20m%20label&mbc=cccccc&mlbc=ff0005&mlbv=1&muv=&bt=42&br=132&bb=46&bl=4&blb=custom%20b%20label&bbc=FFCCCC&blbc=010EFF&blbv=&buv=1&pt=42&pr=132&pb=46&pl=4&plb=custom%20p%20label&pbc=009701&plbc=01ffff&plbv=1&puv=&ew=820&eh=500&elb=custom%20e%20label&ebc=0A0F78&elbc=F0F07F&elbv=&euv=1
+    let urlParams = new URLSearchParams(window.location.search)
     for (let pair of urlParams.entries()) { 
-      if (hookFunctions[pair[0]]) {
-        hookFunctions[pair[0]](pair[1])
+      if (hooksMap[pair[0]].func) {
+        hooksMap[pair[0]].func(pair[1])
       }
     }
   }
@@ -145,14 +258,21 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   }
 
   function copyLink() {
-    linkInput.current.value = window.location.href
-    linkInput.current.select()
+    let pageRoot = [window.location.protocol, '//', window.location.host, window.location.pathname].join('')
+    let queryString = new URLSearchParams()
+    let keys = Object.keys(hooksMap)
+    for (let i = 0; i < keys.length; i++) {
+      queryString.append(keys[i], hooksMap[keys[i]].var)
+    }
+    let compiledLink = pageRoot + '?' + queryString
+    linkHiddenInput.current.value = compiledLink
+    linkHiddenInput.current.select()
     document.execCommand('copy')
     triggerNotification(linkCopiedNotification.current)
   }
 
   function copyCSS() {
-    cssCodeTextarea.current.select()
+    cssCodeHiddenTextarea.current.select()
     document.execCommand('copy')
     triggerNotification(cssCopiedNotification.current)
   }
@@ -342,7 +462,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     Link copied to clipboard!
                   </span>
                   <input
-                    ref={linkInput}
+                    ref={linkHiddenInput}
                     value=""
                     type="text"
                     readOnly
@@ -1361,7 +1481,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             CSS copied to clipboard!
           </span>
           <textarea
-            ref={cssCodeTextarea}
+            ref={cssCodeHiddenTextarea}
             value={styleBlock}
             readOnly
             className="accessibly-hidden"
