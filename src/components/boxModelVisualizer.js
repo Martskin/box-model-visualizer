@@ -11,6 +11,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   let linkHiddenInput = React.createRef()
   let linkCopiedNotification = React.createRef()
 
+  let marginBackgroundColorInput = React.createRef()
+  let borderBackgroundColorInput = React.createRef()
+  let paddingBackgroundColorInput = React.createRef()
+  let elementBackgroundColorInput = React.createRef()
+
   const [marginBackgroundColor, setMarginBackgroundColor] = useState(margin.backgroundColor)
   const [marginLabelColor, setMarginLabelColor] = useState(margin.labelColor)
   const [marginUnitColor, setMarginUnitColor] = useState(margin.unitColor)
@@ -431,9 +436,13 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         },
         '.control-panel__thumbnail': {
           border: `6px solid ${tokens.border.color.default}`,
+          cursor: 'pointer',
           height: '40px',
           margin: '0 auto',
           width: '58px',
+          '&:hover': {
+            outline: `1px solid ${tokens.border.color.interactive.hover.default}`,
+          }
         },
         '.input-group-horizontal': {
           alignItems: 'center',
@@ -584,6 +593,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     style={{
                       borderColor: marginBackgroundColor,
                     }}
+                    onClick={() => marginBackgroundColorInput.current.click()}
                   />
                 </div>
 
@@ -730,6 +740,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         value={marginBackgroundColor}
                         type="color"
                         onChange={(e) => setMarginBackgroundColor(e.target.value)}
+                        ref={marginBackgroundColorInput}
                       />
                     </div>
 
@@ -803,6 +814,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     style={{
                       borderColor: borderBackgroundColor,
                     }}
+                    onClick={() => borderBackgroundColorInput.current.click()}
                   />
                 </div>
 
@@ -949,6 +961,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         value={borderBackgroundColor}
                         type="color"
                         onChange={(e) => setBorderBackgroundColor(e.target.value)}
+                        ref={borderBackgroundColorInput}
                       />
                     </div>
 
@@ -1022,6 +1035,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     style={{
                       borderColor: paddingBackgroundColor,
                     }}
+                    onClick={() => paddingBackgroundColorInput.current.click()}
                   />
                 </div>
 
@@ -1168,6 +1182,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         value={paddingBackgroundColor}
                         type="color"
                         onChange={(e) => setPaddingBackgroundColor(e.target.value)}
+                        ref={paddingBackgroundColorInput}
                       />
                     </div>
 
@@ -1224,6 +1239,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       background: elementBackgroundColor,
                       border: 'none',
                     }}
+                    onClick={() => elementBackgroundColorInput.current.click()}
                   />
                 </div>
 
@@ -1353,6 +1369,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         value={elementBackgroundColor}
                         type="color"
                         onChange={(e) => setElementBackgroundColor(e.target.value)}
+                        ref={elementBackgroundColorInput}
                       />
                     </div>
 
