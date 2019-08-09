@@ -336,7 +336,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           float: 'left',
           fontSize: tokens.font.size.sm,
           fontWeight: 'bold',
-          margin: `0 0 ${tokens.space.xxs}px`,
+          margin: `0 0 ${tokens.space.sm}px`,
           padding: 0,
           width: '100%',
           '+ *': {
@@ -390,12 +390,13 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         },
         select: {
           display: 'block',
+          width: '100%',
         },
         '.control-panel': {
           alignItems: 'center',
           display: 'flex',
           flexWrap: 'wrap',
-          marginBottom: tokens.space.xs,
+          marginBottom: tokens.space.md,
           'input[type="number"]': {
             width: '60px',
           }
@@ -434,12 +435,14 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           margin: '0 auto',
           width: '58px',
         },
-        '.input-grid': {
+        '.input-group-horizontal': {
+          alignItems: 'center',
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gridColumnGap: tokens.space.xs,
-          '> div': {
-            marginBottom: tokens.space.xs,
+          gridGap: tokens.space.xxs,
+          gridTemplateColumns: 'auto 1fr',
+          marginBottom: tokens.space.xs,
+          label: {
+            margin: 0,
           }
         },
         '.color-picker-input-grid': {
@@ -450,6 +453,9 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           'input[type="color"]': {
             position: 'absolute',
             top: '-4px',
+          },
+          'input[type="text"]': {
+            width: '60px',
           }
         },
         '.notification': {
@@ -476,7 +482,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           width: '100vw',
           '> div': {
             overflow: 'auto',
-            padding: tokens.space.sm,
+            padding: `${tokens.space.sm}px ${tokens.space.md}px`,
             position: 'relative',
             '&:first-of-type': {
               background: tokens.color.background.light,
@@ -624,44 +630,48 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
               </div>
 
-              <div className="input-grid">
+              <div className="input-group-horizontal">
                 <div>
-                  <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show margin label"
-                        type="checkbox"
-                        onChange={(e) => setMarginLabelIsVisible(e.target.checked)}
-                        checked={marginLabelIsVisible}
-                      />
-                      <span>Label</span>
-                    </label>
+                  <label>
                     <input
-                      aria-label="margin label"
-                      value={marginLabel}
-                      type="text"
-                      onChange={(e) => setMarginLabel(e.target.value)}
-                      onClick={(e) => e.target.select()}
+                      aria-label="show margin label"
+                      type="checkbox"
+                      onChange={(e) => setMarginLabelIsVisible(e.target.checked)}
+                      checked={marginLabelIsVisible}
                     />
-                  </div>
+                    <span>Label:</span>
+                  </label>
                 </div>
-
                 <div>
-                  <div className="input-group">
-                    <label>Label Position</label>
-                    <select
-                      value={marginLabelPosition}
-                      onChange={(e) => setMarginLabelPosition(e.target.value)}
-                    >
-                      {labelPositionSelectOptions()}
-                    </select>
-                  </div>
+                  <input
+                    aria-label="margin label"
+                    value={marginLabel}
+                    type="text"
+                    onChange={(e) => setMarginLabel(e.target.value)}
+                    onClick={(e) => e.target.select()}
+                  />
                 </div>
               </div>
 
-              <div className="input-grid">
+              <div className="input-group-horizontal">
                 <div>
-                  <label>Label Color</label>
+                <label>Label Position:</label>
+                </div>
+                <div>
+                  <select
+                    value={marginLabelPosition}
+                    onChange={(e) => setMarginLabelPosition(e.target.value)}
+                  >
+                    {labelPositionSelectOptions()}
+                  </select>
+                </div>
+              </div>
+
+              <div className="input-group-horizontal">
+                <div>
+                  <label>Label Color:</label>
+                </div>
+                <div>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
@@ -681,45 +691,53 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     </div>
                   </div>
                 </div>
+              </div>
 
+              <div className="input-group-horizontal">
                 <div>
-                  <label>Background Color</label>
+                  <label>Unit Color:</label>
+                </div>
+                <div>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
-                        value={marginBackgroundColor}
+                        value={marginUnitColor}
                         type="color"
-                        onChange={(e) => setMarginBackgroundColor(e.target.value)}
+                        onChange={(e) => setMarginUnitColor(e.target.value)}
                       />
                     </div>
 
                     <div>
                       <input
-                        value={marginBackgroundColor}
+                        value={marginUnitColor}
                         type="text"
-                        onChange={(e) => setMarginBackgroundColor(e.target.value)}
+                        onChange={(e) => setMarginUnitColor(e.target.value)}
                         onClick={(e) => e.target.select()}
                       />
                     </div>
                   </div>
                 </div>
+              </div>
 
+              <div className="input-group-horizontal">
                 <div>
-                  <label>Unit Color</label>
+                <label>Background Color:</label>
+                  </div>
+                <div>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
-                        value={marginUnitColor}
+                        value={marginBackgroundColor}
                         type="color"
-                        onChange={(e) => setMarginUnitColor(e.target.value)}
+                        onChange={(e) => setMarginBackgroundColor(e.target.value)}
                       />
                     </div>
 
                     <div>
                       <input
-                        value={marginUnitColor}
+                        value={marginBackgroundColor}
                         type="text"
-                        onChange={(e) => setMarginUnitColor(e.target.value)}
+                        onChange={(e) => setMarginBackgroundColor(e.target.value)}
                         onClick={(e) => e.target.select()}
                       />
                     </div>
@@ -831,44 +849,48 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
               </div>
 
-              <div className="input-grid">
+              <div className="input-group-horizontal">
                 <div>
-                  <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show margin label"
-                        type="checkbox"
-                        onChange={(e) => setBorderLabelIsVisible(e.target.checked)}
-                        checked={borderLabelIsVisible}
-                      />
-                      <span>Label</span>
-                    </label>
+                  <label>
                     <input
-                      aria-label="border label"
-                      value={borderLabel}
-                      type="text"
-                      onChange={(e) => setBorderLabel(e.target.value)}
-                      onClick={(e) => e.target.select()}
+                      aria-label="show border label"
+                      type="checkbox"
+                      onChange={(e) => setBorderLabelIsVisible(e.target.checked)}
+                      checked={borderLabelIsVisible}
                     />
-                  </div>
+                    <span>Label:</span>
+                  </label>
                 </div>
-
                 <div>
-                  <div className="input-group">
-                    <label>Label Position</label>
-                    <select
-                      value={borderLabelPosition}
-                      onChange={(e) => setBorderLabelPosition(e.target.value)}
-                    >
-                      {labelPositionSelectOptions()}
-                    </select>
-                  </div>
+                  <input
+                    aria-label="border label"
+                    value={borderLabel}
+                    type="text"
+                    onChange={(e) => setBorderLabel(e.target.value)}
+                    onClick={(e) => e.target.select()}
+                  />
                 </div>
               </div>
 
-              <div className="input-grid">
+              <div className="input-group-horizontal">
                 <div>
-                  <label>Label Color</label>
+                <label>Label Position:</label>
+                </div>
+                <div>
+                  <select
+                    value={borderLabelPosition}
+                    onChange={(e) => setBorderLabelPosition(e.target.value)}
+                  >
+                    {labelPositionSelectOptions()}
+                  </select>
+                </div>
+              </div>
+
+              <div className="input-group-horizontal">
+                <div>
+                  <label>Label Color:</label>
+                </div>
+                <div>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
@@ -888,9 +910,39 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     </div>
                   </div>
                 </div>
+              </div>
 
+              <div className="input-group-horizontal">
                 <div>
-                  <label>Background Color</label>
+                  <label>Unit Color:</label>
+                </div>
+                <div>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={borderUnitColor}
+                        type="color"
+                        onChange={(e) => setBorderUnitColor(e.target.value)}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        value={borderUnitColor}
+                        type="text"
+                        onChange={(e) => setBorderUnitColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="input-group-horizontal">
+                <div>
+                <label>Background Color:</label>
+                  </div>
+                <div>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
@@ -1016,44 +1068,48 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
               </div>
 
-              <div className="input-grid">
+              <div className="input-group-horizontal">
                 <div>
-                  <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show padding label"
-                        type="checkbox"
-                        onChange={(e) => setPaddingLabelIsVisible(e.target.checked)}
-                        checked={paddingLabelIsVisible}
-                      />
-                      <span>Label</span>
-                    </label>
+                  <label>
                     <input
-                      aria-label="padding label"
-                      value={paddingLabel}
-                      type="text"
-                      onChange={(e) => setPaddingLabel(e.target.value)}
-                      onClick={(e) => e.target.select()}
+                      aria-label="show padding label"
+                      type="checkbox"
+                      onChange={(e) => setPaddingLabelIsVisible(e.target.checked)}
+                      checked={paddingLabelIsVisible}
                     />
-                  </div>
+                    <span>Label:</span>
+                  </label>
                 </div>
-
                 <div>
-                  <div className="input-group">
-                    <label>Label Position</label>
-                    <select
-                      value={paddingLabelPosition}
-                      onChange={(e) => setPaddingLabelPosition(e.target.value)}
-                    >
-                      {labelPositionSelectOptions()}
-                    </select>
-                  </div>
+                  <input
+                    aria-label="padding label"
+                    value={paddingLabel}
+                    type="text"
+                    onChange={(e) => setPaddingLabel(e.target.value)}
+                    onClick={(e) => e.target.select()}
+                  />
                 </div>
               </div>
 
-              <div className="input-grid">
+              <div className="input-group-horizontal">
                 <div>
-                  <label>Label Color</label>
+                <label>Label Position:</label>
+                </div>
+                <div>
+                  <select
+                    value={paddingLabelPosition}
+                    onChange={(e) => setPaddingLabelPosition(e.target.value)}
+                  >
+                    {labelPositionSelectOptions()}
+                  </select>
+                </div>
+              </div>
+
+              <div className="input-group-horizontal">
+                <div>
+                  <label>Label Color:</label>
+                </div>
+                <div>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
@@ -1073,9 +1129,39 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     </div>
                   </div>
                 </div>
+              </div>
 
+              <div className="input-group-horizontal">
                 <div>
-                  <label>Background Color</label>
+                  <label>Unit Color:</label>
+                </div>
+                <div>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={paddingUnitColor}
+                        type="color"
+                        onChange={(e) => setPaddingUnitColor(e.target.value)}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        value={paddingUnitColor}
+                        type="text"
+                        onChange={(e) => setPaddingUnitColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="input-group-horizontal">
+                <div>
+                <label>Background Color:</label>
+                  </div>
+                <div>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
@@ -1167,44 +1253,48 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
               </div>
 
-              <div className="input-grid">
+              <div className="input-group-horizontal">
                 <div>
-                  <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show element label"
-                        type="checkbox"
-                        onChange={(e) => setElementLabelIsVisible(e.target.checked)}
-                        checked={elementLabelIsVisible}
-                      />
-                      <span>Label</span>
-                    </label>
+                  <label>
                     <input
-                      aria-label="element label"
-                      value={elementLabel}
-                      type="text"
-                      onChange={(e) => setElementLabel(e.target.value)}
-                      onClick={(e) => e.target.select()}
+                      aria-label="show element label"
+                      type="checkbox"
+                      onChange={(e) => setElementLabelIsVisible(e.target.checked)}
+                      checked={elementLabelIsVisible}
                     />
-                  </div>
+                    <span>Label:</span>
+                  </label>
                 </div>
-
                 <div>
-                  <div className="input-group">
-                    <label>Label Position</label>
-                    <select
-                      value={elementLabelPosition}
-                      onChange={(e) => setElementLabelPosition(e.target.value)}
-                    >
-                      {labelPositionSelectOptions()}
-                    </select>
-                  </div>
+                  <input
+                    aria-label="element label"
+                    value={elementLabel}
+                    type="text"
+                    onChange={(e) => setElementLabel(e.target.value)}
+                    onClick={(e) => e.target.select()}
+                  />
                 </div>
               </div>
 
-              <div className="input-grid">
+              <div className="input-group-horizontal">
                 <div>
-                  <label>Label Color</label>
+                <label>Label Position:</label>
+                </div>
+                <div>
+                  <select
+                    value={elementLabelPosition}
+                    onChange={(e) => setElementLabelPosition(e.target.value)}
+                  >
+                    {labelPositionSelectOptions()}
+                  </select>
+                </div>
+              </div>
+
+              <div className="input-group-horizontal">
+                <div>
+                  <label>Label Color:</label>
+                </div>
+                <div>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
@@ -1224,9 +1314,39 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     </div>
                   </div>
                 </div>
+              </div>
 
+              <div className="input-group-horizontal">
                 <div>
-                  <label>Background Color</label>
+                  <label>Unit Color:</label>
+                </div>
+                <div>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={elementUnitColor}
+                        type="color"
+                        onChange={(e) => setElementUnitColor(e.target.value)}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        value={elementUnitColor}
+                        type="text"
+                        onChange={(e) => setElementUnitColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="input-group-horizontal">
+                <div>
+                <label>Background Color:</label>
+                  </div>
+                <div>
                   <div className="color-picker-input-grid">
                     <div>
                       <input
