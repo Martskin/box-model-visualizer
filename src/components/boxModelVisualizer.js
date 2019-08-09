@@ -13,44 +13,62 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
   const [marginBackgroundColor, setMarginBackgroundColor] = useState(margin.backgroundColor)
   const [marginLabelColor, setMarginLabelColor] = useState(margin.labelColor)
+  const [marginUnitColor, setMarginUnitColor] = useState(margin.unitColor)
   const [marginTop, setMarginTop] = useState(margin.top)
   const [marginRight, setMarginRight] = useState(margin.right)
   const [marginBottom, setMarginBottom] = useState(margin.bottom)
   const [marginLeft, setMarginLeft] = useState(margin.left)
   const [marginLabel, setMarginLabel] = useState(margin.label)
   const [marginLabelIsVisible, setMarginLabelIsVisible] = useState(true)
-  const [marginUnitsIsVisible, setMarginUnitsIsVisible] = useState(true)
+  const [marginLabelPosition, setMarginLabelPosition] = useState(margin.labelPosition)
+  const [marginTopUnitIsVisible, setMarginTopUnitIsVisible] = useState(true)
+  const [marginRightUnitIsVisible, setMarginRightUnitIsVisible] = useState(true)
+  const [marginBottomUnitIsVisible, setMarginBottomUnitIsVisible] = useState(true)
+  const [marginLeftUnitIsVisible, setMarginLeftUnitIsVisible] = useState(true)
   const [marginIsHighlighted, setMarginIsHighlighted] = useState(false)
 
   const [borderBackgroundColor, setBorderBackgroundColor] = useState(border.backgroundColor)
   const [borderLabelColor, setBorderLabelColor] = useState(border.labelColor)
-  const [borderTopWidth, setBorderTopWidth] = useState(border.top)
-  const [borderRightWidth, setBorderRightWidth] = useState(border.right)
-  const [borderBottomWidth, setBorderBottomWidth] = useState(border.bottom)
-  const [borderLeftWidth, setBorderLeftWidth] = useState(border.left)
+  const [borderUnitColor, setBorderUnitColor] = useState(border.unitColor)
+  const [borderTop, setBorderTop] = useState(border.top)
+  const [borderRight, setBorderRight] = useState(border.right)
+  const [borderBottom, setBorderBottom] = useState(border.bottom)
+  const [borderLeft, setBorderLeft] = useState(border.left)
   const [borderLabel, setBorderLabel] = useState(border.label)
   const [borderLabelIsVisible, setBorderLabelIsVisible] = useState(true)
-  const [borderUnitsIsVisible, setBorderUnitsIsVisible] = useState(true)
+  const [borderLabelPosition, setBorderLabelPosition] = useState(border.labelPosition)
+  const [borderTopUnitIsVisible, setBorderTopUnitIsVisible] = useState(true)
+  const [borderRightUnitIsVisible, setBorderRightUnitIsVisible] = useState(true)
+  const [borderBottomUnitIsVisible, setBorderBottomUnitIsVisible] = useState(true)
+  const [borderLeftUnitIsVisible, setBorderLeftUnitIsVisible] = useState(true)
   const [borderIsHighlighted, setBorderIsHighlighted] = useState(false)
 
   const [paddingBackgroundColor, setPaddingBackgroundColor] = useState(padding.backgroundColor)
   const [paddingLabelColor, setPaddingLabelColor] = useState(padding.labelColor)
+  const [paddingUnitColor, setPaddingUnitColor] = useState(padding.unitColor)
   const [paddingTop, setPaddingTop] = useState(padding.top)
   const [paddingRight, setPaddingRight] = useState(padding.right)
   const [paddingBottom, setPaddingBottom]= useState(padding.bottom)
   const [paddingLeft, setPaddingLeft] = useState(padding.left)
   const [paddingLabel, setPaddingLabel] = useState(padding.label)
   const [paddingLabelIsVisible, setPaddingLabelIsVisible] = useState(true)
-  const [paddingUnitsIsVisible, setPaddingUnitsIsVisible] = useState(true)
+  const [paddingLabelPosition, setPaddingLabelPosition] = useState(padding.labelPosition)
+  const [paddingTopUnitIsVisible, setPaddingTopUnitIsVisible] = useState(true)
+  const [paddingRightUnitIsVisible, setPaddingRightUnitIsVisible] = useState(true)
+  const [paddingBottomUnitIsVisible, setPaddingBottomUnitIsVisible] = useState(true)
+  const [paddingLeftUnitIsVisible, setPaddingLeftUnitIsVisible] = useState(true)
   const [paddingIsHighlighted, setPaddingIsHighlighted] = useState(false)
 
   const [elementBackgroundColor, setElementBackgroundColor] = useState(element.backgroundColor)
   const [elementLabelColor, setElementLabelColor] = useState(element.labelColor)
+  const [elementUnitColor, setElementUnitColor] = useState(element.unitColor)
   const [elementWidth, setElementWidth] = useState(element.width)
   const [elementHeight, setElementHeight] = useState(element.height)
   const [elementLabel, setElementLabel] = useState(element.label)
   const [elementLabelIsVisible, setElementLabelIsVisible] = useState(true)
-  const [elementUnitsIsVisible, setElementUnitsIsVisible] = useState(true)
+  const [elementLabelPosition, setElementLabelPosition] = useState(element.labelPosition)
+  const [elementWidthUnitIsVisible, setElementWidthUnitIsVisible] = useState(true)
+  const [elementHeightUnitIsVisible, setElementHeightUnitIsVisible] = useState(true)
   const [elementIsHighlighted, setElementIsHighlighted] = useState(false)
 
   const styleBlock = `
@@ -63,10 +81,10 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   /* border properties */
   border-color: ${borderBackgroundColor};
   border-style: solid;
-  border-top-width: ${borderTopWidth}px;
-  border-right-width: ${borderRightWidth}px;
-  border-bottom-width: ${borderBottomWidth}px;
-  border-left-width: ${borderLeftWidth}px;
+  border-top-width: ${borderTop}px;
+  border-right-width: ${borderRight}px;
+  border-bottom-width: ${borderBottom}px;
+  border-left-width: ${borderLeft}px;
 
   /* padding properties */
   padding-top: ${paddingTop}px;
@@ -128,25 +146,25 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
       func: (val) => {setMarginLabelIsVisible(truthyHelper(val))}
     },
     muv: {
-      var: marginUnitsIsVisible,
-      func: (val) => {setMarginUnitsIsVisible(truthyHelper(val))}
+      var: marginTopUnitIsVisible,
+      func: (val) => {setMarginTopUnitIsVisible(truthyHelper(val))}
     },
     
     bt: {
-      var: borderTopWidth,
-      func: (val) => {setBorderTopWidth(parseInt(val))}
+      var: borderTop,
+      func: (val) => {setBorderTop(parseInt(val))}
     },
     br: {
-      var: borderRightWidth,
-      func: (val) => {setBorderRightWidth(parseInt(val))}
+      var: borderRight,
+      func: (val) => {setBorderRight(parseInt(val))}
     },
     bb: {
-      var: borderBottomWidth,
-      func: (val) => {setBorderBottomWidth(parseInt(val))}
+      var: borderBottom,
+      func: (val) => {setBorderBottom(parseInt(val))}
     },
     bl: {
-      var: borderLeftWidth,
-      func: (val) => {setBorderLeftWidth(parseInt(val))}
+      var: borderLeft,
+      func: (val) => {setBorderLeft(parseInt(val))}
     },
     blb: {
       var: borderLabel,
@@ -165,8 +183,8 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
       func: (val) => {setBorderLabelIsVisible(truthyHelper(val))}
     },
     buv: {
-      var: borderUnitsIsVisible,
-      func: (val) => {setBorderUnitsIsVisible(truthyHelper(val))}
+      var: borderTopUnitIsVisible,
+      func: (val) => {setBorderTopUnitIsVisible(truthyHelper(val))}
     },
 
     pt: {
@@ -202,8 +220,8 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
       func: (val) => {setPaddingLabelIsVisible(truthyHelper(val))}
     },
     puv: {
-      var: paddingUnitsIsVisible,
-      func: (val) => {setPaddingUnitsIsVisible(truthyHelper(val))}
+      var: paddingTopUnitIsVisible,
+      func: (val) => {setPaddingTopUnitIsVisible(truthyHelper(val))}
     },
 
     ew: {
@@ -231,8 +249,8 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
       func: (val) => {setElementLabelIsVisible(truthyHelper(val))}
     },
     euv: {
-      var: elementUnitsIsVisible,
-      func: (val) => {setElementUnitsIsVisible(truthyHelper(val))}
+      var: elementWidthUnitIsVisible,
+      func: (val) => {setElementWidthUnitIsVisible(truthyHelper(val))}
     },
   }
 
@@ -277,6 +295,25 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
     triggerNotification(cssCopiedNotification.current)
   }
 
+  function labelPositionSelectOptions() {
+    return (
+      <>
+        <option value="itl">Inside top left</option>
+        <option value="itc">Inside top center</option>
+        <option value="itr">Inside top right</option>
+        <option value="ibl">Inside bottom left</option>
+        <option value="ibc">Inside bottom center</option>
+        <option value="ibr">Inside bottom right</option>
+        <option value="otl">Outside top left</option>
+        <option value="otc">Outside top center</option>
+        <option value="otr">Outside top right</option>
+        <option value="obl">Outside bottom left</option>
+        <option value="obc">Outside bottom center</option>
+        <option value="obr">Outside bottom right</option>
+      </>
+    )
+  }
+
   return (
     <div
       css={css({
@@ -312,6 +349,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           fontWeight: 'normal',
           lineHeight: 1.1,
           margin: `0 0 ${tokens.space.xxs}px`,
+          userSelect: 'none',
         },
         'fieldset': {
           borderBottom: 0,
@@ -347,11 +385,18 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             width: 22,
           }
         },
+        'input[type="checkbox"]': {
+          margin: `0 ${tokens.space.xxs}px 0 0`,
+        },
+        select: {
+          display: 'block',
+        },
         '.control-panel': {
+          alignItems: 'center',
           display: 'flex',
           flexWrap: 'wrap',
           marginBottom: tokens.space.xs,
-          'input': {
+          'input[type="number"]': {
             width: '60px',
           }
         },
@@ -385,8 +430,9 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         },
         '.control-panel__thumbnail': {
           border: `6px solid ${tokens.border.color.default}`,
-          height: '28px',
-          width: '100%',
+          height: '40px',
+          margin: '0 auto',
+          width: '58px',
         },
         '.input-grid': {
           display: 'grid',
@@ -485,20 +531,39 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
               >
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Top</label>
+                    <label>
+                      <input
+                        aria-label="show margin top unit"
+                        type="checkbox"
+                        onChange={(e) => setMarginTopUnitIsVisible(e.target.checked)}
+                        checked={marginTopUnitIsVisible}
+                      />
+                      <span>Top</span>
+                    </label>
                     <input
+                      aria-label="margin top"
                       value={marginTop}
                       type="number"
                       onChange={(e) => setMarginTop(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
                     />
+                    
                   </div>
                 </div>
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Right</label>
+                    <label>
+                      <input
+                        aria-label="show margin right unit"
+                        type="checkbox"
+                        onChange={(e) => setMarginRightUnitIsVisible(e.target.checked)}
+                        checked={marginRightUnitIsVisible}
+                      />
+                      <span>Right</span>
+                    </label>
                     <input
+                      aria-label="margin right"
                       value={marginRight}
                       type="number"
                       onChange={(e) => setMarginRight(parseInt(e.target.value))}
@@ -518,8 +583,17 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Bottom</label>
+                    <label>
+                      <input
+                        aria-label="show margin bottom unit"
+                        type="checkbox"
+                        onChange={(e) => setMarginBottomUnitIsVisible(e.target.checked)}
+                        checked={marginBottomUnitIsVisible}
+                      />
+                      <span>Bottom</span>
+                    </label>
                     <input
+                      aria-label="margin bottom"
                       value={marginBottom}
                       type="number"
                       onChange={(e) => setMarginBottom(parseInt(e.target.value))}
@@ -530,8 +604,17 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Left</label>
+                    <label>
+                      <input
+                        aria-label="show margin left unit"
+                        type="checkbox"
+                        onChange={(e) => setMarginLeftUnitIsVisible(e.target.checked)}
+                        checked={marginLeftUnitIsVisible}
+                      />
+                      <span>Left</span>
+                    </label>
                     <input
+                      aria-label="margin left"
                       value={marginLeft}
                       type="number"
                       onChange={(e) => setMarginLeft(parseInt(e.target.value))}
@@ -543,27 +626,40 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
               <div className="input-grid">
                 <div>
-                  <label>
+                  <div className="input-group">
+                    <label>
+                      <input
+                        aria-label="show margin label"
+                        type="checkbox"
+                        onChange={(e) => setMarginLabelIsVisible(e.target.checked)}
+                        checked={marginLabelIsVisible}
+                      />
+                      <span>Label</span>
+                    </label>
                     <input
-                      type="checkbox"
-                      onChange={(e) => setMarginLabelIsVisible(e.target.checked)}
-                      checked={marginLabelIsVisible}
+                      aria-label="margin label"
+                      value={marginLabel}
+                      type="text"
+                      onChange={(e) => setMarginLabel(e.target.value)}
+                      onClick={(e) => e.target.select()}
                     />
-                    <span>Show label</span>
-                  </label>
+                  </div>
                 </div>
 
                 <div>
-                  <label>
-                    <input
-                      type="checkbox"
-                      onChange={(e) => setMarginUnitsIsVisible(e.target.checked)}
-                      checked={marginUnitsIsVisible}
-                    />
-                    <span>Show units</span>
-                  </label>
+                  <div className="input-group">
+                    <label>Label Position</label>
+                    <select
+                      value={marginLabelPosition}
+                      onChange={(e) => setMarginLabelPosition(e.target.value)}
+                    >
+                      {labelPositionSelectOptions()}
+                    </select>
+                  </div>
                 </div>
+              </div>
 
+              <div className="input-grid">
                 <div>
                   <label>Label Color</label>
                   <div className="color-picker-input-grid">
@@ -572,7 +668,6 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         value={marginLabelColor}
                         type="color"
                         onChange={(e) => setMarginLabelColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
                       />
                     </div>
 
@@ -595,7 +690,6 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         value={marginBackgroundColor}
                         type="color"
                         onChange={(e) => setMarginBackgroundColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
                       />
                     </div>
 
@@ -611,14 +705,24 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 </div>
 
                 <div>
-                  <div className="input-group">
-                    <label>Label</label>
-                    <input
-                      value={marginLabel}
-                      type="text"
-                      onChange={(e) => setMarginLabel(e.target.value)}
-                      onClick={(e) => e.target.select()}
-                    />
+                  <label>Unit Color</label>
+                  <div className="color-picker-input-grid">
+                    <div>
+                      <input
+                        value={marginUnitColor}
+                        type="color"
+                        onChange={(e) => setMarginUnitColor(e.target.value)}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        value={marginUnitColor}
+                        type="text"
+                        onChange={(e) => setMarginUnitColor(e.target.value)}
+                        onClick={(e) => e.target.select()}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -634,23 +738,42 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
               >
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Top</label>
+                    <label>
+                      <input
+                        aria-label="show border top unit"
+                        type="checkbox"
+                        onChange={(e) => setBorderTopUnitIsVisible(e.target.checked)}
+                        checked={borderTopUnitIsVisible}
+                      />
+                      <span>Top</span>
+                    </label>
                     <input
-                      value={borderTopWidth}
+                      aria-label="border top"
+                      value={borderTop}
                       type="number"
-                      onChange={(e) => setBorderTopWidth(parseInt(e.target.value))}
+                      onChange={(e) => setBorderTop(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
                     />
+                    
                   </div>
                 </div>
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Right</label>
+                    <label>
+                      <input
+                        aria-label="show border right unit"
+                        type="checkbox"
+                        onChange={(e) => setBorderRightUnitIsVisible(e.target.checked)}
+                        checked={borderRightUnitIsVisible}
+                      />
+                      <span>Right</span>
+                    </label>
                     <input
-                      value={borderRightWidth}
+                      aria-label="border right"
+                      value={borderRight}
                       type="number"
-                      onChange={(e) => setBorderRightWidth(parseInt(e.target.value))}
+                      onChange={(e) => setBorderRight(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
                     />
                   </div>
@@ -667,11 +790,20 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Bottom</label>
+                    <label>
+                      <input
+                        aria-label="show border bottom unit"
+                        type="checkbox"
+                        onChange={(e) => setBorderBottomUnitIsVisible(e.target.checked)}
+                        checked={borderBottomUnitIsVisible}
+                      />
+                      <span>Bottom</span>
+                    </label>
                     <input
-                      value={borderBottomWidth}
+                      aria-label="margin bottom"
+                      value={borderBottom}
                       type="number"
-                      onChange={(e) => setBorderBottomWidth(parseInt(e.target.value))}
+                      onChange={(e) => setBorderBottom(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
                     />
                   </div>
@@ -679,11 +811,20 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Left</label>
+                    <label>
+                      <input
+                        aria-label="show border left unit"
+                        type="checkbox"
+                        onChange={(e) => setBorderLeftUnitIsVisible(e.target.checked)}
+                        checked={borderLeftUnitIsVisible}
+                      />
+                      <span>Left</span>
+                    </label>
                     <input
-                      value={borderLeftWidth}
+                      aria-label="border left"
+                      value={borderLeft}
                       type="number"
-                      onChange={(e) => setBorderLeftWidth(parseInt(e.target.value))}
+                      onChange={(e) => setBorderLeft(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
                     />
                   </div>
@@ -692,27 +833,40 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
               <div className="input-grid">
                 <div>
-                  <label>
+                  <div className="input-group">
+                    <label>
+                      <input
+                        aria-label="show margin label"
+                        type="checkbox"
+                        onChange={(e) => setBorderLabelIsVisible(e.target.checked)}
+                        checked={borderLabelIsVisible}
+                      />
+                      <span>Label</span>
+                    </label>
                     <input
-                      type="checkbox"
-                      onChange={(e) => setBorderLabelIsVisible(e.target.checked)}
-                      checked={borderLabelIsVisible}
+                      aria-label="border label"
+                      value={borderLabel}
+                      type="text"
+                      onChange={(e) => setBorderLabel(e.target.value)}
+                      onClick={(e) => e.target.select()}
                     />
-                    <span>Show label</span>
-                  </label>
+                  </div>
                 </div>
 
                 <div>
-                  <label>
-                    <input
-                      type="checkbox"
-                      onChange={(e) => setBorderUnitsIsVisible(e.target.checked)}
-                      checked={borderUnitsIsVisible}
-                    />
-                    <span>Show units</span>
-                  </label>
+                  <div className="input-group">
+                    <label>Label Position</label>
+                    <select
+                      value={borderLabelPosition}
+                      onChange={(e) => setBorderLabelPosition(e.target.value)}
+                    >
+                      {labelPositionSelectOptions()}
+                    </select>
+                  </div>
                 </div>
+              </div>
 
+              <div className="input-grid">
                 <div>
                   <label>Label Color</label>
                   <div className="color-picker-input-grid">
@@ -721,7 +875,6 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         value={borderLabelColor}
                         type="color"
                         onChange={(e) => setBorderLabelColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
                       />
                     </div>
 
@@ -744,7 +897,6 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         value={borderBackgroundColor}
                         type="color"
                         onChange={(e) => setBorderBackgroundColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
                       />
                     </div>
 
@@ -756,18 +908,6 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         onClick={(e) => e.target.select()}
                       />
                     </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="input-group">
-                    <label>Label</label>
-                    <input
-                      value={borderLabel}
-                      type="text"
-                      onChange={(e) => setBorderLabel(e.target.value)}
-                      onClick={(e) => e.target.select()}
-                    />
                   </div>
                 </div>
               </div>
@@ -783,20 +923,39 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
               >
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Top</label>
+                    <label>
+                      <input
+                        aria-label="show padding top unit"
+                        type="checkbox"
+                        onChange={(e) => setPaddingTopUnitIsVisible(e.target.checked)}
+                        checked={paddingTopUnitIsVisible}
+                      />
+                      <span>Top</span>
+                    </label>
                     <input
+                      aria-label="padding top"
                       value={paddingTop}
                       type="number"
                       onChange={(e) => setPaddingTop(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
                     />
+                    
                   </div>
                 </div>
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Right</label>
+                    <label>
+                      <input
+                        aria-label="show padding right unit"
+                        type="checkbox"
+                        onChange={(e) => setPaddingRightUnitIsVisible(e.target.checked)}
+                        checked={paddingRightUnitIsVisible}
+                      />
+                      <span>Right</span>
+                    </label>
                     <input
+                      aria-label="padding right"
                       value={paddingRight}
                       type="number"
                       onChange={(e) => setPaddingRight(parseInt(e.target.value))}
@@ -816,8 +975,17 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Bottom</label>
+                    <label>
+                      <input
+                        aria-label="show padding bottom unit"
+                        type="checkbox"
+                        onChange={(e) => setPaddingBottomUnitIsVisible(e.target.checked)}
+                        checked={paddingBottomUnitIsVisible}
+                      />
+                      <span>Bottom</span>
+                    </label>
                     <input
+                      aria-label="padding bottom"
                       value={paddingBottom}
                       type="number"
                       onChange={(e) => setPaddingBottom(parseInt(e.target.value))}
@@ -828,8 +996,17 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Left</label>
+                    <label>
+                      <input
+                        aria-label="show padding left unit"
+                        type="checkbox"
+                        onChange={(e) => setPaddingLeftUnitIsVisible(e.target.checked)}
+                        checked={paddingLeftUnitIsVisible}
+                      />
+                      <span>Left</span>
+                    </label>
                     <input
+                      aria-label="padding left"
                       value={paddingLeft}
                       type="number"
                       onChange={(e) => setPaddingLeft(parseInt(e.target.value))}
@@ -841,27 +1018,40 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
               <div className="input-grid">
                 <div>
-                  <label>
+                  <div className="input-group">
+                    <label>
+                      <input
+                        aria-label="show padding label"
+                        type="checkbox"
+                        onChange={(e) => setPaddingLabelIsVisible(e.target.checked)}
+                        checked={paddingLabelIsVisible}
+                      />
+                      <span>Label</span>
+                    </label>
                     <input
-                      type="checkbox"
-                      onChange={(e) => setPaddingLabelIsVisible(e.target.checked)}
-                      checked={paddingLabelIsVisible}
+                      aria-label="padding label"
+                      value={paddingLabel}
+                      type="text"
+                      onChange={(e) => setPaddingLabel(e.target.value)}
+                      onClick={(e) => e.target.select()}
                     />
-                    <span>Show label</span>
-                  </label>
+                  </div>
                 </div>
 
                 <div>
-                  <label>
-                    <input
-                      type="checkbox"
-                      onChange={(e) => setPaddingUnitsIsVisible(e.target.checked)}
-                      checked={paddingUnitsIsVisible}
-                    />
-                    <span>Show units</span>
-                  </label>
+                  <div className="input-group">
+                    <label>Label Position</label>
+                    <select
+                      value={paddingLabelPosition}
+                      onChange={(e) => setPaddingLabelPosition(e.target.value)}
+                    >
+                      {labelPositionSelectOptions()}
+                    </select>
+                  </div>
                 </div>
+              </div>
 
+              <div className="input-grid">
                 <div>
                   <label>Label Color</label>
                   <div className="color-picker-input-grid">
@@ -870,13 +1060,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         value={paddingLabelColor}
                         type="color"
                         onChange={(e) => setPaddingLabelColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
                       />
                     </div>
 
                     <div>
                       <input
-                        value={marginLabelColor}
+                        value={paddingLabelColor}
                         type="text"
                         onChange={(e) => setPaddingBackgroundColor(e.target.value)}
                         onClick={(e) => e.target.select()}
@@ -893,7 +1082,6 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         value={paddingBackgroundColor}
                         type="color"
                         onChange={(e) => setPaddingBackgroundColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
                       />
                     </div>
 
@@ -905,18 +1093,6 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         onClick={(e) => e.target.select()}
                       />
                     </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="input-group">
-                    <label>Label</label>
-                    <input
-                      value={paddingLabel}
-                      type="text"
-                      onChange={(e) => setPaddingLabel(e.target.value)}
-                      onClick={(e) => e.target.select()}
-                    />
                   </div>
                 </div>
               </div>
@@ -932,8 +1108,17 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
               >
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Width</label>
+                    <label>
+                      <input
+                        aria-label="show element width"
+                        type="checkbox"
+                        onChange={(e) => setElementWidthUnitIsVisible(e.target.checked)}
+                        checked={elementWidthUnitIsVisible}
+                      />
+                      <span>Width</span>
+                    </label>
                     <input
+                      aria-label="element width"
                       value={elementWidth}
                       type="number"
                       onChange={(e) => setElementWidth(parseInt(e.target.value))}
@@ -962,8 +1147,17 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>Height</label>
+                    <label>
+                      <input
+                        aria-label="show element height"
+                        type="checkbox"
+                        onChange={(e) => setElementHeightUnitIsVisible(e.target.checked)}
+                        checked={elementHeightUnitIsVisible}
+                      />
+                      <span>Height</span>
+                    </label>
                     <input
+                      aria-label="element height"
                       value={elementHeight}
                       type="number"
                       onChange={(e) => setElementHeight(parseInt(e.target.value))}
@@ -975,27 +1169,40 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
               <div className="input-grid">
                 <div>
-                  <label>
+                  <div className="input-group">
+                    <label>
+                      <input
+                        aria-label="show element label"
+                        type="checkbox"
+                        onChange={(e) => setElementLabelIsVisible(e.target.checked)}
+                        checked={elementLabelIsVisible}
+                      />
+                      <span>Label</span>
+                    </label>
                     <input
-                      type="checkbox"
-                      onChange={(e) => setElementLabelIsVisible(e.target.checked)}
-                      checked={elementLabelIsVisible}
+                      aria-label="element label"
+                      value={elementLabel}
+                      type="text"
+                      onChange={(e) => setElementLabel(e.target.value)}
+                      onClick={(e) => e.target.select()}
                     />
-                    <span>Show label</span>
-                  </label>
+                  </div>
                 </div>
 
                 <div>
-                  <label>
-                    <input
-                      type="checkbox"
-                      onChange={(e) => setElementUnitsIsVisible(e.target.checked)}
-                      checked={elementUnitsIsVisible}
-                    />
-                    <span>Show units</span>
-                  </label>
+                  <div className="input-group">
+                    <label>Label Position</label>
+                    <select
+                      value={elementLabelPosition}
+                      onChange={(e) => setElementLabelPosition(e.target.value)}
+                    >
+                      {labelPositionSelectOptions()}
+                    </select>
+                  </div>
                 </div>
+              </div>
 
+              <div className="input-grid">
                 <div>
                   <label>Label Color</label>
                   <div className="color-picker-input-grid">
@@ -1004,7 +1211,6 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         value={elementLabelColor}
                         type="color"
                         onChange={(e) => setElementLabelColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
                       />
                     </div>
 
@@ -1027,7 +1233,6 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         value={elementBackgroundColor}
                         type="color"
                         onChange={(e) => setElementBackgroundColor(e.target.value)}
-                        onClick={(e) => e.target.select()}
                       />
                     </div>
 
@@ -1039,18 +1244,6 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         onClick={(e) => e.target.select()}
                       />
                     </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="input-group">
-                    <label>Label</label>
-                    <input
-                      value={elementLabel}
-                      type="text"
-                      onChange={(e) => setElementLabel(e.target.value)}
-                      onClick={(e) => e.target.select()}
-                    />
                   </div>
                 </div>
               </div>
@@ -1068,7 +1261,6 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             <div
               css={css({
                 background: marginBackgroundColor,
-                color: marginLabelColor,
                 display: 'inline-flex',
                 fontSize: tokens.font.size.xs,
                 paddingTop: marginTop,
@@ -1098,6 +1290,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   css={css({
                     alignItems: 'center',
                     display: 'flex',
+                    color: marginLabelColor,
                     justifyContent: 'flex-start',
                     left: 0,
                     lineHeight: 1,
@@ -1112,83 +1305,90 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   {marginLabel}
                 </div>
               )}
-              {marginUnitsIsVisible && (
-                <>
-                  <div
-                    css={css({
-                      alignItems: 'center',
-                      display: 'flex',
-                      height: marginTop,
-                      justifyContent: 'center',
-                      left: 0,
-                      opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                      position: 'absolute',
-                      top: 0,
-                      width: '100%',
-                      zIndex: 8,
-                    })}
-                  >
-                    {marginTop.toLocaleString()}
-                  </div>
-                  <div
-                    css={css({
-                      alignItems: 'center',
-                      display: 'flex',
-                      height: '100%',
-                      justifyContent: 'center',
-                      opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                      position: 'absolute',
-                      right: 0,
-                      top: 0,
-                      width: marginRight,
-                      zIndex: 8,
-                    })}
-                  >
-                    {marginRight.toLocaleString()}
-                  </div>
-                  <div
-                    css={css({
-                      alignItems: 'center',
-                      display: 'flex',
-                      height: marginBottom,
-                      justifyContent: 'center',
-                      left: 0,
-                      opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                      position: 'absolute',
-                      bottom: 0,
-                      width: '100%',
-                      zIndex: 8,
-                    })}
-                  >
-                    {marginBottom.toLocaleString()}
-                  </div>
-                  <div
-                    css={css({
-                      alignItems: 'center',
-                      display: 'flex',
-                      height: '100%',
-                      justifyContent: 'center',
-                      left: 0,
-                      opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                      position: 'absolute',
-                      top: 0,
-                      width: marginLeft,
-                      zIndex: 8,
-                    })}
-                  >
-                    {marginLeft.toLocaleString()}
-                  </div>
-                </>
+              {marginTopUnitIsVisible && (
+                <div
+                  css={css({
+                    alignItems: 'center',
+                    color: marginUnitColor,
+                    display: 'flex',
+                    height: marginTop,
+                    justifyContent: 'center',
+                    left: 0,
+                    opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                    position: 'absolute',
+                    top: 0,
+                    width: '100%',
+                    zIndex: 8,
+                  })}
+                >
+                  {marginTop.toLocaleString()}
+                </div>
+              )}
+              {marginRightUnitIsVisible && (
+                <div
+                  css={css({
+                    alignItems: 'center',
+                    color: marginUnitColor,
+                    display: 'flex',
+                    height: '100%',
+                    justifyContent: 'center',
+                    opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                    position: 'absolute',
+                    right: 0,
+                    top: 0,
+                    width: marginRight,
+                    zIndex: 8,
+                  })}
+                >
+                  {marginRight.toLocaleString()}
+                </div>
+              )}
+              {marginBottomUnitIsVisible && (
+                <div
+                  css={css({
+                    alignItems: 'center',
+                    color: marginUnitColor,
+                    display: 'flex',
+                    height: marginBottom,
+                    justifyContent: 'center',
+                    left: 0,
+                    opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                    position: 'absolute',
+                    bottom: 0,
+                    width: '100%',
+                    zIndex: 8,
+                  })}
+                >
+                  {marginBottom.toLocaleString()}
+                </div>
+              )}
+              {marginLeftUnitIsVisible && (
+                <div
+                  css={css({
+                    alignItems: 'center',
+                    color: marginUnitColor,
+                    display: 'flex',
+                    height: '100%',
+                    justifyContent: 'center',
+                    left: 0,
+                    opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                    position: 'absolute',
+                    top: 0,
+                    width: marginLeft,
+                    zIndex: 8,
+                  })}
+                >
+                  {marginLeft.toLocaleString()}
+                </div>
               )}
               <div
                 css={css({
                   background: borderBackgroundColor,
-                  color: borderLabelColor,
                   display: 'inline-flex',
-                  paddingTop: borderTopWidth,
-                  paddingRight: borderRightWidth,
-                  paddingBottom: borderBottomWidth,
-                  paddingLeft: borderLeftWidth,
+                  paddingTop: borderTop,
+                  paddingRight: borderRight,
+                  paddingBottom: borderBottom,
+                  paddingLeft: borderLeft,
                   position: 'relative',
                   zIndex: 2,
                   '&::before': {
@@ -1209,6 +1409,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div
                     css={css({
                       alignItems: 'center',
+                      color: borderLabelColor,
                       display: 'flex',
                       justifyContent: 'flex-start',
                       left: 0,
@@ -1224,79 +1425,86 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     {borderLabel}
                   </div>
                 )}
-                {borderUnitsIsVisible && (
-                  <>
-                    <div
-                      css={css({
-                        alignItems: 'center',
-                        display: 'flex',
-                        height: borderTopWidth,
-                        justifyContent: 'center',
-                        left: 0,
-                        opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                        position: 'absolute',
-                        top: 0,
-                        width: '100%',
-                        zIndex: 8,
-                      })}
-                    >
-                      {borderTopWidth.toLocaleString()}
-                    </div>
-                    <div
-                      css={css({
-                        alignItems: 'center',
-                        display: 'flex',
-                        height: '100%',
-                        justifyContent: 'center',
-                        opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                        position: 'absolute',
-                        right: 0,
-                        top: 0,
-                        width: borderRightWidth,
-                        zIndex: 8,
-                      })}
-                    >
-                      {borderRightWidth.toLocaleString()}
-                    </div>
-                    <div
-                      css={css({
-                        alignItems: 'center',
-                        display: 'flex',
-                        height: borderBottomWidth,
-                        justifyContent: 'center',
-                        left: 0,
-                        opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                        position: 'absolute',
-                        bottom: 0,
-                        width: '100%',
-                        zIndex: 8,
-                      })}
-                    >
-                      {borderBottomWidth.toLocaleString()}
-                    </div>
-                    <div
-                      css={css({
-                        alignItems: 'center',
-                        display: 'flex',
-                        height: '100%',
-                        justifyContent: 'center',
-                        left: 0,
-                        opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                        position: 'absolute',
-                        top: 0,
-                        width: borderLeftWidth,
-                        zIndex: 8,
-                      })}
-                    >
-                      {borderLeftWidth.toLocaleString()}
-                    </div>
-                  </>
+                {borderTopUnitIsVisible && (
+                  <div
+                    css={css({
+                      alignItems: 'center',
+                      color: borderUnitColor,
+                      display: 'flex',
+                      height: borderTop,
+                      justifyContent: 'center',
+                      left: 0,
+                      opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      position: 'absolute',
+                      top: 0,
+                      width: '100%',
+                      zIndex: 8,
+                    })}
+                  >
+                    {borderTop.toLocaleString()}
+                  </div>
+                )}
+                {borderRightUnitIsVisible && (
+                  <div
+                    css={css({
+                      alignItems: 'center',
+                      color: borderUnitColor,
+                      display: 'flex',
+                      height: '100%',
+                      justifyContent: 'center',
+                      opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      position: 'absolute',
+                      right: 0,
+                      top: 0,
+                      width: borderRight,
+                      zIndex: 8,
+                    })}
+                  >
+                    {borderRight.toLocaleString()}
+                  </div>
+                )}
+                {borderBottomUnitIsVisible && (
+                  <div
+                    css={css({
+                      alignItems: 'center',
+                      color: borderUnitColor,
+                      display: 'flex',
+                      height: borderBottom,
+                      justifyContent: 'center',
+                      left: 0,
+                      opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      position: 'absolute',
+                      bottom: 0,
+                      width: '100%',
+                      zIndex: 8,
+                    })}
+                  >
+                    {borderBottom.toLocaleString()}
+                  </div>
+                )}
+                {borderLeftUnitIsVisible && (
+                  <div
+                    css={css({
+                      alignItems: 'center',
+                      color: borderUnitColor,
+                      display: 'flex',
+                      height: '100%',
+                      justifyContent: 'center',
+                      left: 0,
+                      opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      position: 'absolute',
+                      top: 0,
+                      width: borderLeft,
+                      zIndex: 8,
+                    })}
+                  >
+                    {borderLeft.toLocaleString()}
+                  </div>
                 )}
                 <div
                   css={css({
                     alignItems: 'center',
                     background: paddingBackgroundColor,
-                    color: paddingLabelColor,
                     display: 'inline-flex',
                     justifyContent: 'center',
                     paddingTop,
@@ -1323,6 +1531,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     <div
                       css={css({
                         alignItems: 'center',
+                        color: paddingLabelColor,
                         display: 'flex',
                         justifyContent: 'flex-start',
                         left: 0,
@@ -1338,81 +1547,88 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       {paddingLabel}
                     </div>
                   )}
-                  {paddingUnitsIsVisible && (
-                    <>
-                      <div
-                        css={css({
-                          alignItems: 'center',
-                          display: 'flex',
-                          height: paddingTop,
-                          justifyContent: 'center',
-                          left: 0,
-                          opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                          position: 'absolute',
-                          top: 0,
-                          width: '100%',
-                          zIndex: 8,
-                        })}
-                      >
-                        {paddingTop.toLocaleString()}
-                      </div>
-                      <div
-                        css={css({
-                          alignItems: 'center',
-                          display: 'flex',
-                          height: '100%',
-                          justifyContent: 'center',
-                          opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                          position: 'absolute',
-                          right: 0,
-                          top: 0,
-                          width: paddingRight,
-                          zIndex: 8,
-                        })}
-                      >
-                        {paddingRight.toLocaleString()}
-                      </div>
-                      <div
-                        css={css({
-                          alignItems: 'center',
-                          display: 'flex',
-                          height: paddingBottom,
-                          justifyContent: 'center',
-                          left: 0,
-                          opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                          position: 'absolute',
-                          bottom: 0,
-                          width: '100%',
-                          zIndex: 8,
-                        })}
-                      >
-                        {paddingBottom.toLocaleString()}
-                      </div>
-                      <div
-                        css={css({
-                          alignItems: 'center',
-                          display: 'flex',
-                          height: '100%',
-                          justifyContent: 'center',
-                          left: 0,
-                          opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                          position: 'absolute',
-                          top: 0,
-                          width: paddingLeft,
-                          zIndex: 8,
-                        })}
-                      >
-                        {paddingLeft.toLocaleString()}
-                      </div>
-                    </>
+                  {paddingTopUnitIsVisible && (
+                    <div
+                      css={css({
+                        alignItems: 'center',
+                        color: paddingUnitColor,
+                        display: 'flex',
+                        height: paddingTop,
+                        justifyContent: 'center',
+                        left: 0,
+                        opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        position: 'absolute',
+                        top: 0,
+                        width: '100%',
+                        zIndex: 8,
+                      })}
+                    >
+                      {paddingTop.toLocaleString()}
+                    </div>
+                  )}
+                  {paddingRightUnitIsVisible && (
+                    <div
+                      css={css({
+                        alignItems: 'center',
+                        color: paddingUnitColor,
+                        display: 'flex',
+                        height: '100%',
+                        justifyContent: 'center',
+                        opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        position: 'absolute',
+                        right: 0,
+                        top: 0,
+                        width: paddingRight,
+                        zIndex: 8,
+                      })}
+                    >
+                      {paddingRight.toLocaleString()}
+                    </div>
+                  )}
+                  {paddingBottomUnitIsVisible && (
+                    <div
+                      css={css({
+                        alignItems: 'center',
+                        color: paddingUnitColor,
+                        display: 'flex',
+                        height: paddingBottom,
+                        justifyContent: 'center',
+                        left: 0,
+                        opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        position: 'absolute',
+                        bottom: 0,
+                        width: '100%',
+                        zIndex: 8,
+                      })}
+                    >
+                      {paddingBottom.toLocaleString()}
+                    </div>
+                  )}
+                  {paddingLeftUnitIsVisible && (
+                    <div
+                      css={css({
+                        alignItems: 'center',
+                        color: paddingUnitColor,
+                        display: 'flex',
+                        height: '100%',
+                        justifyContent: 'center',
+                        left: 0,
+                        opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        position: 'absolute',
+                        top: 0,
+                        width: paddingLeft,
+                        zIndex: 8,
+                      })}
+                    >
+                      {paddingLeft.toLocaleString()}
+                    </div>
                   )}
                   <div
                     css={css({
                       background: elementBackgroundColor,
-                      color: elementLabelColor,
-                      height: elementHeight - (borderTopWidth + borderBottomWidth) - (paddingTop + paddingBottom),
+                      height: elementHeight - (borderTop + borderBottom) - (paddingTop + paddingBottom),
                       position: 'relative',
-                      width: elementWidth - (borderRightWidth + borderLeftWidth) - (paddingRight + paddingLeft),
+                      width: elementWidth - (borderRight + borderLeft) - (paddingRight + paddingLeft),
                       zIndex: 6,
                       '&::before': {
                         background: tokens.color.background.default,
@@ -1432,6 +1648,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       <div
                         css={css({
                           alignItems: 'center',
+                          color: elementLabelColor,
                           display: 'flex',
                           justifyContent: 'flex-start',
                           left: 0,
@@ -1447,10 +1664,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                         {elementLabel}
                       </div>
                     )}
-                    {elementUnitsIsVisible && (
+                    {(elementWidthUnitIsVisible || elementHeightUnitIsVisible) && (
                       <div
                         css={css({
                           alignItems: 'center',
+                          color: elementUnitColor,
                           display: 'flex',
                           height: '100%',
                           justifyContent: 'center',
@@ -1462,9 +1680,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                           zIndex: 8,
                         })}
                       >
-                        {elementWidth.toLocaleString()} x {elementHeight.toLocaleString()}
+                        {elementWidthUnitIsVisible && (<span>{elementWidth.toLocaleString()}</span>)}
+                        {(elementWidthUnitIsVisible && elementHeightUnitIsVisible) && (<span>&nbsp;x&nbsp;</span>)}
+                        {elementHeightUnitIsVisible && (<span>{elementHeight.toLocaleString()}</span>)}
                       </div>
-                  )}
+                    )}
                   </div>
                 </div>
               </div>
@@ -1503,36 +1723,44 @@ BoxModelVisualizer.defaultProps = {
   margin: {
     backgroundColor: '#f8cca1',
     labelColor: tokens.color.text.default,
+    unitColor: tokens.color.text.default,
     top: 32,
     right: 32,
     bottom: 32,
     left: 32,
     label: 'margin',
+    labelPosition: 'itl',
   },
   border: {
     backgroundColor: '#fde1a0',
     labelColor: tokens.color.text.default,
+    unitColor: tokens.color.text.default,
     top: 8,
     right: 8,
     bottom: 8,
     left: 8,
     label: 'border',
+    labelPosition: 'itl',
   },
   padding: {
     backgroundColor: '#c4ddb9',
     labelColor: tokens.color.text.default,
+    unitColor: tokens.color.text.default,
     top: 16,
     right: 16,
     bottom: 16,
     left: 16,
     label: 'padding',
+    labelPosition: 'itl',
   },
   element: {
     backgroundColor: '#a1c6e7',
     labelColor: tokens.color.text.default,
+    unitColor: tokens.color.text.default,
     width: 200,
     height: 200,
     label: 'element',
+    labelPosition: 'itl',
   },
 }
 
