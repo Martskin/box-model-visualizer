@@ -77,13 +77,13 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   const [elementIsHighlighted, setElementIsHighlighted] = useState(false)
 
   const styleBlock = `
-  /* margin properties */
+  /* margin positionProperties */
   margin-top: ${marginTop}px;
   margin-right: ${marginRight}px;
   margin-bottom: ${marginBottom}px;
   margin-left: ${marginLeft}px;
 
-  /* border properties */
+  /* border positionProperties */
   border-color: ${borderBackgroundColor};
   border-style: solid;
   border-top-width: ${borderTop}px;
@@ -91,13 +91,13 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   border-bottom-width: ${borderBottom}px;
   border-left-width: ${borderLeft}px;
 
-  /* padding properties */
+  /* padding positionProperties */
   padding-top: ${paddingTop}px;
   padding-right: ${paddingRight}px;
   padding-bottom: ${paddingBottom}px;
   padding-left: ${paddingLeft}px;
 
-  /* element size properties */
+  /* element size positionProperties */
   box-sizing: border-box;
   width: ${elementWidth}px;
   height: ${elementHeight}px;
@@ -276,7 +276,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
     }, 5000)
   }
 
-  function resetProperties() {
+  function resetpositionProperties() {
     window.location = '/'
   }
 
@@ -310,28 +310,38 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         <option value="itl">Inside top left</option>
         <option value="itc">Inside top center</option>
         <option value="itr">Inside top right</option>
-        <option value="ibl">Inside bottom left</option>
-        <option value="ibc">Inside bottom center</option>
         <option value="ibr">Inside bottom right</option>
+        <option value="ibc">Inside bottom center</option>
+        <option value="ibl">Inside bottom left</option>
         {elementSpecificOption}
         <option value="otl">Outside top left</option>
         <option value="otc">Outside top center</option>
         <option value="otr">Outside top right</option>
-        <option value="obl">Outside bottom left</option>
-        <option value="obc">Outside bottom center</option>
+        <option value="ort">Outside right top</option>
+        <option value="orm">Outside right middle</option>
+        <option value="orb">Outside right bottom</option>
         <option value="obr">Outside bottom right</option>
+        <option value="obc">Outside bottom center</option>
+        <option value="obl">Outside bottom left</option>
+        <option value="olb">Outside left bottom</option>
+        <option value="olm">Outside left middle</option>
+        <option value="olt">Outside left top</option>
       </>
     )
   }
 
-  function getLabelPositionStyles(label) {
+  function getLabelStyles(label) {
     let labelPosition
     let labelOffset = {}
-    let properties = {}
+    let labelColor
+    let isDimmed
+    let positionProperties = {}
 
     switch (label) {
       case ('margin'):
         labelPosition = marginLabelPosition
+        labelColor = marginLabelColor
+        isDimmed = borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted
         labelOffset = {
           top: 0,
           right: 0,
@@ -341,6 +351,8 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         break
       case ('border'):
         labelPosition = borderLabelPosition
+        labelColor = borderLabelColor
+        isDimmed = marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted
         labelOffset = {
           top: marginTop,
           right: marginRight,
@@ -350,6 +362,8 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         break
       case ('padding'):
         labelPosition = paddingLabelPosition
+        labelColor = paddingLabelColor
+        isDimmed = marginIsHighlighted || borderIsHighlighted || elementIsHighlighted
         labelOffset = {
           top: marginTop + borderTop,
           right: marginRight + borderRight,
@@ -359,6 +373,8 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         break
       case ('element'):
         labelPosition = elementLabelPosition
+        labelColor = elementLabelColor
+        isDimmed = marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted
         labelOffset = {
           top: marginTop + borderTop + paddingTop,
           right: marginRight + borderRight + paddingRight,
@@ -377,7 +393,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
     switch (labelPosition) {
       case ('itl'):
-        properties = {
+        positionProperties = {
           justifyContent: 'flex-start',
           left: 0,
           top: 0,
@@ -385,7 +401,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         }
         break
       case ('itc'):
-        properties = {
+        positionProperties = {
           justifyContent: 'center',
           left: 0,
           top: 0,
@@ -393,22 +409,57 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         }
         break
       case ('itr'):
-        properties = {
+        positionProperties = {
           justifyContent: 'flex-end',
           left: 0,
           top: 0,
           width: '100%',
         }
         break
-      case ('otl'):
-        properties = {
+      case ('ibr'):
+        positionProperties = {
+          justifyContent: 'flex-end',
+          left: 0,
+          bottom: 0,
+          width: '100%',
+        }
+        break
+      case ('ibc'):
+        positionProperties = {
+          justifyContent: 'center',
+          left: 0,
+          bottom: 0,
+          width: '100%',
+        }
+        break
+      case ('ibl'):
+        positionProperties = {
           justifyContent: 'flex-start',
-          right: `calc(100% + ${labelOffset.left}px)`,
+          left: 0,
+          bottom: 0,
+          width: '100%',
+        }
+        break
+      case ('imc'):
+        positionProperties = {
+          alignItems: 'center',
+          height: '100%',
+          justifyContent: 'center',
+          left: 0,
           top: 0,
+          width: '100%',
+        }
+        break
+      case ('otl'):
+        positionProperties = {
+          justifyContent: 'flex-start',
+          left: 0,
+          top: `calc(-14px - ${labelOffset.top}px)`,
+          width: '100%',
         }
         break
       case ('otc'):
-        properties = {
+        positionProperties = {
           justifyContent: 'center',
           left: 0,
           top: `calc(-14px - ${labelOffset.top}px)`,
@@ -416,70 +467,85 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         }
         break
       case ('otr'):
-        properties = {
+        positionProperties = {
+          justifyContent: 'flex-end',
+          left: 0,
+          top: `calc(-14px - ${labelOffset.top}px)`,
+          width: '100%',
+        }
+        break
+      case ('ort'):
+        positionProperties = {
           justifyContent: 'flex-start',
           left: `calc(100% + ${labelOffset.right}px)`,
           top: 0,
         }
         break
-      case ('ibl'):
-        properties = {
+      case ('orm'):
+        positionProperties = {
+          alignItems: 'center',
+          height: '100%',
           justifyContent: 'flex-start',
-          left: 0,
-          bottom: 0,
-          width: '100%',
+          left: `calc(100% + ${labelOffset.right}px)`,
+          top: 0,
         }
         break
-      case ('ibc'):
-        properties = {
-          justifyContent: 'center',
-          left: 0,
+      case ('orb'):
+        positionProperties = {
+          justifyContent: 'flex-start',
+          left: `calc(100% + ${labelOffset.right}px)`,
           bottom: 0,
-          width: '100%',
         }
         break
-      case ('ibr'):
-        properties = {
+      case ('obr'):
+        positionProperties = {
           justifyContent: 'flex-end',
           left: 0,
-          bottom: 0,
+          bottom: `calc(-14px - ${labelOffset.bottom}px)`,
           width: '100%',
-        }
-        break
-      case ('imc'):
-        properties = {
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100%',
-          left: 0,
-          top: 0,
-          width: '100%',
-        }
-        break
-      case ('obl'):
-        properties = {
-          justifyContent: 'flex-start',
-          right: `calc(100% + ${labelOffset.left}px)`,
-          bottom: 0,
         }
         break
       case ('obc'):
-        properties = {
+        positionProperties = {
           justifyContent: 'center',
           left: 0,
           bottom: `calc(-14px - ${labelOffset.bottom}px)`,
           width: '100%',
         }
         break
-      case ('obr'):
-        properties = {
+      case ('obl'):
+        positionProperties = {
           justifyContent: 'flex-start',
-          left: `calc(100% + ${labelOffset.right}px)`,
+          left: 0,
+          bottom: `calc(-14px - ${labelOffset.bottom}px)`,
+          width: '100%',
+        }
+        break
+      case ('olb'):
+        positionProperties = {
+          justifyContent: 'flex-start',
+          right: `calc(100% + ${labelOffset.left}px)`,
           bottom: 0,
         }
         break
+      case ('olm'):
+        positionProperties = {
+          alignItems: 'center',
+          height: '100%',
+          justifyContent: 'flex-start',
+          right: `calc(100% + ${labelOffset.left}px)`,
+          bottom: 0,
+        }
+        break
+      case ('olt'):
+        positionProperties = {
+          justifyContent: 'flex-start',
+          right: `calc(100% + ${labelOffset.left}px)`,
+          top: 0,
+        }
+        break
       default:
-        properties = {
+        positionProperties = {
           justifyContent: 'flex-start',
           left: 0,
           top: 0,
@@ -490,12 +556,13 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
     return (
       {
         display: 'flex',
-        color: marginLabelColor,
+        color: labelColor,
         lineHeight: 1,
+        opacity: isDimmed ? '.25' : 1,
         padding: tokens.space.xxxs,
         position: 'absolute',
         zIndex: 8,
-        ...properties,
+        ...positionProperties,
       }
     )
   }
@@ -691,7 +758,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         })}
       >
         <div>
-          <h2>Properties</h2>
+          <h2>positionProperties</h2>
           <form>
             <fieldset>
               <div
@@ -717,7 +784,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   />
                 </div>
                 <div>
-                  <Button label="Reset" onClick={() => resetProperties() } size="small" />
+                  <Button label="Reset" onClick={() => resetpositionProperties() } size="small" />
                 </div>
               </div>
             </fieldset>
@@ -1612,8 +1679,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
               {marginLabelIsVisible && (
                 <div
                   css={css({
-                    ...getLabelPositionStyles('margin'),
-                    opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                    ...getLabelStyles('margin'),
                   })}
                 >
                   {marginLabel}
@@ -1722,8 +1788,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 {borderLabelIsVisible && (
                   <div
                     css={css({
-                    ...getLabelPositionStyles('border'),
-                    opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                    ...getLabelStyles('border'),
                   })}
                   >
                     {borderLabel}
@@ -1834,8 +1899,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   {paddingLabelIsVisible && (
                     <div
                       css={css({
-                        ...getLabelPositionStyles('padding'),
-                        opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        ...getLabelStyles('padding'),
                       })}
                     >
                       {paddingLabel}
@@ -1941,8 +2005,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     {elementLabelIsVisible && (
                       <div
                         css={css({
-                        ...getLabelPositionStyles('element'),
-                        opacity: (marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted) ? '.25' : 1,
+                        ...getLabelStyles('element'),
                       })}
                       >
                         {elementLabel}
