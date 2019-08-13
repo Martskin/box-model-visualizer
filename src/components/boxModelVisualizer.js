@@ -77,13 +77,13 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   const [elementIsHighlighted, setElementIsHighlighted] = useState(false)
 
   const styleBlock = `
-  /* margin positionProperties */
+  /* margin properties */
   margin-top: ${marginTop}px;
   margin-right: ${marginRight}px;
   margin-bottom: ${marginBottom}px;
   margin-left: ${marginLeft}px;
 
-  /* border positionProperties */
+  /* border properties */
   border-color: ${borderBackgroundColor};
   border-style: solid;
   border-top-width: ${borderTop}px;
@@ -91,13 +91,13 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   border-bottom-width: ${borderBottom}px;
   border-left-width: ${borderLeft}px;
 
-  /* padding positionProperties */
+  /* padding properties */
   padding-top: ${paddingTop}px;
   padding-right: ${paddingRight}px;
   padding-bottom: ${paddingBottom}px;
   padding-left: ${paddingLeft}px;
 
-  /* element size positionProperties */
+  /* element size properties */
   box-sizing: border-box;
   width: ${elementWidth}px;
   height: ${elementHeight}px;
@@ -150,9 +150,29 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
       var: marginLabelIsVisible,
       func: (val) => {setMarginLabelIsVisible(truthyHelper(val))}
     },
-    muv: {
+    mlbp: {
+      var: marginLabelPosition,
+      func: (val) => {setMarginLabelPosition(val)}
+    },
+    muc: {
+      var: marginUnitColor,
+      func: (val) => {setMarginUnitColor(val)}
+    },
+    mtuv: {
       var: marginTopUnitIsVisible,
       func: (val) => {setMarginTopUnitIsVisible(truthyHelper(val))}
+    },
+    mruv: {
+      var: marginRightUnitIsVisible,
+      func: (val) => {setMarginRightUnitIsVisible(truthyHelper(val))}
+    },
+    mbuv: {
+      var: marginBottomUnitIsVisible,
+      func: (val) => {setMarginBottomUnitIsVisible(truthyHelper(val))}
+    },
+    mluv: {
+      var: marginLeftUnitIsVisible,
+      func: (val) => {setMarginLeftUnitIsVisible(truthyHelper(val))}
     },
     
     bt: {
@@ -187,9 +207,29 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
       var: borderLabelIsVisible,
       func: (val) => {setBorderLabelIsVisible(truthyHelper(val))}
     },
-    buv: {
+    blbp: {
+      var: borderLabelPosition,
+      func: (val) => {setBorderLabelPosition(val)}
+    },
+    buc: {
+      var: borderUnitColor,
+      func: (val) => {setBorderUnitColor(val)}
+    },
+    btuv: {
       var: borderTopUnitIsVisible,
       func: (val) => {setBorderTopUnitIsVisible(truthyHelper(val))}
+    },
+    bruv: {
+      var: borderRightUnitIsVisible,
+      func: (val) => {setBorderRightUnitIsVisible(truthyHelper(val))}
+    },
+    bbuv: {
+      var: borderBottomUnitIsVisible,
+      func: (val) => {setBorderBottomUnitIsVisible(truthyHelper(val))}
+    },
+    bluv: {
+      var: borderLeftUnitIsVisible,
+      func: (val) => {setBorderLeftUnitIsVisible(truthyHelper(val))}
     },
 
     pt: {
@@ -224,9 +264,29 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
       var: paddingLabelIsVisible,
       func: (val) => {setPaddingLabelIsVisible(truthyHelper(val))}
     },
-    puv: {
+    plbp: {
+      var: paddingLabelPosition,
+      func: (val) => {setPaddingLabelPosition(val)}
+    },
+    puc: {
+      var: paddingUnitColor,
+      func: (val) => {setPaddingUnitColor(val)}
+    },
+    ptuv: {
       var: paddingTopUnitIsVisible,
       func: (val) => {setPaddingTopUnitIsVisible(truthyHelper(val))}
+    },
+    pruv: {
+      var: paddingRightUnitIsVisible,
+      func: (val) => {setPaddingRightUnitIsVisible(truthyHelper(val))}
+    },
+    pbuv: {
+      var: paddingBottomUnitIsVisible,
+      func: (val) => {setPaddingBottomUnitIsVisible(truthyHelper(val))}
+    },
+    pluv: {
+      var: paddingLeftUnitIsVisible,
+      func: (val) => {setPaddingLeftUnitIsVisible(truthyHelper(val))}
     },
 
     ew: {
@@ -253,14 +313,26 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
       var: elementLabelIsVisible,
       func: (val) => {setElementLabelIsVisible(truthyHelper(val))}
     },
-    euv: {
+    elbp: {
+      var: elementLabelPosition,
+      func: (val) => {setElementLabelPosition(val)}
+    },
+    euc: {
+      var: elementUnitColor,
+      func: (val) => {setElementUnitColor(val)}
+    },
+    ewuv: {
       var: elementWidthUnitIsVisible,
       func: (val) => {setElementWidthUnitIsVisible(truthyHelper(val))}
+    },
+    ehuv: {
+      var: elementHeightUnitIsVisible,
+      func: (val) => {setElementHeightUnitIsVisible(truthyHelper(val))}
     },
   }
 
   function parseQueryString() {
-    //?mt=42&mr=132&mb=46&ml=4&mlb=custom%20m%20label&mbc=cccccc&mlbc=ff0005&mlbv=1&muv=&bt=42&br=132&bb=46&bl=4&blb=custom%20b%20label&bbc=FFCCCC&blbc=010EFF&blbv=&buv=1&pt=42&pr=132&pb=46&pl=4&plb=custom%20p%20label&pbc=009701&plbc=01ffff&plbv=1&puv=&ew=820&eh=500&elb=custom%20e%20label&ebc=0A0F78&elbc=F0F07F&elbv=&euv=1
+    //?mt=10&mr=10&mb=10&ml=10&mlb=custom+margin+label&mbc=%23ff7c00&mlbc=%23009701&mlbv=true&mlbp=olm&muc=%23ff0005&mtuv=true&mruv=true&mbuv=true&mluv=true&bt=15&br=15&bb=15&bl=15&blb=custom+border+label&bbc=%23fde1ff&blbc=%23fa84b3&blbv=true&blbp=otc&buc=%2330c9bf&btuv=true&bruv=true&bbuv=true&bluv=true&pt=20&pr=20&pb=20&pl=20&plb=custom+padding+label&pbc=%23c40700&plbc=%23ffd730&plbv=true&plbp=orm&puc=%2330ffff&ptuv=true&pruv=true&pbuv=true&pluv=true&ew=250&eh=300&elb=custom+element+label&ebc=%23ff7c00&elbc=%23ff00ff&elbv=true&elbp=obc&euc=%23010eff&ewuv=true&ehuv=true
     let urlParams = new URLSearchParams(window.location.search)
     for (let pair of urlParams.entries()) { 
       if (hooksMap[pair[0]].func) {
@@ -276,7 +348,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
     }, 5000)
   }
 
-  function resetpositionProperties() {
+  function resetProperties() {
     window.location = '/'
   }
 
@@ -561,6 +633,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         opacity: isDimmed ? '.25' : 1,
         padding: tokens.space.xxxs,
         position: 'absolute',
+        whiteSpace: 'nowrap',
         zIndex: 8,
         ...positionProperties,
       }
@@ -688,14 +761,9 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           }
         },
         '.control-panel__thumbnail': {
-          border: `6px solid ${tokens.border.color.default}`,
           cursor: 'pointer',
           height: '40px',
           margin: '0 auto',
-          width: '50px',
-          '&:hover': {
-            outline: `1px solid ${tokens.border.color.interactive.hover.default}`,
-          }
         },
         '.input-group-horizontal': {
           alignItems: 'center',
@@ -731,7 +799,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             overflow: 'hidden',
             position: 'absolute',
             height: '1px !important',
-            width: '1px !important',
+            width: '100px !important',
         }
       })}
     >
@@ -758,7 +826,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         })}
       >
         <div>
-          <h2>positionProperties</h2>
+          <h2>Properties</h2>
           <form>
             <fieldset>
               <div
@@ -784,7 +852,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   />
                 </div>
                 <div>
-                  <Button label="Reset" onClick={() => resetpositionProperties() } size="small" />
+                  <Button label="Reset" onClick={() => resetProperties() } size="small" />
                 </div>
               </div>
             </fieldset>
@@ -844,7 +912,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div
                     className="control-panel__thumbnail"
                     style={{
-                      borderColor: marginBackgroundColor,
+                      outline: `6px solid ${marginBackgroundColor}`,
                     }}
                     onClick={() => marginBackgroundColorInput.current.click()}
                   />
@@ -1065,8 +1133,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div
                     className="control-panel__thumbnail"
                     style={{
-                      borderColor: borderBackgroundColor,
-                      borderWidth: 1,
+                      border: `1px solid ${borderBackgroundColor}`,
                     }}
                     onClick={() => borderBackgroundColorInput.current.click()}
                   />
@@ -1287,7 +1354,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   <div
                     className="control-panel__thumbnail"
                     style={{
-                      borderColor: paddingBackgroundColor,
+                      border: `6px solid ${paddingBackgroundColor}`,
                     }}
                     onClick={() => paddingBackgroundColorInput.current.click()}
                   />
@@ -1491,7 +1558,6 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     className="control-panel__thumbnail"
                     style={{
                       background: elementBackgroundColor,
-                      border: 'none',
                     }}
                     onClick={() => elementBackgroundColorInput.current.click()}
                   />
