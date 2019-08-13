@@ -333,6 +333,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
   function parseQueryString() {
     //?mt=10&mr=10&mb=10&ml=10&mlb=custom+margin+label&mbc=%23ff7c00&mlbc=%23009701&mlbv=true&mlbp=olm&muc=%23ff0005&mtuv=true&mruv=true&mbuv=true&mluv=true&bt=15&br=15&bb=15&bl=15&blb=custom+border+label&bbc=%23fde1ff&blbc=%23fa84b3&blbv=true&blbp=otc&buc=%2330c9bf&btuv=true&bruv=true&bbuv=true&bluv=true&pt=20&pr=20&pb=20&pl=20&plb=custom+padding+label&pbc=%23c40700&plbc=%23ffd730&plbv=true&plbp=orm&puc=%2330ffff&ptuv=true&pruv=true&pbuv=true&pluv=true&ew=250&eh=300&elb=custom+element+label&ebc=%23ff7c00&elbc=%23ff00ff&elbv=true&elbp=obc&euc=%23010eff&ewuv=true&ehuv=true
+    //?mt=0&mr=0&mb=32&ml=0&mlb=margin&mbc=%23f8cca1&mlbc=%23303030&mlbv=true&mlbp=ibl&muc=%23303030&mtuv=false&mruv=false&mbuv=true&mluv=false&bt=1&br=1&bb=1&bl=1&blb=border&bbc=%23ff0005&blbc=%23303030&blbv=false&blbp=olt&buc=%23303030&btuv=false&bruv=false&bbuv=false&bluv=false&pt=8&pr=16&pb=8&pl=16&plb=padding&pbc=%23c4ddb9&plbc=%23303030&plbv=true&plbp=olt&puc=%23303030&ptuv=true&pruv=true&pbuv=true&pluv=true&ew=150&eh=50&elb=button&ebc=%23a1c6e7&elbc=%23303030&elbv=true&elbp=imc&euc=%23303030&ewuv=false&ehuv=false
     let urlParams = new URLSearchParams(window.location.search)
     for (let pair of urlParams.entries()) { 
       if (hooksMap[pair[0]].func) {
@@ -526,7 +527,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         positionProperties = {
           justifyContent: 'flex-start',
           left: 0,
-          top: `calc(-14px - ${labelOffset.top}px)`,
+          top: `calc(-14px - ${labelOffset.top}px - ${tokens.space.xxs}px)`,
           width: '100%',
         }
         break
@@ -534,7 +535,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         positionProperties = {
           justifyContent: 'center',
           left: 0,
-          top: `calc(-14px - ${labelOffset.top}px)`,
+          top: `calc(-14px - ${labelOffset.top}px - ${tokens.space.xxs}px)`,
           width: '100%',
         }
         break
@@ -542,14 +543,14 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         positionProperties = {
           justifyContent: 'flex-end',
           left: 0,
-          top: `calc(-14px - ${labelOffset.top}px)`,
+          top: `calc(-14px - ${labelOffset.top}px - ${tokens.space.xxs}px)`,
           width: '100%',
         }
         break
       case ('ort'):
         positionProperties = {
           justifyContent: 'flex-start',
-          left: `calc(100% + ${labelOffset.right}px)`,
+          left: `calc(100% + ${labelOffset.right}px + ${tokens.space.xxs}px)`,
           top: 0,
         }
         break
@@ -558,14 +559,14 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           alignItems: 'center',
           height: '100%',
           justifyContent: 'flex-start',
-          left: `calc(100% + ${labelOffset.right}px)`,
+          left: `calc(100% + ${labelOffset.right}px + ${tokens.space.xxs}px)`,
           top: 0,
         }
         break
       case ('orb'):
         positionProperties = {
           justifyContent: 'flex-start',
-          left: `calc(100% + ${labelOffset.right}px)`,
+          left: `calc(100% + ${labelOffset.right}px + ${tokens.space.xxs}px)`,
           bottom: 0,
         }
         break
@@ -573,7 +574,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         positionProperties = {
           justifyContent: 'flex-end',
           left: 0,
-          bottom: `calc(-14px - ${labelOffset.bottom}px)`,
+          bottom: `calc(-14px - ${labelOffset.bottom}px - ${tokens.space.xxs}px)`,
           width: '100%',
         }
         break
@@ -581,7 +582,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         positionProperties = {
           justifyContent: 'center',
           left: 0,
-          bottom: `calc(-14px - ${labelOffset.bottom}px)`,
+          bottom: `calc(-14px - ${labelOffset.bottom}px - ${tokens.space.xxs}px)`,
           width: '100%',
         }
         break
@@ -589,14 +590,14 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         positionProperties = {
           justifyContent: 'flex-start',
           left: 0,
-          bottom: `calc(-14px - ${labelOffset.bottom}px)`,
+          bottom: `calc(-14px - ${labelOffset.bottom}px - ${tokens.space.xxs}px)`,
           width: '100%',
         }
         break
       case ('olb'):
         positionProperties = {
           justifyContent: 'flex-start',
-          right: `calc(100% + ${labelOffset.left}px)`,
+          right: `calc(100% + ${labelOffset.left}px + ${tokens.space.xxs}px)`,
           bottom: 0,
         }
         break
@@ -605,14 +606,14 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           alignItems: 'center',
           height: '100%',
           justifyContent: 'flex-start',
-          right: `calc(100% + ${labelOffset.left}px)`,
+          right: `calc(100% + ${labelOffset.left}px + ${tokens.space.xxs}px)`,
           bottom: 0,
         }
         break
       case ('olt'):
         positionProperties = {
           justifyContent: 'flex-start',
-          right: `calc(100% + ${labelOffset.left}px)`,
+          right: `calc(100% + ${labelOffset.left}px + ${tokens.space.xxs}px)`,
           top: 0,
         }
         break
@@ -1016,7 +1017,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       <input
                         value={marginLabelColor}
                         type="text"
-                        onChange={(e) => setMarginBackgroundColor(e.target.value)}
+                        onChange={(e) => setMarginLabelColor(e.target.value)}
                         onClick={(e) => e.target.select()}
                       />
                     </div>
@@ -1237,7 +1238,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       <input
                         value={borderLabelColor}
                         type="text"
-                        onChange={(e) => setBorderBackgroundColor(e.target.value)}
+                        onChange={(e) => setBorderLabelColor(e.target.value)}
                         onClick={(e) => e.target.select()}
                       />
                     </div>
@@ -1458,7 +1459,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       <input
                         value={paddingLabelColor}
                         type="text"
-                        onChange={(e) => setPaddingBackgroundColor(e.target.value)}
+                        onChange={(e) => setPaddingLabelColor(e.target.value)}
                         onClick={(e) => e.target.select()}
                       />
                     </div>
@@ -1644,7 +1645,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       <input
                         value={elementLabelColor}
                         type="text"
-                        onChange={(e) => setElementBackgroundColor(e.target.value)}
+                        onChange={(e) => setElementLabelColor(e.target.value)}
                         onClick={(e) => e.target.select()}
                       />
                     </div>
