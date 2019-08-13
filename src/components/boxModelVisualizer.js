@@ -300,7 +300,11 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
     triggerNotification(cssCopiedNotification.current)
   }
 
-  function labelPositionSelectOptions() {
+  function labelPositionSelectOptions(label) {
+    let elementSpecificOption
+    if (label === 'element') {
+      elementSpecificOption = <option value="imc">Inside middle center</option>
+    }
     return (
       <>
         <option value="itl">Inside top left</option>
@@ -309,6 +313,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         <option value="ibl">Inside bottom left</option>
         <option value="ibc">Inside bottom center</option>
         <option value="ibr">Inside bottom right</option>
+        {elementSpecificOption}
         <option value="otl">Outside top left</option>
         <option value="otc">Outside top center</option>
         <option value="otr">Outside top right</option>
@@ -316,6 +321,182 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         <option value="obc">Outside bottom center</option>
         <option value="obr">Outside bottom right</option>
       </>
+    )
+  }
+
+  function getLabelPositionStyles(label) {
+    let labelPosition
+    let labelOffset = {}
+    let properties = {}
+
+    switch (label) {
+      case ('margin'):
+        labelPosition = marginLabelPosition
+        labelOffset = {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+        }
+        break
+      case ('border'):
+        labelPosition = borderLabelPosition
+        labelOffset = {
+          top: marginTop,
+          right: marginRight,
+          bottom: marginBottom,
+          left: marginLeft,
+        }
+        break
+      case ('padding'):
+        labelPosition = paddingLabelPosition
+        labelOffset = {
+          top: marginTop + borderTop,
+          right: marginRight + borderRight,
+          bottom: marginBottom + borderBottom,
+          left: marginLeft + borderLeft,
+        }
+        break
+      case ('element'):
+        labelPosition = elementLabelPosition
+        labelOffset = {
+          top: marginTop + borderTop + paddingTop,
+          right: marginRight + borderRight + paddingRight,
+          bottom: marginBottom + borderBottom + paddingBottom,
+          left: marginLeft + borderLeft + paddingLeft,
+        }
+        break
+      default:
+        labelOffset = {
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+        }
+    }
+
+    switch (labelPosition) {
+      case ('itl'):
+        properties = {
+          justifyContent: 'flex-start',
+          left: 0,
+          top: 0,
+          width: '100%',
+        }
+        break
+      case ('itc'):
+        properties = {
+          justifyContent: 'center',
+          left: 0,
+          top: 0,
+          width: '100%',
+        }
+        break
+      case ('itr'):
+        properties = {
+          justifyContent: 'flex-end',
+          left: 0,
+          top: 0,
+          width: '100%',
+        }
+        break
+      case ('otl'):
+        properties = {
+          justifyContent: 'flex-start',
+          right: `calc(100% + ${labelOffset.left}px)`,
+          top: 0,
+        }
+        break
+      case ('otc'):
+        properties = {
+          justifyContent: 'center',
+          left: 0,
+          top: `calc(-14px - ${labelOffset.top}px)`,
+          width: '100%',
+        }
+        break
+      case ('otr'):
+        properties = {
+          justifyContent: 'flex-start',
+          left: `calc(100% + ${labelOffset.right}px)`,
+          top: 0,
+        }
+        break
+      case ('ibl'):
+        properties = {
+          justifyContent: 'flex-start',
+          left: 0,
+          bottom: 0,
+          width: '100%',
+        }
+        break
+      case ('ibc'):
+        properties = {
+          justifyContent: 'center',
+          left: 0,
+          bottom: 0,
+          width: '100%',
+        }
+        break
+      case ('ibr'):
+        properties = {
+          justifyContent: 'flex-end',
+          left: 0,
+          bottom: 0,
+          width: '100%',
+        }
+        break
+      case ('imc'):
+        properties = {
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+          left: 0,
+          top: 0,
+          width: '100%',
+        }
+        break
+      case ('obl'):
+        properties = {
+          justifyContent: 'flex-start',
+          right: `calc(100% + ${labelOffset.left}px)`,
+          bottom: 0,
+        }
+        break
+      case ('obc'):
+        properties = {
+          justifyContent: 'center',
+          left: 0,
+          bottom: `calc(-14px - ${labelOffset.bottom}px)`,
+          width: '100%',
+        }
+        break
+      case ('obr'):
+        properties = {
+          justifyContent: 'flex-start',
+          left: `calc(100% + ${labelOffset.right}px)`,
+          bottom: 0,
+        }
+        break
+      default:
+        properties = {
+          justifyContent: 'flex-start',
+          left: 0,
+          top: 0,
+          width: '100%',
+        }
+    }
+
+    return (
+      {
+        display: 'flex',
+        color: marginLabelColor,
+        lineHeight: 1,
+        padding: tokens.space.xxxs,
+        position: 'absolute',
+        zIndex: 8,
+        ...properties,
+      }
     )
   }
 
@@ -374,6 +555,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         },
         'input:not([type="checkbox"])': {
           border: tokens.border.input,
+          borderRadius: tokens.border.radius.interactive,
           color: tokens.color.text.default,
           display: 'block',
           fontSize: tokens.font.size.xs,
@@ -399,11 +581,15 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         },
         '.control-panel': {
           alignItems: 'center',
+          border: tokens.border.component,
+          borderRadius: tokens.border.radius.default,
+          background: tokens.color.background.default,
           display: 'flex',
           flexWrap: 'wrap',
           marginBottom: tokens.space.md,
+          padding: tokens.space.sm,
           'input[type="number"]': {
-            width: '60px',
+            width: '50px',
           }
         },
         '.control-panel__cell': {
@@ -439,7 +625,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           cursor: 'pointer',
           height: '40px',
           margin: '0 auto',
-          width: '58px',
+          width: '50px',
           '&:hover': {
             outline: `1px solid ${tokens.border.color.interactive.hover.default}`,
           }
@@ -477,8 +663,8 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             clip: 'rect(1px, 1px, 1px, 1px)',
             overflow: 'hidden',
             position: 'absolute',
-            height: '1px',
-            width: '1px',
+            height: '1px !important',
+            width: '1px !important',
         }
       })}
     >
@@ -813,6 +999,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     className="control-panel__thumbnail"
                     style={{
                       borderColor: borderBackgroundColor,
+                      borderWidth: 1,
                     }}
                     onClick={() => borderBackgroundColorInput.current.click()}
                   />
@@ -1301,7 +1488,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     value={elementLabelPosition}
                     onChange={(e) => setElementLabelPosition(e.target.value)}
                   >
-                    {labelPositionSelectOptions()}
+                    {labelPositionSelectOptions('element')}
                   </select>
                 </div>
               </div>
@@ -1425,18 +1612,8 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
               {marginLabelIsVisible && (
                 <div
                   css={css({
-                    alignItems: 'center',
-                    display: 'flex',
-                    color: marginLabelColor,
-                    justifyContent: 'flex-start',
-                    left: 0,
-                    lineHeight: 1,
+                    ...getLabelPositionStyles('margin'),
                     opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                    padding: tokens.space.xxxs,
-                    position: 'absolute',
-                    top: 0,
-                    width: '100%',
-                    zIndex: 8,
                   })}
                 >
                   {marginLabel}
@@ -1545,19 +1722,9 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                 {borderLabelIsVisible && (
                   <div
                     css={css({
-                      alignItems: 'center',
-                      color: borderLabelColor,
-                      display: 'flex',
-                      justifyContent: 'flex-start',
-                      left: 0,
-                      lineHeight: 1,
-                      opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                      padding: tokens.space.xxxs,
-                      position: 'absolute',
-                      top: 0,
-                      width: '100%',
-                      zIndex: 8,
-                    })}
+                    ...getLabelPositionStyles('border'),
+                    opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                  })}
                   >
                     {borderLabel}
                   </div>
@@ -1667,18 +1834,8 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                   {paddingLabelIsVisible && (
                     <div
                       css={css({
-                        alignItems: 'center',
-                        color: paddingLabelColor,
-                        display: 'flex',
-                        justifyContent: 'flex-start',
-                        left: 0,
-                        lineHeight: 1,
+                        ...getLabelPositionStyles('padding'),
                         opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                        padding: tokens.space.xxxs,
-                        position: 'absolute',
-                        top: 0,
-                        width: '100%',
-                        zIndex: 8,
                       })}
                     >
                       {paddingLabel}
@@ -1784,19 +1941,9 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     {elementLabelIsVisible && (
                       <div
                         css={css({
-                          alignItems: 'center',
-                          color: elementLabelColor,
-                          display: 'flex',
-                          justifyContent: 'flex-start',
-                          left: 0,
-                          lineHeight: 1,
-                          opacity: (marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted) ? '.25' : 1,
-                          padding: tokens.space.xxxs,
-                          position: 'absolute',
-                          top: 0,
-                          width: '100%',
-                          zIndex: 8,
-                        })}
+                        ...getLabelPositionStyles('element'),
+                        opacity: (marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted) ? '.25' : 1,
+                      })}
                       >
                         {elementLabel}
                       </div>
