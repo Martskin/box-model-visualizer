@@ -8,7 +8,7 @@ import Logo from "./logo"
 const Header = ({ siteTitle, siteSubTitle, siteHeading }) => (
   <header
     css={css({
-      backgroundColor: tokens.color.background.black,
+      backgroundColor: tokens.color.background.dark,
       color: tokens.color.text.onDark.default,
       fontFamily: tokens.font.family.sansSerif,
       padding: tokens.space.xs,
