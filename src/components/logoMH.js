@@ -2,7 +2,7 @@ import React from "react"
 import tokens from "../data/tokens"
 import { css } from "@emotion/core"
 
-const Logo = () => (
+const LogoMH = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="80px"
@@ -24,4 +24,4 @@ const Logo = () => (
       </g>
   </svg>
 )
-export default Logo
+export default LogoMH

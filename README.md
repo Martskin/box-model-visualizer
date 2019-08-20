@@ -1,5 +1,7 @@
 # CSS box-model visualizer.
 
+![CSS box-model visualizer](https://user-images.githubusercontent.com/3717760/63387735-15ff3d80-c35b-11e9-993c-2b23d4d6cbcf.png)
+
 ## 
 ```gatsby develop```
 

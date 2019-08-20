@@ -3,9 +3,11 @@ import PropTypes from "prop-types"
 import React from "react"
 import tokens from "../data/tokens"
 import { css } from "@emotion/core"
-import Logo from "./logo"
+import LogoBMV from "./logoBMV"
+import LogoMH from "./logoMH"
+import LogoGH from "./logoGH"
 
-const Header = ({ siteTitle, siteSubTitle, siteHeading }) => (
+const Header = ({ siteTitle }) => (
   <header
     css={css({
       backgroundColor: tokens.color.background.dark,
@@ -31,7 +33,7 @@ const Header = ({ siteTitle, siteSubTitle, siteHeading }) => (
         })}
       >
         <div>
-          <Logo />
+          <LogoBMV />
         </div>
         <div>
           <div
@@ -39,7 +41,7 @@ const Header = ({ siteTitle, siteSubTitle, siteHeading }) => (
               color: tokens.color.text.onDark.secondary,
               fontSize: tokens.font.size.lg,
               lineHeight: 1,
-              paddingLeft: tokens.space.sm,
+              paddingLeft: tokens.space.xs,
             })}
           >
             {siteTitle}
@@ -48,11 +50,35 @@ const Header = ({ siteTitle, siteSubTitle, siteHeading }) => (
       </Link>
       <div
         css={css({
-          fontWeight: 'bold',
-          fontSize: tokens.font.size.lg,
+          display: 'flex',
         })}
       >
-        {siteHeading}
+        <a
+          href="https://github.com/Martskin/box-model-visualizer"
+          target="_blank"
+          rel="noopener noreferrer"
+          css={css({
+            marginRight: tokens.space.xxs,
+            ':hover': {
+              opacity: '.75',
+            }
+          })}
+        >
+          <LogoGH />
+        </a>
+        <a
+          href="http://www.MartinHofmann.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          css={css({
+            marginRight: tokens.space.xxs,
+            ':hover': {
+              opacity: '.75',
+            }
+          })}
+        >
+          <LogoMH />
+        </a>
       </div>
     </div>
   </header>
