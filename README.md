@@ -1,8 +1,13 @@
-# CSS box-model visualizer.
+<h1>
+    <img width="30" alt="CSS Box-model Visualizer" src="https://user-images.githubusercontent.com/3717760/63388648-033a3800-c35e-11e9-86b8-9febb99d1655.png">
+    CSS Box-model Visualizer
+</h1>
 
-![CSS box-model visualizer](https://user-images.githubusercontent.com/3717760/63387735-15ff3d80-c35b-11e9-993c-2b23d4d6cbcf.png)
+<img width="276" alt="CSS Box-model Visualizer" src="https://user-images.githubusercontent.com/3717760/63387735-15ff3d80-c35b-11e9-993c-2b23d4d6cbcf.png">
 
-## 
+[CSS Box-model Visualizer Control Panel](https://box-model-visualizer.netlify.com)
+
+## Run local server
 ```gatsby develop```
 
 
