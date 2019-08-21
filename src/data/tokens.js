@@ -124,6 +124,15 @@ module.exports = {
     component: `1px ${base.color.neutral[86]} solid`,
     input: `1px ${base.color.neutral[86]} solid`,
   },
+  icon: {
+    size: {
+      default: base.space.default * .875,
+    },
+    color: {
+      default: base.color.neutral[50],
+      secondary: base.color.neutral[69],
+    }
+  },
   shadow: {
     default:' 0 0px 8px #251f1f',
   },

@@ -4,6 +4,7 @@ import { css } from "@emotion/core"
 import CodeSnippet from "./codeSnippet"
 import tokens from "../data/tokens"
 import Button from "./button"
+import CheckboxEye from "./checkboxEye"
 
 function BoxModelVisualizer({ margin, border, padding, element }) {  
   let cssCodeHiddenTextarea = React.createRef()
@@ -850,6 +851,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                     type="text"
                     readOnly
                     className="accessibly-hidden"
+                    tabIndex="-1"
                   />
                 </div>
                 <div>
@@ -868,15 +870,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
               >
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show margin top unit"
-                        type="checkbox"
-                        onChange={(e) => setMarginTopUnitIsVisible(e.target.checked)}
-                        checked={marginTopUnitIsVisible}
-                      />
-                      <span>Top</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show margin top unit"
+                      label="Top"
+                      onChange={(checkedState) => setMarginTopUnitIsVisible(checkedState)}
+                      checked={marginTopUnitIsVisible}
+                    />
                     <input
                       aria-label="margin top"
                       value={marginTop}
@@ -884,21 +883,17 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
                       onChange={(e) => setMarginTop(parseInt(e.target.value))}
                       onClick={(e) => e.target.select()}
                     />
-                    
                   </div>
                 </div>
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show margin right unit"
-                        type="checkbox"
-                        onChange={(e) => setMarginRightUnitIsVisible(e.target.checked)}
-                        checked={marginRightUnitIsVisible}
-                      />
-                      <span>Right</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show margin right unit"
+                      label="Right"
+                      onChange={(checkedState) => setMarginRightUnitIsVisible(checkedState)}
+                      checked={marginRightUnitIsVisible}
+                    />
                     <input
                       aria-label="margin right"
                       value={marginRight}
@@ -921,15 +916,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show margin bottom unit"
-                        type="checkbox"
-                        onChange={(e) => setMarginBottomUnitIsVisible(e.target.checked)}
-                        checked={marginBottomUnitIsVisible}
-                      />
-                      <span>Bottom</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show margin bottom unit"
+                      label="Bottom"
+                      onChange={(checkedState) => setMarginBottomUnitIsVisible(checkedState)}
+                      checked={marginBottomUnitIsVisible}
+                    />
                     <input
                       aria-label="margin bottom"
                       value={marginBottom}
@@ -942,15 +934,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show margin left unit"
-                        type="checkbox"
-                        onChange={(e) => setMarginLeftUnitIsVisible(e.target.checked)}
-                        checked={marginLeftUnitIsVisible}
-                      />
-                      <span>Left</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show margin left unit"
+                      label="Left"
+                      onChange={(checkedState) => setMarginLeftUnitIsVisible(checkedState)}
+                      checked={marginLeftUnitIsVisible}
+                    />
                     <input
                       aria-label="margin left"
                       value={marginLeft}
@@ -964,15 +953,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
               <div className="input-group-horizontal">
                 <div>
-                  <label>
-                    <input
-                      aria-label="show margin label"
-                      type="checkbox"
-                      onChange={(e) => setMarginLabelIsVisible(e.target.checked)}
-                      checked={marginLabelIsVisible}
-                    />
-                    <span>Label:</span>
-                  </label>
+                  <CheckboxEye
+                    ariaLabel="show margin label"
+                    label="Label:"
+                    onChange={(checkedState) => setMarginLabelIsVisible(checkedState)}
+                    checked={marginLabelIsVisible}
+                  />
                 </div>
                 <div>
                   <input
@@ -1089,15 +1075,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
               >
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show border top unit"
-                        type="checkbox"
-                        onChange={(e) => setBorderTopUnitIsVisible(e.target.checked)}
-                        checked={borderTopUnitIsVisible}
-                      />
-                      <span>Top</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show border top unit"
+                      label="Top"
+                      onChange={(checkedState) => setBorderTopUnitIsVisible(checkedState)}
+                      checked={borderTopUnitIsVisible}
+                    />
                     <input
                       aria-label="border top"
                       value={borderTop}
@@ -1111,15 +1094,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show border right unit"
-                        type="checkbox"
-                        onChange={(e) => setBorderRightUnitIsVisible(e.target.checked)}
-                        checked={borderRightUnitIsVisible}
-                      />
-                      <span>Right</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show border right unit"
+                      label="Right"
+                      onChange={(checkedState) => setBorderRightUnitIsVisible(checkedState)}
+                      checked={borderRightUnitIsVisible}
+                    />
                     <input
                       aria-label="border right"
                       value={borderRight}
@@ -1142,15 +1122,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show border bottom unit"
-                        type="checkbox"
-                        onChange={(e) => setBorderBottomUnitIsVisible(e.target.checked)}
-                        checked={borderBottomUnitIsVisible}
-                      />
-                      <span>Bottom</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show border bottom unit"
+                      label="Bottom"
+                      onChange={(checkedState) => setBorderBottomUnitIsVisible(checkedState)}
+                      checked={borderBottomUnitIsVisible}
+                    />
                     <input
                       aria-label="margin bottom"
                       value={borderBottom}
@@ -1163,15 +1140,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show border left unit"
-                        type="checkbox"
-                        onChange={(e) => setBorderLeftUnitIsVisible(e.target.checked)}
-                        checked={borderLeftUnitIsVisible}
-                      />
-                      <span>Left</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show border left unit"
+                      label="Left"
+                      onChange={(checkedState) => setBorderLeftUnitIsVisible(checkedState)}
+                      checked={borderLeftUnitIsVisible}
+                    />
                     <input
                       aria-label="border left"
                       value={borderLeft}
@@ -1185,15 +1159,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
               <div className="input-group-horizontal">
                 <div>
-                  <label>
-                    <input
-                      aria-label="show border label"
-                      type="checkbox"
-                      onChange={(e) => setBorderLabelIsVisible(e.target.checked)}
-                      checked={borderLabelIsVisible}
-                    />
-                    <span>Label:</span>
-                  </label>
+                  <CheckboxEye
+                    ariaLabel="show border label"
+                    label="Label:"
+                    onChange={(checkedState) => setBorderLabelIsVisible(checkedState)}
+                    checked={borderLabelIsVisible}
+                  />
                 </div>
                 <div>
                   <input
@@ -1310,15 +1281,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
               >
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show padding top unit"
-                        type="checkbox"
-                        onChange={(e) => setPaddingTopUnitIsVisible(e.target.checked)}
-                        checked={paddingTopUnitIsVisible}
-                      />
-                      <span>Top</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show padding top unit"
+                      label="Top"
+                      onChange={(checkedState) => setPaddingTopUnitIsVisible(checkedState)}
+                      checked={paddingTopUnitIsVisible}
+                    />
                     <input
                       aria-label="padding top"
                       value={paddingTop}
@@ -1332,15 +1300,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show padding right unit"
-                        type="checkbox"
-                        onChange={(e) => setPaddingRightUnitIsVisible(e.target.checked)}
-                        checked={paddingRightUnitIsVisible}
-                      />
-                      <span>Right</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show padding right unit"
+                      label="Right"
+                      onChange={(checkedState) => setPaddingRightUnitIsVisible(checkedState)}
+                      checked={paddingRightUnitIsVisible}
+                    />
                     <input
                       aria-label="padding right"
                       value={paddingRight}
@@ -1363,15 +1328,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show padding bottom unit"
-                        type="checkbox"
-                        onChange={(e) => setPaddingBottomUnitIsVisible(e.target.checked)}
-                        checked={paddingBottomUnitIsVisible}
-                      />
-                      <span>Bottom</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show padding bottom unit"
+                      label="Bottom"
+                      onChange={(checkedState) => setPaddingBottomUnitIsVisible(checkedState)}
+                      checked={paddingBottomUnitIsVisible}
+                    />
                     <input
                       aria-label="padding bottom"
                       value={paddingBottom}
@@ -1384,15 +1346,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show padding left unit"
-                        type="checkbox"
-                        onChange={(e) => setPaddingLeftUnitIsVisible(e.target.checked)}
-                        checked={paddingLeftUnitIsVisible}
-                      />
-                      <span>Left</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show padding left unit"
+                      label="Left"
+                      onChange={(checkedState) => setPaddingLeftUnitIsVisible(checkedState)}
+                      checked={paddingLeftUnitIsVisible}
+                    />
                     <input
                       aria-label="padding left"
                       value={paddingLeft}
@@ -1406,15 +1365,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
               <div className="input-group-horizontal">
                 <div>
-                  <label>
-                    <input
-                      aria-label="show padding label"
-                      type="checkbox"
-                      onChange={(e) => setPaddingLabelIsVisible(e.target.checked)}
-                      checked={paddingLabelIsVisible}
-                    />
-                    <span>Label:</span>
-                  </label>
+                  <CheckboxEye
+                    ariaLabel="show padding label"
+                    label="Label:"
+                    onChange={(checkedState) => setPaddingLabelIsVisible(checkedState)}
+                    checked={paddingLabelIsVisible}
+                  />
                 </div>
                 <div>
                   <input
@@ -1531,15 +1487,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
               >
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show element width"
-                        type="checkbox"
-                        onChange={(e) => setElementWidthUnitIsVisible(e.target.checked)}
-                        checked={elementWidthUnitIsVisible}
-                      />
-                      <span>Width</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show element width"
+                      label="Width"
+                      onChange={(checkedState) => setElementWidthUnitIsVisible(checkedState)}
+                      checked={elementWidthUnitIsVisible}
+                    />
                     <input
                       aria-label="element width"
                       value={elementWidth}
@@ -1570,15 +1523,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
                 <div className="control-panel__cell">
                   <div className="input-group">
-                    <label>
-                      <input
-                        aria-label="show element height"
-                        type="checkbox"
-                        onChange={(e) => setElementHeightUnitIsVisible(e.target.checked)}
-                        checked={elementHeightUnitIsVisible}
-                      />
-                      <span>Height</span>
-                    </label>
+                    <CheckboxEye
+                      ariaLabel="show element height"
+                      label="Height"
+                      onChange={(checkedState) => setElementHeightUnitIsVisible(checkedState)}
+                      checked={elementHeightUnitIsVisible}
+                    />
                     <input
                       aria-label="element height"
                       value={elementHeight}
@@ -1592,15 +1542,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
               <div className="input-group-horizontal">
                 <div>
-                  <label>
-                    <input
-                      aria-label="show element label"
-                      type="checkbox"
-                      onChange={(e) => setElementLabelIsVisible(e.target.checked)}
-                      checked={elementLabelIsVisible}
-                    />
-                    <span>Label:</span>
-                  </label>
+                  <CheckboxEye
+                    ariaLabel="show element label"
+                    label="Label:"
+                    onChange={(checkedState) => setElementLabelIsVisible(checkedState)}
+                    checked={elementLabelIsVisible}
+                  />
                 </div>
                 <div>
                   <input
@@ -2119,6 +2066,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             value={styleBlock}
             readOnly
             className="accessibly-hidden"
+            tabIndex="-1"
           />
         </div>
       </div>
