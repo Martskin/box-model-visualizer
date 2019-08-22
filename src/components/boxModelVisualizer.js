@@ -696,6 +696,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           },
         },
         'input:not([type="checkbox"])': {
+          background: tokens.color.background.default,
           border: tokens.border.input,
           borderRadius: tokens.border.radius.interactive,
           color: tokens.color.text.default,
@@ -707,19 +708,33 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             background: 'transparent',
             border: 0,
             cursor: 'pointer',
-            height: 26,
+            height: 25,
             padding: 0,
             margin: '0 0 0 -2px',
             verticalAlign: 'middle',
-            width: 22,
+            width: 21,
           }
         },
         'input[type="checkbox"]': {
           margin: `0 ${tokens.space.xxs}px 0 0`,
         },
+        input: {
+          outline: 'none',
+          ':focus': {
+            boxShadow: tokens.shadow.focus,
+          }
+        },
         select: {
+          background: tokens.color.background.default,
+          border: tokens.border.input,
+          borderRadius: tokens.border.radius.interactive,
           display: 'block',
+          fontSize: tokens.font.size.xs,
           width: '100%',
+          outline: 'none',
+          ':focus': {
+            boxShadow: tokens.shadow.focus,
+          }
         },
         '.control-panel': {
           alignItems: 'center',
@@ -731,7 +746,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
           marginBottom: tokens.space.md,
           padding: tokens.space.sm,
           'input[type="number"]': {
-            width: '50px',
+            width: '55px',
           }
         },
         '.control-panel__cell': {

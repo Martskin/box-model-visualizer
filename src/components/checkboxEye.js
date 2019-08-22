@@ -11,11 +11,21 @@ function CheckboxEye({ checked, label, ariaLabel, onChange }) {
 		<label
 			css={css({
 				cursor: 'pointer',
+				display: 'block',
+				fontSize: tokens.font.size.xs,
+				fontWeight: 'normal',
+				lineHeight: 1,
+				margin: `0 0 ${tokens.space.xxs}px`,
+				userSelect: 'none',
 				svg: {
 					display: 'inline-block',
 					marginRight: tokens.space.xxs,
-					verticalAlign: 'middle',
-				}
+					verticalAlign: 'middle',lineHeight: 1,
+				},
+				'> div': {
+					borderRadius: tokens.border.radius.interactive,
+					padding: tokens.space.xxxs,
+				},
 			})}
 		>
 			<input
@@ -29,38 +39,39 @@ function CheckboxEye({ checked, label, ariaLabel, onChange }) {
 					position: 'absolute',
 					height: '1px',
 					width: '1px',
-					'& + svg': {
+					'& + div svg': {
 						color: tokens.icon.color.secondary,
 					},
-					'& + svg + svg': {
+					'& + div svg + svg': {
 						display: 'none',
 					},
 					':checked': {
-						'& + svg': {
+						'& + div svg': {
 							display: 'none',
 						},
-						'& + svg + svg': {
+						'& + div svg + svg': {
 							display: 'inline-block',
 						}
 					},
 					':not(:checked)': {
-						'& + svg + svg + span': {
+						'& + div svg + svg + span': {
 							color: tokens.color.text.secondary,
 						}
 					},
 					':focus': {
-						'& + svg, & + svg + svg': {
-							outline: `1px solid ${tokens.border.color.interactive.default}`,
-							outlineOffset: 1,
+						'& + div': {
+							boxShadow: tokens.shadow.focus,
 						}
 					}
 				})}
 			/>
-			<IconEyeClosed />
-			<IconEye />
-			{label && (
-				<span>{label}</span>
-			)}
+			<div>
+				<IconEyeClosed />
+				<IconEye />
+				{label && (
+					<span>{label}</span>
+				)}
+			</div>
 		</label>
 	)
 }

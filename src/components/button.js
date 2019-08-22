@@ -99,6 +99,7 @@ function Button({ label, disabled, variant, size, onClick }) {
         lineHeight: 1,
         margin: 0,
         overflow: 'visible',
+        outline: 'none',
         ...getVariantProperties(variant),
         ...getSizeProperties(size),
         width: 'auto',
@@ -110,6 +111,9 @@ function Button({ label, disabled, variant, size, onClick }) {
         },
         '& + button': {
           marginLeft: tokens.space.xs,
+        },
+        ':focus': {
+          boxShadow: tokens.shadow.focus,
         }
       })}
       disabled={disabled}

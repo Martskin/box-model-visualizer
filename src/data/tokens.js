@@ -15,6 +15,7 @@ const base = {
     },
     blue: {
       45: "#095ddd",
+      50: "#00beff",
       55: "#19cbff",
       60: "#3b86f7",
       95: "#e8f6ff",
@@ -119,7 +120,7 @@ module.exports = {
     },
     radius: {
       default: 3,
-      interactive: 3,
+      interactive: 2,
     },
     component: `1px ${base.color.neutral[86]} solid`,
     input: `1px ${base.color.neutral[86]} solid`,
@@ -134,7 +135,8 @@ module.exports = {
     }
   },
   shadow: {
-    default:' 0 0px 8px #251f1f',
+    default:' 0 0 8px #251f1f',
+    focus: `0 0 0 1px ${base.color.blue[50]}`,
   },
   layout: {
     breakpoint: {

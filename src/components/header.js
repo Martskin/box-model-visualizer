@@ -27,9 +27,15 @@ const Header = ({ siteTitle }) => (
         to="/"
         css={css({
           alignItems: 'center',
+          borderRadius: tokens.border.radius.interactive,
           color: tokens.color.text.secondary,
           display: 'inline-flex',
+          outline: 0,
+          padding: tokens.space.xxxs,
           textDecoration: 'none',
+          ':focus': {
+            boxShadow: tokens.shadow.focus,
+          },
         })}
       >
         <div>
@@ -58,9 +64,14 @@ const Header = ({ siteTitle }) => (
           target="_blank"
           rel="noopener noreferrer"
           css={css({
+            borderRadius: tokens.border.radius.interactive,
             marginRight: tokens.space.xxs,
+            outline: 'none',
             ':hover': {
               opacity: '.75',
+            },
+            ':focus': {
+              boxShadow: tokens.shadow.focus,
             }
           })}
         >
@@ -71,9 +82,14 @@ const Header = ({ siteTitle }) => (
           target="_blank"
           rel="noopener noreferrer"
           css={css({
+            borderRadius: tokens.border.radius.interactive,
             marginRight: tokens.space.xxs,
+            outline: 'none',
             ':hover': {
               opacity: '.75',
+            },
+            ':focus': {
+              boxShadow: tokens.shadow.focus,
             }
           })}
         >
