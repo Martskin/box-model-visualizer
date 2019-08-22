@@ -52,9 +52,9 @@ module.exports = {
       sm: base.space.default * .75,
       md: base.space.default,
       lg: base.space.default * 1.25,
-      xl: base.space.default * 1.5,
-      xxl: base.space.default * 3.5,
-      xxxl: base.space.default * 4,
+      xl: base.space.default * 1.875,
+      xxl: base.space.default * 2.5,
+      xxxl: base.space.default * 3,
     }
   },
   color: {

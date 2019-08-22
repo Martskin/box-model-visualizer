@@ -351,7 +351,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   }
 
   function resetProperties() {
-    window.location = '/'
+    window.location = '/model'
   }
 
   function copyLink() {
