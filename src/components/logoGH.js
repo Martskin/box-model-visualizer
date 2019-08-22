@@ -4,6 +4,7 @@ import { css } from "@emotion/core"
 
 const LogoGH = () => (
   <svg
+    aria-labelledby="github-logo"
     xmlns="http://www.w3.org/2000/svg"
 	  width="32px"
     height="32px"
@@ -15,6 +16,7 @@ const LogoGH = () => (
       width: tokens.space.lg,
     })}
   >
+  <title id="github-logo">GitHub Repo</title>
   <path d="M16,1.713c-8.088,0-14.648,6.559-14.648,14.649
     c0,6.472,4.197,11.963,10.019,13.899c0.732,0.134,1-0.317,1-0.706c0-0.348-0.013-1.271-0.02-2.493
     c-4.075,0.886-4.934-1.962-4.934-1.962C6.75,23.409,5.79,22.957,5.79,22.957c-1.33-0.909,0.101-0.892,0.101-0.892

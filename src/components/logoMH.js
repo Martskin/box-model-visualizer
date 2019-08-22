@@ -4,6 +4,7 @@ import { css } from "@emotion/core"
 
 const LogoMH = () => (
   <svg
+    aria-labelledby="martin-hofmann-logo"
     xmlns="http://www.w3.org/2000/svg"
     width="80px"
     height="80px"
@@ -15,7 +16,7 @@ const LogoMH = () => (
         width: tokens.space.lg,
       })}
       >
-      <title>MartinHofmann.com</title>
+      <title id="martin-hofmann-logo">MartinHofmann.com</title>
       <g>
           <polygon points="19.521,71.762 29.762,61.522 29.762,18.488 19.511,8.238 9.271,18.479 19.521,28.728"/>
           <polygon points="60.488,71.762 70.729,61.522 70.729,18.488 60.479,8.238 50.24,18.479 60.488,28.728"/>
