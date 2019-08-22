@@ -13,11 +13,11 @@ A quick, easy tool to visualize and share CSS box-model examples. Customize marg
 
 <img width="310" alt="Buttom Model Example" src="https://user-images.githubusercontent.com/3717760/63553872-a6bb5200-c4f0-11e9-9e9a-ed6eec185f0a.png">
 
-## Card Model Example
+### Card Model Example
 
 <img width="310" alt="Card Model Example" src="https://user-images.githubusercontent.com/3717760/63553873-a6bb5200-c4f0-11e9-93c2-3e56a7574867.png">
 
-## Heading Model Example
+### Heading Model Example
 
 <img width="310" alt="Heading Model Example" src="https://user-images.githubusercontent.com/3717760/63553874-a6bb5200-c4f0-11e9-8dab-e6514a9f17d9.png">
 
