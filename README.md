@@ -5,9 +5,11 @@
 
 A quick, easy tool to visualize and share CSS box-model examples. Customize margin, padding, border and element sizes and colors.
 
-<img width="276" alt="CSS Box-model Visualizer" src="https://user-images.githubusercontent.com/3717760/63387735-15ff3d80-c35b-11e9-993c-2b23d4d6cbcf.png">
+<a href="https://box-model-visualizer.netlify.com/model">
+  <img width="276" alt="CSS Box-model Visualizer" src="https://user-images.githubusercontent.com/3717760/63387735-15ff3d80-c35b-11e9-993c-2b23d4d6cbcf.png">
+</a>
 
-[Create a model](https://box-model-visualizer.netlify.com)
+[Create a model](https://box-model-visualizer.netlify.com/model)
 
 ### Buttom Model Example
 

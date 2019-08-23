@@ -15,7 +15,7 @@ import { css } from "@emotion/core"
 import tokens from "../data/tokens"
 
 
-const Layout = ({ children }) => (
+const Layout = ({ children, location }) => (
   <StaticQuery
     query={graphql`
       query SiteTitleQuery {
@@ -32,6 +32,7 @@ const Layout = ({ children }) => (
         <Header
           siteTitle={data.site.siteMetadata.title}
           siteSubTitle={data.site.siteMetadata.subtitle}
+          location={location}
         />
         <div
           css={css({

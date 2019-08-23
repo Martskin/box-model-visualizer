@@ -25,6 +25,7 @@
     "react-helmet": "^5.2.1"
   },
   "devDependencies": {
+    "html2canvas": "^1.0.0-rc.3",
     "prettier": "^1.18.2"
   },
   "keywords": [

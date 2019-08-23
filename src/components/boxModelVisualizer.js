@@ -5,6 +5,7 @@ import CodeSnippet from "./codeSnippet"
 import tokens from "../data/tokens"
 import Button from "./button"
 import CheckboxEye from "./checkboxEye"
+import html2canvas from "html2canvas"
 
 function BoxModelVisualizer({ margin, border, padding, element }) {  
   let cssCodeHiddenTextarea = React.createRef()
@@ -107,6 +108,34 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   useEffect(() => {
     parseQueryString()
   }, [])
+
+  function savePNG() {
+    const boxModel = document.getElementById("box-model")
+
+    html2canvas(boxModel).then(function(canvas) {
+      saveAs(canvas.toDataURL(), 'box-model.png');
+    }) 
+  }
+
+  function saveAs(uri, filename) {
+    let link = document.createElement('a');
+
+    if (typeof link.download === 'string') {
+      link.href = uri;
+      link.download = filename;
+
+      //Firefox requires the link to be in the body
+      document.body.appendChild(link);
+
+      //simulate click
+      link.click();
+
+      //remove the link when done
+      document.body.removeChild(link);
+    } else {
+      window.open(uri);
+    }
+  }
 
   function truthyHelper(val) {
     let paramSafeVal
@@ -834,6 +863,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             '&:first-of-type': {
               background: tokens.color.background.light,
               borderRight: tokens.border.component,
+              paddingTop: 0,
             },
             '&:last-of-type': {
               background: tokens.color.background.light,
@@ -843,38 +873,70 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         })}
       >
         <div>
-          <h2>Properties</h2>
-          <form>
-            <fieldset>
+          <div
+            css={css({
+              backgroundColor: tokens.color.background.light,
+              borderBottom: tokens.border.component,
+              margin: `0 -${tokens.space.md}px ${tokens.space.sm}px`,
+              padding: `${tokens.space.md + 2}px ${tokens.space.md}px`,
+              position: 'sticky',
+              top: 0,
+              zIndex: 10,
+            })}
+          >
+            <span
+              ref={linkCopiedNotification}
+              className="notification"
+              css={css({
+                bottom: 2,
+                left: tokens.space.md - 2,
+                position: 'absolute',
+              })}
+            >
+              Link copied to clipboard!
+            </span>
+            <div
+              css={css({
+                display: 'flex',
+                '> div': {
+                  display: 'flex',
+                  flexGrow: 1,
+                }
+              })}
+            >
               <div
                 css={css({
-                  display: 'flex',
+                  justifyContent: 'flex-start',
                 })}
               >
-                <div
-                  css={css({
-                    flexGrow: 1,
-                  })}
-                >
-                  <Button label="Copy link" onClick={() => copyLink() } size="small" variant="primary" />
-                  <span ref={linkCopiedNotification} className="notification">
-                    Link copied to clipboard!
-                  </span>
-                  <input
-                    ref={linkHiddenInput}
-                    value=""
-                    type="text"
-                    readOnly
-                    className="accessibly-hidden"
-                    tabIndex="-1"
-                  />
-                </div>
-                <div>
-                  <Button label="Reset" onClick={() => resetProperties() } size="small" />
-                </div>
+                <Button label="Copy link" onClick={() => copyLink() } size="small" variant="primary" />
+                <input
+                  ref={linkHiddenInput}
+                  value=""
+                  type="text"
+                  readOnly
+                  className="accessibly-hidden"
+                  tabIndex="-1"
+                />
               </div>
-            </fieldset>
-          
+              <div
+                css={css({
+                  justifyContent: 'center',
+                })}
+              >
+                <Button label="Download PNG" onClick={() => savePNG() } size="small" />
+              </div>
+              <div
+                css={css({
+                  justifyContent: 'flex-end',
+                })}
+              >
+                <Button label="Reset" onClick={() => resetProperties() } size="small" />
+              </div>
+            </div>
+          </div>
+          <h2>Properties</h2>
+          <form>
             <fieldset
               onMouseEnter={() => setMarginIsHighlighted(true)}
               onMouseLeave={() => setMarginIsHighlighted(false)}
@@ -1679,6 +1741,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             })}
           >
             <div
+              id="box-model"
               css={css({
                 background: marginBackgroundColor,
                 display: 'inline-flex',
