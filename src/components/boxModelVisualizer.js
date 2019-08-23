@@ -5,6 +5,7 @@ import CodeSnippet from "./codeSnippet"
 import tokens from "../data/tokens"
 import Button from "./button"
 import CheckboxEye from "./checkboxEye"
+import html2canvas from "html2canvas"
 
 function BoxModelVisualizer({ margin, border, padding, element }) {  
   let cssCodeHiddenTextarea = React.createRef()
@@ -107,6 +108,34 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   useEffect(() => {
     parseQueryString()
   }, [])
+
+  function savePNG() {
+    const boxModel = document.getElementById("box-model")
+
+    html2canvas(boxModel).then(function(canvas) {
+      saveAs(canvas.toDataURL(), 'box-model.png');
+    }) 
+  }
+
+  function saveAs(uri, filename) {
+    let link = document.createElement('a');
+
+    if (typeof link.download === 'string') {
+      link.href = uri;
+      link.download = filename;
+
+      //Firefox requires the link to be in the body
+      document.body.appendChild(link);
+
+      //simulate click
+      link.click();
+
+      //remove the link when done
+      document.body.removeChild(link);
+    } else {
+      window.open(uri);
+    }
+  }
 
   function truthyHelper(val) {
     let paramSafeVal
@@ -834,6 +863,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             '&:first-of-type': {
               background: tokens.color.background.light,
               borderRight: tokens.border.component,
+              paddingTop: 0,
             },
             '&:last-of-type': {
               background: tokens.color.background.light,
@@ -843,38 +873,70 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
         })}
       >
         <div>
-          <h2>Properties</h2>
-          <form>
-            <fieldset>
+          <div
+            css={css({
+              backgroundColor: tokens.color.background.light,
+              borderBottom: tokens.border.component,
+              margin: `0 -${tokens.space.md}px ${tokens.space.sm}px`,
+              padding: `${tokens.space.md + 2}px ${tokens.space.md}px`,
+              position: 'sticky',
+              top: 0,
+              zIndex: 10,
+            })}
+          >
+            <span
+              ref={linkCopiedNotification}
+              className="notification"
+              css={css({
+                bottom: 2,
+                left: tokens.space.md - 2,
+                position: 'absolute',
+              })}
+            >
+              Link copied to clipboard!
+            </span>
+            <div
+              css={css({
+                display: 'flex',
+                '> div': {
+                  display: 'flex',
+                  flexGrow: 1,
+                }
+              })}
+            >
               <div
                 css={css({
-                  display: 'flex',
+                  justifyContent: 'flex-start',
                 })}
               >
-                <div
-                  css={css({
-                    flexGrow: 1,
-                  })}
-                >
-                  <Button label="Copy link" onClick={() => copyLink() } size="small" variant="primary" />
-                  <span ref={linkCopiedNotification} className="notification">
-                    Link copied to clipboard!
-                  </span>
-                  <input
-                    ref={linkHiddenInput}
-                    value=""
-                    type="text"
-                    readOnly
-                    className="accessibly-hidden"
-                    tabIndex="-1"
-                  />
-                </div>
-                <div>
-                  <Button label="Reset" onClick={() => resetProperties() } size="small" />
-                </div>
+                <Button label="Copy link" onClick={() => copyLink() } size="small" variant="primary" />
+                <input
+                  ref={linkHiddenInput}
+                  value=""
+                  type="text"
+                  readOnly
+                  className="accessibly-hidden"
+                  tabIndex="-1"
+                />
               </div>
-            </fieldset>
-          
+              <div
+                css={css({
+                  justifyContent: 'center',
+                })}
+              >
+                <Button label="Download PNG" onClick={() => savePNG() } size="small" />
+              </div>
+              <div
+                css={css({
+                  justifyContent: 'flex-end',
+                })}
+              >
+                <Button label="Reset" onClick={() => resetProperties() } size="small" />
+              </div>
+            </div>
+          </div>
+          <h2>Properties</h2>
+          <form>
             <fieldset
               onMouseEnter={() => setMarginIsHighlighted(true)}
               onMouseLeave={() => setMarginIsHighlighted(false)}
@@ -1679,388 +1741,396 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             })}
           >
             <div
+              id="box-model"
               css={css({
-                background: marginBackgroundColor,
-                display: 'inline-flex',
-                fontSize: tokens.font.size.xs,
-                paddingTop: marginTop,
-                paddingRight: marginRight,
-                paddingBottom: marginBottom,
-                paddingLeft: marginLeft,
-                position: 'relative',
-                div: {
-                  transition: 'width .5s ease-out, height .5s ease-out',
-                },
-                '&::before': {
-                  background: tokens.color.background.default,
-                  content: '" "',
-                  display: 'block',
-                  left: 0,
-                  opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.6' : 0,
-                  position: 'absolute',
-                  height: '100%',
-                  top: 0,
-                  width: '100%',
-                  zIndex: 1,
-                }
+                display: 'inline-block',
+                padding: '20px 50px',
               })}
             >
-              {marginLabelIsVisible && (
-                <div
-                  css={css({
-                    ...getLabelStyles('margin'),
-                  })}
-                >
-                  {marginLabel}
-                </div>
-              )}
-              {marginTopUnitIsVisible && (
-                <div
-                  css={css({
-                    alignItems: 'center',
-                    color: marginUnitColor,
-                    display: 'flex',
-                    height: marginTop,
-                    justifyContent: 'center',
-                    left: 0,
-                    opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                    position: 'absolute',
-                    top: 0,
-                    width: '100%',
-                    zIndex: 8,
-                  })}
-                >
-                  {marginTop.toLocaleString()}
-                </div>
-              )}
-              {marginRightUnitIsVisible && (
-                <div
-                  css={css({
-                    alignItems: 'center',
-                    color: marginUnitColor,
-                    display: 'flex',
-                    height: '100%',
-                    justifyContent: 'center',
-                    opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                    position: 'absolute',
-                    right: 0,
-                    top: 0,
-                    width: marginRight,
-                    zIndex: 8,
-                  })}
-                >
-                  {marginRight.toLocaleString()}
-                </div>
-              )}
-              {marginBottomUnitIsVisible && (
-                <div
-                  css={css({
-                    alignItems: 'center',
-                    color: marginUnitColor,
-                    display: 'flex',
-                    height: marginBottom,
-                    justifyContent: 'center',
-                    left: 0,
-                    opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                    position: 'absolute',
-                    bottom: 0,
-                    width: '100%',
-                    zIndex: 8,
-                  })}
-                >
-                  {marginBottom.toLocaleString()}
-                </div>
-              )}
-              {marginLeftUnitIsVisible && (
-                <div
-                  css={css({
-                    alignItems: 'center',
-                    color: marginUnitColor,
-                    display: 'flex',
-                    height: '100%',
-                    justifyContent: 'center',
-                    left: 0,
-                    opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
-                    position: 'absolute',
-                    top: 0,
-                    width: marginLeft,
-                    zIndex: 8,
-                  })}
-                >
-                  {marginLeft.toLocaleString()}
-                </div>
-              )}
               <div
                 css={css({
-                  background: borderBackgroundColor,
+                  background: marginBackgroundColor,
                   display: 'inline-flex',
-                  paddingTop: borderTop,
-                  paddingRight: borderRight,
-                  paddingBottom: borderBottom,
-                  paddingLeft: borderLeft,
+                  fontSize: tokens.font.size.xs,
+                  paddingTop: marginTop,
+                  paddingRight: marginRight,
+                  paddingBottom: marginBottom,
+                  paddingLeft: marginLeft,
                   position: 'relative',
-                  zIndex: 2,
+                  div: {
+                    transition: 'width .5s ease-out, height .5s ease-out',
+                  },
                   '&::before': {
                     background: tokens.color.background.default,
                     content: '" "',
                     display: 'block',
                     left: 0,
-                    opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.6' : 0,
+                    opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.6' : 0,
                     position: 'absolute',
                     height: '100%',
                     top: 0,
                     width: '100%',
-                    zIndex: 3,
+                    zIndex: 1,
                   }
                 })}
               >
-                {borderLabelIsVisible && (
+                {marginLabelIsVisible && (
                   <div
                     css={css({
-                    ...getLabelStyles('border'),
-                  })}
+                      ...getLabelStyles('margin'),
+                    })}
                   >
-                    {borderLabel}
+                    {marginLabel}
                   </div>
                 )}
-                {borderTopUnitIsVisible && (
+                {marginTopUnitIsVisible && (
                   <div
                     css={css({
                       alignItems: 'center',
-                      color: borderUnitColor,
+                      color: marginUnitColor,
                       display: 'flex',
-                      height: borderTop,
+                      height: marginTop,
                       justifyContent: 'center',
                       left: 0,
-                      opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                       position: 'absolute',
                       top: 0,
                       width: '100%',
                       zIndex: 8,
                     })}
                   >
-                    {borderTop.toLocaleString()}
+                    {marginTop.toLocaleString()}
                   </div>
                 )}
-                {borderRightUnitIsVisible && (
+                {marginRightUnitIsVisible && (
                   <div
                     css={css({
                       alignItems: 'center',
-                      color: borderUnitColor,
+                      color: marginUnitColor,
                       display: 'flex',
                       height: '100%',
                       justifyContent: 'center',
-                      opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                       position: 'absolute',
                       right: 0,
                       top: 0,
-                      width: borderRight,
+                      width: marginRight,
                       zIndex: 8,
                     })}
                   >
-                    {borderRight.toLocaleString()}
+                    {marginRight.toLocaleString()}
                   </div>
                 )}
-                {borderBottomUnitIsVisible && (
+                {marginBottomUnitIsVisible && (
                   <div
                     css={css({
                       alignItems: 'center',
-                      color: borderUnitColor,
+                      color: marginUnitColor,
                       display: 'flex',
-                      height: borderBottom,
+                      height: marginBottom,
                       justifyContent: 'center',
                       left: 0,
-                      opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                       position: 'absolute',
                       bottom: 0,
                       width: '100%',
                       zIndex: 8,
                     })}
                   >
-                    {borderBottom.toLocaleString()}
+                    {marginBottom.toLocaleString()}
                   </div>
                 )}
-                {borderLeftUnitIsVisible && (
+                {marginLeftUnitIsVisible && (
                   <div
                     css={css({
                       alignItems: 'center',
-                      color: borderUnitColor,
+                      color: marginUnitColor,
                       display: 'flex',
                       height: '100%',
                       justifyContent: 'center',
                       left: 0,
-                      opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                      opacity: (borderIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                       position: 'absolute',
                       top: 0,
-                      width: borderLeft,
+                      width: marginLeft,
                       zIndex: 8,
                     })}
                   >
-                    {borderLeft.toLocaleString()}
+                    {marginLeft.toLocaleString()}
                   </div>
                 )}
                 <div
                   css={css({
-                    alignItems: 'center',
-                    background: paddingBackgroundColor,
+                    background: borderBackgroundColor,
                     display: 'inline-flex',
-                    justifyContent: 'center',
-                    paddingTop,
-                    paddingRight,
-                    paddingBottom,
-                    paddingLeft,
+                    paddingTop: borderTop,
+                    paddingRight: borderRight,
+                    paddingBottom: borderBottom,
+                    paddingLeft: borderLeft,
                     position: 'relative',
-                    zIndex: 4,
+                    zIndex: 2,
                     '&::before': {
                       background: tokens.color.background.default,
                       content: '" "',
                       display: 'block',
                       left: 0,
-                      opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.6' : 0,
+                      opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.6' : 0,
                       position: 'absolute',
                       height: '100%',
                       top: 0,
                       width: '100%',
-                      zIndex: 5,
+                      zIndex: 3,
                     }
                   })}
                 >
-                  {paddingLabelIsVisible && (
+                  {borderLabelIsVisible && (
                     <div
                       css={css({
-                        ...getLabelStyles('padding'),
-                      })}
+                      ...getLabelStyles('border'),
+                    })}
                     >
-                      {paddingLabel}
+                      {borderLabel}
                     </div>
                   )}
-                  {paddingTopUnitIsVisible && (
+                  {borderTopUnitIsVisible && (
                     <div
                       css={css({
                         alignItems: 'center',
-                        color: paddingUnitColor,
+                        color: borderUnitColor,
                         display: 'flex',
-                        height: paddingTop,
+                        height: borderTop,
                         justifyContent: 'center',
                         left: 0,
-                        opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                         position: 'absolute',
                         top: 0,
                         width: '100%',
                         zIndex: 8,
                       })}
                     >
-                      {paddingTop.toLocaleString()}
+                      {borderTop.toLocaleString()}
                     </div>
                   )}
-                  {paddingRightUnitIsVisible && (
+                  {borderRightUnitIsVisible && (
                     <div
                       css={css({
                         alignItems: 'center',
-                        color: paddingUnitColor,
+                        color: borderUnitColor,
                         display: 'flex',
                         height: '100%',
                         justifyContent: 'center',
-                        opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                         position: 'absolute',
                         right: 0,
                         top: 0,
-                        width: paddingRight,
+                        width: borderRight,
                         zIndex: 8,
                       })}
                     >
-                      {paddingRight.toLocaleString()}
+                      {borderRight.toLocaleString()}
                     </div>
                   )}
-                  {paddingBottomUnitIsVisible && (
+                  {borderBottomUnitIsVisible && (
                     <div
                       css={css({
                         alignItems: 'center',
-                        color: paddingUnitColor,
+                        color: borderUnitColor,
                         display: 'flex',
-                        height: paddingBottom,
+                        height: borderBottom,
                         justifyContent: 'center',
                         left: 0,
-                        opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                         position: 'absolute',
                         bottom: 0,
                         width: '100%',
                         zIndex: 8,
                       })}
                     >
-                      {paddingBottom.toLocaleString()}
+                      {borderBottom.toLocaleString()}
                     </div>
                   )}
-                  {paddingLeftUnitIsVisible && (
+                  {borderLeftUnitIsVisible && (
                     <div
                       css={css({
                         alignItems: 'center',
-                        color: paddingUnitColor,
+                        color: borderUnitColor,
                         display: 'flex',
                         height: '100%',
                         justifyContent: 'center',
                         left: 0,
-                        opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                        opacity: (marginIsHighlighted || paddingIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                         position: 'absolute',
                         top: 0,
-                        width: paddingLeft,
+                        width: borderLeft,
                         zIndex: 8,
                       })}
                     >
-                      {paddingLeft.toLocaleString()}
+                      {borderLeft.toLocaleString()}
                     </div>
                   )}
                   <div
                     css={css({
-                      background: elementBackgroundColor,
-                      height: elementHeight - (borderTop + borderBottom) - (paddingTop + paddingBottom),
+                      alignItems: 'center',
+                      background: paddingBackgroundColor,
+                      display: 'inline-flex',
+                      justifyContent: 'center',
+                      paddingTop,
+                      paddingRight,
+                      paddingBottom,
+                      paddingLeft,
                       position: 'relative',
-                      width: elementWidth - (borderRight + borderLeft) - (paddingRight + paddingLeft),
-                      zIndex: 6,
+                      zIndex: 4,
                       '&::before': {
                         background: tokens.color.background.default,
                         content: '" "',
                         display: 'block',
                         left: 0,
-                        opacity: (marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted) ? '.6' : 0,
+                        opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.6' : 0,
                         position: 'absolute',
                         height: '100%',
                         top: 0,
                         width: '100%',
-                        zIndex: 7,
+                        zIndex: 5,
                       }
                     })}
                   >
-                    {elementLabelIsVisible && (
+                    {paddingLabelIsVisible && (
                       <div
                         css={css({
-                        ...getLabelStyles('element'),
-                      })}
+                          ...getLabelStyles('padding'),
+                        })}
                       >
-                        {elementLabel}
+                        {paddingLabel}
                       </div>
                     )}
-                    {(elementWidthUnitIsVisible || elementHeightUnitIsVisible) && (
+                    {paddingTopUnitIsVisible && (
                       <div
                         css={css({
                           alignItems: 'center',
-                          color: elementUnitColor,
+                          color: paddingUnitColor,
                           display: 'flex',
-                          height: '100%',
+                          height: paddingTop,
                           justifyContent: 'center',
                           left: 0,
-                          opacity: (marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted) ? '.25' : 1,
+                          opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
                           position: 'absolute',
                           top: 0,
                           width: '100%',
                           zIndex: 8,
                         })}
                       >
-                        {elementWidthUnitIsVisible && (<span>{elementWidth.toLocaleString()}</span>)}
-                        {(elementWidthUnitIsVisible && elementHeightUnitIsVisible) && (<span>&nbsp;x&nbsp;</span>)}
-                        {elementHeightUnitIsVisible && (<span>{elementHeight.toLocaleString()}</span>)}
+                        {paddingTop.toLocaleString()}
                       </div>
                     )}
+                    {paddingRightUnitIsVisible && (
+                      <div
+                        css={css({
+                          alignItems: 'center',
+                          color: paddingUnitColor,
+                          display: 'flex',
+                          height: '100%',
+                          justifyContent: 'center',
+                          opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                          position: 'absolute',
+                          right: 0,
+                          top: 0,
+                          width: paddingRight,
+                          zIndex: 8,
+                        })}
+                      >
+                        {paddingRight.toLocaleString()}
+                      </div>
+                    )}
+                    {paddingBottomUnitIsVisible && (
+                      <div
+                        css={css({
+                          alignItems: 'center',
+                          color: paddingUnitColor,
+                          display: 'flex',
+                          height: paddingBottom,
+                          justifyContent: 'center',
+                          left: 0,
+                          opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                          position: 'absolute',
+                          bottom: 0,
+                          width: '100%',
+                          zIndex: 8,
+                        })}
+                      >
+                        {paddingBottom.toLocaleString()}
+                      </div>
+                    )}
+                    {paddingLeftUnitIsVisible && (
+                      <div
+                        css={css({
+                          alignItems: 'center',
+                          color: paddingUnitColor,
+                          display: 'flex',
+                          height: '100%',
+                          justifyContent: 'center',
+                          left: 0,
+                          opacity: (marginIsHighlighted || borderIsHighlighted || elementIsHighlighted) ? '.25' : 1,
+                          position: 'absolute',
+                          top: 0,
+                          width: paddingLeft,
+                          zIndex: 8,
+                        })}
+                      >
+                        {paddingLeft.toLocaleString()}
+                      </div>
+                    )}
+                    <div
+                      css={css({
+                        background: elementBackgroundColor,
+                        height: elementHeight - (borderTop + borderBottom) - (paddingTop + paddingBottom),
+                        position: 'relative',
+                        width: elementWidth - (borderRight + borderLeft) - (paddingRight + paddingLeft),
+                        zIndex: 6,
+                        '&::before': {
+                          background: tokens.color.background.default,
+                          content: '" "',
+                          display: 'block',
+                          left: 0,
+                          opacity: (marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted) ? '.6' : 0,
+                          position: 'absolute',
+                          height: '100%',
+                          top: 0,
+                          width: '100%',
+                          zIndex: 7,
+                        }
+                      })}
+                    >
+                      {elementLabelIsVisible && (
+                        <div
+                          css={css({
+                          ...getLabelStyles('element'),
+                        })}
+                        >
+                          {elementLabel}
+                        </div>
+                      )}
+                      {(elementWidthUnitIsVisible || elementHeightUnitIsVisible) && (
+                        <div
+                          css={css({
+                            alignItems: 'center',
+                            color: elementUnitColor,
+                            display: 'flex',
+                            height: '100%',
+                            justifyContent: 'center',
+                            left: 0,
+                            opacity: (marginIsHighlighted || borderIsHighlighted || paddingIsHighlighted) ? '.25' : 1,
+                            position: 'absolute',
+                            top: 0,
+                            width: '100%',
+                            zIndex: 8,
+                          })}
+                        >
+                          {elementWidthUnitIsVisible && (<span>{elementWidth.toLocaleString()}</span>)}
+                          {(elementWidthUnitIsVisible && elementHeightUnitIsVisible) && (<span>&nbsp;x&nbsp;</span>)}
+                          {elementHeightUnitIsVisible && (<span>{elementHeight.toLocaleString()}</span>)}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
