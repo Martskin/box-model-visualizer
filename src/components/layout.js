@@ -14,6 +14,7 @@ import "./layout.css"
 import { css } from "@emotion/core"
 import tokens from "../data/tokens"
 
+
 const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
@@ -25,6 +26,7 @@ const Layout = ({ children }) => (
         }
       }
     `}
+    
     render={data => (
       <>
         <Header
@@ -36,33 +38,57 @@ const Layout = ({ children }) => (
             '.layout-container': {
               margin: '0 auto',
               maxWidth: '1040px',
-              paddingBottom: '200px',
+              paddingBottom: '50px',
+              '@media (min-width: 480px)': {
+                paddingBottom: '200px',
+              }
             },
             '.layout__hero': {
               color: tokens.color.text.default,
               fontFamily: tokens.font.family.sansSerif,
               lineHeight: 1.5,
-              padding: tokens.space.xxl,
+              padding: tokens.space.lg,
               textAlign: 'center',
+              '@media (min-width: 480px)': {
+                fontSize: tokens.font.size.xxl,
+                padding: tokens.space.xxl,
+              }
             },
             '.layout__heading': {
-              fontSize: tokens.font.size.xxl,
-              margin: `0 0 ${tokens.space.md}px`
+              fontSize: tokens.font.size.xl,
+              lineHeight: 1,
+              margin: `0 0 ${tokens.space.md}px`,
+              '@media (min-width: 480px)': {
+                fontSize: tokens.font.size.xxl,
+              },
             },
             '.layout__lead': {
               color: tokens.color.text.secondary,
-              fontSize: tokens.font.size.lg,
-              margin: `0 auto ${tokens.space.xl}px`,
+              fontSize: tokens.font.size.md,
+              lineHeight: 1.25,
+              margin: `0 auto ${tokens.space.lg}px`,
               maxWidth: '500px',
+              '@media (min-width: 480px)': {
+                fontSize: tokens.font.size.lg,
+                lineHeight: 1.5,
+                marginBottom: tokens.space.xl,
+              }
             },
             '.layout__grid': {
-              display: 'grid',
-              gridGap: tokens.space.lg,
-              gridTemplateColumns: '1fr 1fr 1fr',
+              padding: `0 ${tokens.space.lg}px`,
               textAlign: 'center',
+              '@media (min-width: 480px)': {
+                display: 'grid',
+                gridGap: tokens.space.lg,
+                gridTemplateColumns: '1fr 1fr 1fr',
+              },
               div: {
                 border: tokens.border.component,
+                marginBottom: tokens.space.lg,
                 padding: `${tokens.space.sm}px ${tokens.space.xxs}px ${tokens.space.lg}px`,
+                '@media (min-width: 480px)': {
+                  margin: 0,
+                }
               },
               img: {
                 cursor: 'pointer',
