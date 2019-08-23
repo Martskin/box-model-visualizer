@@ -5,6 +5,7 @@ import CodeSnippet from "./codeSnippet"
 import tokens from "../data/tokens"
 import Button from "./button"
 import CheckboxEye from "./checkboxEye"
+import html2canvas from "html2canvas"
 
 function BoxModelVisualizer({ margin, border, padding, element }) {  
   let cssCodeHiddenTextarea = React.createRef()
@@ -109,10 +110,12 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   }, [])
 
   function savePNG() {
-    
+
   }
 
+  function saveAs(uri, filename) {
 
+  }
 
   function truthyHelper(val) {
     let paramSafeVal
