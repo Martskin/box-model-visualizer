@@ -5,7 +5,6 @@ import CodeSnippet from "./codeSnippet"
 import tokens from "../data/tokens"
 import Button from "./button"
 import CheckboxEye from "./checkboxEye"
-import html2canvas from "html2canvas"
 
 function BoxModelVisualizer({ margin, border, padding, element }) {  
   let cssCodeHiddenTextarea = React.createRef()
@@ -110,32 +109,10 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
   }, [])
 
   function savePNG() {
-    const boxModel = document.getElementById("box-model")
-
-    html2canvas(boxModel).then(function(canvas) {
-      saveAs(canvas.toDataURL(), 'box-model.png');
-    }) 
+    
   }
 
-  function saveAs(uri, filename) {
-    let link = document.createElement('a');
 
-    if (typeof link.download === 'string') {
-      link.href = uri;
-      link.download = filename;
-
-      //Firefox requires the link to be in the body
-      document.body.appendChild(link);
-
-      //simulate click
-      link.click();
-
-      //remove the link when done
-      document.body.removeChild(link);
-    } else {
-      window.open(uri);
-    }
-  }
 
   function truthyHelper(val) {
     let paramSafeVal
