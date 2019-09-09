@@ -69,7 +69,7 @@ function SEO({ description, lang, meta, title }) {
         },
         {
           name: `google-site-verification`,
-          content: `2L8ecRXBmyISChz-wGyGQYyeiKTVpHs6KEL4YT6-U3o`,
+          content: `FDPnxaH2pZtTweaS6Q9YTsZGZloizXvb_LcEWpGo9bg`,
         },
       ].concat(meta)}
     />
