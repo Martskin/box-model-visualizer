@@ -107,7 +107,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
 
   useEffect(() => {
     parseQueryString()
-  }, [])
+  }, [])  // eslint-disable-line react-hooks/exhaustive-deps
 
   function savePNG() {
     const boxModel = document.getElementById("box-model")
