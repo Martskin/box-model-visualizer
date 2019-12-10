@@ -13,6 +13,7 @@ A quick, easy tool to visualize and share CSS box-model examples. Customize marg
 
 ### ASCII Example
 
+```ascii
 border
  _____________
 |   padding   |
@@ -23,6 +24,7 @@ border
 | ___________ |
 |   margin    |
 |_____________|
+```
 
 ### Buttom Model Example
 
