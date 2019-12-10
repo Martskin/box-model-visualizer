@@ -720,7 +720,7 @@ function BoxModelVisualizer({ margin, border, padding, element }) {
             borderBottom: tokens.border.component,
             marginBottom: tokens.space.md,
           },
-          '&:not(:first-of-type):hover': {
+          '&:hover': {
             background: tokens.color.background.interactive.hover.default,
           },
         },
