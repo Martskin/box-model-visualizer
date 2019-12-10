@@ -1,9 +1,9 @@
 <h1>
-  <img width="30" alt="CSS Box-model Visualizer" src="https://user-images.githubusercontent.com/3717760/63388648-033a3800-c35e-11e9-86b8-9febb99d1655.png">
-    CSS Box-model Visualizer
+  <img width="30" alt="CSS Box Model Visualizer" src="https://user-images.githubusercontent.com/3717760/63388648-033a3800-c35e-11e9-86b8-9febb99d1655.png">
+    CSS Box Model Visualizer
 </h1>
 
-A quick, easy tool to visualize and share CSS box-model examples. Customize margin, padding, border and element sizes and colors.
+A quick way to visualize and share CSS box model examples. Adjust the inputs in the control panel to customize margin, padding, border, element dimensions and colors.
 
 <a href="https://box-model-visualizer.netlify.com/model">
   <img width="276" alt="CSS Box-model Visualizer" src="https://user-images.githubusercontent.com/3717760/63387735-15ff3d80-c35b-11e9-993c-2b23d4d6cbcf.png">

@@ -67,7 +67,7 @@ const Layout = ({ children }) => (
               fontSize: tokens.font.size.md,
               lineHeight: 1.25,
               margin: `0 auto ${tokens.space.lg}px`,
-              maxWidth: '500px',
+              maxWidth: '550px',
               '@media (min-width: 480px)': {
                 fontSize: tokens.font.size.lg,
                 lineHeight: 1.5,

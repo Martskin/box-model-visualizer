@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `CSS Box-model Visualizer`,
-    description: `A quick, easy tool to visualize and share CSS box-model examples. Customize margin, padding, border and element sizes and colors.`,
+    title: `CSS Box Model Visualizer`,
+    description: `A quick way to visualize and share CSS box model examples. Adjust the inputs in the control panel to customize margin, padding, border, element dimensions and colors.`,
     author: `Martin Hofmann <martin@martinhofmann.com>`,
   },
   plugins: [
